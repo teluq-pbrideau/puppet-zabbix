@@ -538,7 +538,7 @@ Default value: `$zabbix::params::server_api_user`
 
 ##### <a name="-zabbix--zabbix_api_pass"></a>`zabbix_api_pass`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Password of the user which connects to the api. Default: zabbix
 
@@ -652,7 +652,7 @@ Default value: `$zabbix::params::server_database_user`
 
 ##### <a name="-zabbix--database_password"></a>`database_password`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Database password. ignored for sqlite.
 
@@ -1876,7 +1876,16 @@ Default value: `$zabbix::params::agent_timeout`
 
 ##### <a name="-zabbix--agent--tlsaccept"></a>`tlsaccept`
 
-Data type: `Optional[Variant[Array[Enum['unencrypted','psk','cert']],Enum['unencrypted','psk','cert']]]`
+Data type:
+
+```puppet
+Optional[
+    Variant[
+      Array[Enum['unencrypted','psk','cert']],
+      Enum['unencrypted','psk','cert']
+    ]
+  ]
+```
 
 What incoming connections to accept from Zabbix server. Used for a passive proxy, ignored on an active proxy.
 
@@ -2306,7 +2315,7 @@ Default value: `$zabbix::params::server_database_user`
 
 ##### <a name="-zabbix--database--database_password"></a>`database_password`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 The password of the database_user.
 
@@ -2914,7 +2923,7 @@ Default value: `$zabbix::params::proxy_database_user`
 
 ##### <a name="-zabbix--proxy--database_password"></a>`database_password`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Database password. ignored for sqlite.
 
@@ -3295,7 +3304,16 @@ Default value: `$zabbix::params::proxy_timeout`
 
 ##### <a name="-zabbix--proxy--tlsaccept"></a>`tlsaccept`
 
-Data type: `Optional[Variant[Array[Enum['unencrypted','psk','cert']],Enum['unencrypted','psk','cert']]]`
+Data type:
+
+```puppet
+Optional[
+    Variant[
+      Array[Enum['unencrypted', 'psk', 'cert']],
+      Enum['unencrypted', 'psk', 'cert']
+    ]
+  ]
+```
 
 What incoming connections to accept from Zabbix server. Used for a passive proxy, ignored on an active proxy.
 
@@ -3903,7 +3921,7 @@ API username.
 
 ##### <a name="-zabbix--resources--web--zabbix_pass"></a>`zabbix_pass`
 
-Data type: `String[1]`
+Data type: `Variant[Sensitive[String[1]], String[1]]`
 
 API password.
 
@@ -4313,7 +4331,7 @@ Default value: `$zabbix::params::server_database_user`
 
 ##### <a name="-zabbix--server--database_password"></a>`database_password`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Database password. ignored for sqlite.
 
@@ -5307,7 +5325,7 @@ Default value: `$zabbix::params::server_api_user`
 
 ##### <a name="-zabbix--web--zabbix_api_pass"></a>`zabbix_api_pass`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Password of the user which connects to the api. Default: zabbix
 
@@ -5365,7 +5383,7 @@ Default value: `$zabbix::params::server_database_user`
 
 ##### <a name="-zabbix--web--database_password"></a>`database_password`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Database password. ignored for sqlite.
 
