@@ -23,8 +23,19 @@ Puppet::Type.type(:zabbix_template).provide(:ruby, parent: Puppet::Provider::Zab
           deleteMissing: (@resource[:delete_missing_graphs].nil? ? false : @resource[:delete_missing_graphs]),
           updateExisting: true
         },
-        groups: {
+        # groups parameter was removed on Zabbix 6.2
+        (@resource[:zabbix_version] =~ %r{5\.[24]|6\.0} ? :groups : nil) => {
           createMissing: true
+        },
+        # new template_groups parameter on Zabbix >= 6.2
+        (@resource[:zabbix_version] =~ %r{6\.[24]|7\.[024]} ? :template_groups : nil) => {
+          createMissing: true,
+          updateExisting: true
+        },
+        # new host_groups parameter on Zabbix >= 6.2
+        (@resource[:zabbix_version] =~ %r{6\.[24]|7\.[024]} ? :host_groups : nil) => {
+          createMissing: true,
+          updateExisting: true
         },
         httptests: {
           createMissing: true,
@@ -57,7 +68,7 @@ Puppet::Type.type(:zabbix_template).provide(:ruby, parent: Puppet::Provider::Zab
           updateExisting: true
         },
         # templateDashboards was renamed to templateScreen on Zabbix >= 5.2
-        (@resource[:zabbix_version] =~ %r{5\.[24]|6\.0} ? :templateDashboards : :templateScreens) => {
+        (@resource[:zabbix_version] =~ %r{5\.[24]|[67]\.[024]} ? :templateDashboards : :templateScreens) => {
           createMissing: true,
           deleteMissing: (@resource[:delete_missing_templatescreens].nil? ? false : @resource[:delete_missing_templatescreens]),
           updateExisting: true
