@@ -124,6 +124,7 @@ Puppet::Type.type(:zabbix_host).provide(:ruby, parent: Puppet::Provider::Zabbix)
     end
     host_params.delete(:proxyid) if host_params[:proxy_groupid] || host_params[:proxyid].nil?
     host_params.delete(:proxy_groupid) if host_params[:proxy_groupid].nil?
+    host_params.delete(:monitored_by) if host_params[:proxyid].nil?
 
     # Now we create the host
     zbx.hosts.create(host_params)
