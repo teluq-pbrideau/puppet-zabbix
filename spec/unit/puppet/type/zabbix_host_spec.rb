@@ -18,7 +18,6 @@ describe Puppet::Type.type(:zabbix_host) do
 
   describe 'when validating properties' do
     %i[
-      group
       groups
       id
       interfaceid
@@ -42,7 +41,7 @@ describe Puppet::Type.type(:zabbix_host) do
       'true' => true,
       'false' => false,
       :true => true,
-      :false => false
+      :false => false,
     }.each do |key, value|
       it "munges #{key.inspect} to #{value}" do
         expect(described_class.new(name: 'nobody').munge_boolean(key)).to eq value
@@ -74,10 +73,6 @@ describe Puppet::Type.type(:zabbix_host) do
   describe 'properties' do
     describe 'ensure' do
       it_behaves_like 'generic ensurable', :present
-    end
-
-    describe 'group' do
-      it_behaves_like 'validated property', :group, nil, ['group1', 'Group One']
     end
 
     describe 'groups' do

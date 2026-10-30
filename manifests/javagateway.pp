@@ -10,20 +10,25 @@
 # @param timeout Number of worker threads to start.
 # @example
 #  class { 'zabbix::javagateway':
-#    zabbix_version => '5.2',
+#    zabbix_version => '6.0',
 #  }
 # @author Werner Dijkerman ikben@werner-dijkerman.nl
 class zabbix::javagateway (
-  $zabbix_version           = $zabbix::params::zabbix_version,
-  $zabbix_package_state     = $zabbix::params::zabbix_package_state,
-  Boolean $manage_firewall  = $zabbix::params::manage_firewall,
-  Boolean $manage_repo      = $zabbix::params::manage_repo,
-  $pidfile                  = $zabbix::params::javagateway_pidfile,
-  $listenip                 = $zabbix::params::javagateway_listenip,
-  $listenport               = $zabbix::params::javagateway_listenport,
-  $startpollers             = $zabbix::params::javagateway_startpollers,
-  $timeout                  = $zabbix::params::javagateway_timeout,
+  $zabbix_version          = $zabbix::params::zabbix_version,
+  $zabbix_package_state    = $zabbix::params::zabbix_package_state,
+  Boolean $manage_firewall = $zabbix::params::manage_firewall,
+  Boolean $manage_repo     = $zabbix::params::manage_repo,
+  $pidfile                 = $zabbix::params::javagateway_pidfile,
+  $listenip                = $zabbix::params::javagateway_listenip,
+  $listenport              = $zabbix::params::javagateway_listenport,
+  $startpollers            = $zabbix::params::javagateway_startpollers,
+  $timeout                 = $zabbix::params::javagateway_timeout,
 ) inherits zabbix::params {
+  # Fix for pid file. Is different in Zabbix (4, 5) and 6
+  $real_pidfile = $zabbix_version ? {
+    /^[45]\.[024]/ => pick($pidfile, '/var/run/zabbix/zabbix_java.pid'),
+    /^[67]\.[024]/  => pick($pidfile, '/var/run/zabbix/zabbix_java_gateway.pid'),
+  }
   # Only include the repo class if it has not yet been included
   unless defined(Class['Zabbix::Repo']) {
     class { 'zabbix::repo':
@@ -59,17 +64,17 @@ class zabbix::javagateway (
     hasrestart => true,
     require    => [
       Package['zabbix-java-gateway'],
-      File['/etc/zabbix/zabbix_java_gateway.conf']
+      File['/etc/zabbix/zabbix_java_gateway.conf'],
     ],
   }
 
   # Manage firewall
   if $manage_firewall {
     firewall { '152 zabbix-javagateway':
-      dport  => $listenport,
-      proto  => 'tcp',
-      action => 'accept',
-      state  => ['NEW','RELATED', 'ESTABLISHED'],
+      dport => $listenport,
+      proto => 'tcp',
+      jump  => 'accept',
+      state => ['NEW','RELATED', 'ESTABLISHED'],
     }
   }
 }

@@ -32,6 +32,8 @@
 #   you can use this parameter to add the database_path to the above mentioned
 #   path.
 # @param manage_database When true, it will configure the database and execute the sql scripts.
+# @param manage_php
+#   If set, version of PHP to install on systems where default one is not supported by Zabbix (actually only EL8).
 # @param manage_repo When true (default) this module will manage the Zabbix repository.
 # @param manage_firewall When true, it will create iptables rules.
 # @param manage_service
@@ -74,6 +76,7 @@
 # @param ldap_reqcert Specifies what checks to perform on a server certificate
 # @param zabbix_api_user Name of the user which the api should connect to. Default: Admin
 # @param zabbix_api_pass Password of the user which connects to the api. Default: zabbix
+# @param zabbix_api_access Which host has access to the api. Default: no restriction
 # @param listenport Listen port for the zabbix-server. Default: 10051
 # @param sourceip Source ip address for outgoing connections.
 # @param logfile Name of log file.
@@ -104,6 +107,7 @@
 # @param startpollers Number of pre-forked instances of pollers.
 # @param startpreprocessors Number of pre-forked instances of preprocessing workers
 # @param startipmipollers Number of pre-forked instances of ipmi pollers.
+# @param startodbcpollers Number of pre-forked instances of ODBC pollers.
 # @param startpollersunreachable Number of pre-forked instances of pollers for unreachable hosts (including ipmi).
 # @param starttrappers Number of pre-forked instances of trappers.
 # @param startpingers Number of pre-forked instances of icmp pingers.
@@ -114,6 +118,7 @@
 # @param starttimers Number of pre-forked instances of timers.
 # @param javagateway IP address (or hostname) of zabbix java gateway.
 # @param javagatewayport Port that zabbix java gateway listens on.
+# @param smsdevices Which devices to use for sms texting
 # @param startjavapollers Number of pre-forked instances of java pollers.
 # @param startlldprocessors Number of pre-forked instances of low-level discovery (LLD) workers.
 # @param startvmwarecollectors Number of pre-forked vmware collector instances.
@@ -227,6 +232,7 @@ class zabbix (
   $default_vhost                                                              = $zabbix::params::default_vhost,
   $manage_vhost                                                               = $zabbix::params::manage_vhost,
   $manage_firewall                                                            = $zabbix::params::manage_firewall,
+  Optional[String] $manage_php                                                = undef,
   $manage_repo                                                                = $zabbix::params::manage_repo,
   $manage_resources                                                           = $zabbix::params::manage_resources,
   $manage_service                                                             = $zabbix::params::manage_service,
@@ -249,7 +255,8 @@ class zabbix (
   Optional[Stdlib::Absolutepath] $ldap_clientkey                              = $zabbix::params::ldap_clientkey,
   Optional[Enum['never', 'allow', 'try', 'demand', 'hard']] $ldap_reqcert     = $zabbix::params::ldap_reqcert,
   $zabbix_api_user                                                            = $zabbix::params::server_api_user,
-  $zabbix_api_pass                                                            = $zabbix::params::server_api_pass,
+  Variant[Sensitive[String], String] $zabbix_api_pass                         = $zabbix::params::server_api_pass,
+  Optional[Array[Stdlib::Host,1]] $zabbix_api_access                          = $zabbix::params::server_api_access,
   $listenport                                                                 = $zabbix::params::server_listenport,
   $sourceip                                                                   = $zabbix::params::server_sourceip,
   Enum['console', 'file', 'system'] $logtype                                  = $zabbix::params::server_logtype,
@@ -262,7 +269,7 @@ class zabbix (
   $database_schema                                                            = $zabbix::params::server_database_schema,
   Boolean $database_double_ieee754                                            = $zabbix::params::server_database_double_ieee754,
   $database_user                                                              = $zabbix::params::server_database_user,
-  $database_password                                                          = $zabbix::params::server_database_password,
+  Variant[Sensitive[String], String] $database_password                       = $zabbix::params::server_database_password,
   $database_socket                                                            = $zabbix::params::server_database_socket,
   $database_port                                                              = $zabbix::params::server_database_port,
   $database_charset                                                           = $zabbix::params::server_database_charset,
@@ -272,6 +279,7 @@ class zabbix (
   Optional[Stdlib::Absolutepath] $database_tlscafile                          = $zabbix::params::server_database_tlscafile,
   $startpollers                                                               = $zabbix::params::server_startpollers,
   $startipmipollers                                                           = $zabbix::params::server_startipmipollers,
+  Integer[0, 1000] $startodbcpollers                                          = $zabbix::params::server_startodbcpollers,
   $startpollersunreachable                                                    = $zabbix::params::server_startpollersunreachable,
   Integer[1, 1000] $startpreprocessors                                        = $zabbix::params::server_startpreprocessors,
   $starttrappers                                                              = $zabbix::params::server_starttrappers,
@@ -300,6 +308,7 @@ class zabbix (
   $cachesize                                                                  = $zabbix::params::server_cachesize,
   $cacheupdatefrequency                                                       = $zabbix::params::server_cacheupdatefrequency,
   $startdbsyncers                                                             = $zabbix::params::server_startdbsyncers,
+  Array[String[1]] $smsdevices                                                = $zabbix::params::server_smsdevices,
   $historycachesize                                                           = $zabbix::params::server_historycachesize,
   Zabbix::Historyics $historyindexcachesize                                   = $zabbix::params::server_historyindexcachesize,
   $trendcachesize                                                             = $zabbix::params::server_trendcachesize,
@@ -364,6 +373,7 @@ class zabbix (
     apache_listenport_ssl                    => $apache_listenport_ssl,
     zabbix_api_user                          => $zabbix_api_user,
     zabbix_api_pass                          => $zabbix_api_pass,
+    zabbix_api_access                        => $zabbix_api_access,
     database_host                            => $database_host,
     database_name                            => $database_name,
     database_schema                          => $database_schema,
@@ -399,6 +409,7 @@ class zabbix (
     zabbix_version            => $zabbix_version,
     zabbix_package_state      => $zabbix_package_state,
     manage_firewall           => $manage_firewall,
+    manage_php                => $manage_php,
     manage_repo               => $manage_repo,
     manage_database           => $manage_database,
     manage_service            => $manage_service,
@@ -418,6 +429,7 @@ class zabbix (
     database_port             => $database_port,
     database_tlsconnect       => $database_tlsconnect,
     database_tlscafile        => $database_tlscafile,
+    smsdevices                => $smsdevices,
     startpollers              => $startpollers,
     startipmipollers          => $startipmipollers,
     startpollersunreachable   => $startpollersunreachable,

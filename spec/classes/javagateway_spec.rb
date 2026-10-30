@@ -7,7 +7,7 @@ describe 'zabbix::javagateway' do
     'rspec.puppet.com'
   end
 
-  on_supported_os(baseline_os_hash).each do |os, facts|
+  on_supported_os.each do |os, facts|
     next if facts[:os]['name'] == 'windows'
 
     context "on #{os}" do
@@ -26,16 +26,19 @@ describe 'zabbix::javagateway' do
         it { is_expected.to contain_service('zabbix-java-gateway').with_ensure('running') }
         it { is_expected.to contain_service('zabbix-java-gateway').with_enable('true') }
         it { is_expected.to contain_service('zabbix-java-gateway').with_require(['Package[zabbix-java-gateway]', 'File[/etc/zabbix/zabbix_java_gateway.conf]']) }
+
+        it { is_expected.to contain_apt__key('zabbix-A1848F5') }          if facts[:os]['family'] == 'Debian'
+        it { is_expected.to contain_apt__key('zabbix-FBABD5F') }          if facts[:os]['family'] == 'Debian'
       end
 
       context 'when declaring manage_repo is true' do
         let :params do
           {
-            manage_repo: true
+            manage_repo: true,
           }
         end
 
-        case facts[:osfamily]
+        case facts[:os]['family']
         when 'Archlinux'
           it { is_expected.not_to compile }
         when 'RedHat'
@@ -54,7 +57,7 @@ describe 'zabbix::javagateway' do
       context 'when declaring manage_firewall is true' do
         let(:params) do
           {
-            manage_firewall: true
+            manage_firewall: true,
           }
         end
 
@@ -64,7 +67,7 @@ describe 'zabbix::javagateway' do
       context 'when declaring manage_firewall is false' do
         let(:params) do
           {
-            manage_firewall: false
+            manage_firewall: false,
           }
         end
 
@@ -78,7 +81,7 @@ describe 'zabbix::javagateway' do
             listenport: '10052',
             pidfile: '/var/run/zabbix/zabbix_java.pid',
             startpollers: '5',
-            timeout: '15'
+            timeout: '15',
           }
         end
 

@@ -64,24 +64,24 @@
 #   the zabbix_server and zabbix_web parameter.
 # @author Werner Dijkerman ikben@werner-dijkerman.nl
 class zabbix::database (
-  $zabbix_type                     = 'server',
-  $zabbix_web                      = $zabbix::params::zabbix_web,
-  $zabbix_web_ip                   = $zabbix::params::zabbix_web_ip,
-  $zabbix_server                   = $zabbix::params::zabbix_server,
-  $zabbix_server_ip                = $zabbix::params::zabbix_server_ip,
-  $zabbix_proxy                    = $zabbix::params::zabbix_proxy,
-  $zabbix_proxy_ip                 = $zabbix::params::zabbix_proxy_ip,
-  $manage_database                 = $zabbix::params::manage_database,
-  Zabbix::Databases $database_type = $zabbix::params::database_type,
-  $database_schema_path            = $zabbix::params::database_schema_path,
-  $database_name                   = $zabbix::params::server_database_name,
-  $database_user                   = $zabbix::params::server_database_user,
-  $database_password               = $zabbix::params::server_database_password,
-  $database_host                   = $zabbix::params::server_database_host,
-  $database_host_ip                = $zabbix::params::server_database_host_ip,
-  $database_charset                = $zabbix::params::server_database_charset,
-  $database_collate                = $zabbix::params::server_database_collate,
-  Optional[String[1]] $database_tablespace = $zabbix::params::server_database_tablespace,
+  $zabbix_type                                          = 'server',
+  $zabbix_web                                           = $zabbix::params::zabbix_web,
+  $zabbix_web_ip                                        = $zabbix::params::zabbix_web_ip,
+  $zabbix_server                                        = $zabbix::params::zabbix_server,
+  $zabbix_server_ip                                     = $zabbix::params::zabbix_server_ip,
+  $zabbix_proxy                                         = $zabbix::params::zabbix_proxy,
+  $zabbix_proxy_ip                                      = $zabbix::params::zabbix_proxy_ip,
+  $manage_database                                      = $zabbix::params::manage_database,
+  Zabbix::Databases $database_type                      = $zabbix::params::database_type,
+  $database_schema_path                                 = $zabbix::params::database_schema_path,
+  $database_name                                        = $zabbix::params::server_database_name,
+  $database_user                                        = $zabbix::params::server_database_user,
+  Variant[Sensitive[String], String] $database_password = $zabbix::params::server_database_password,
+  $database_host                                        = $zabbix::params::server_database_host,
+  $database_host_ip                                     = $zabbix::params::server_database_host_ip,
+  $database_charset                                     = $zabbix::params::server_database_charset,
+  $database_collate                                     = $zabbix::params::server_database_collate,
+  Optional[String[1]] $database_tablespace              = $zabbix::params::server_database_tablespace,
 ) inherits zabbix::params {
   # So lets create the databases and load all files. This can only be
   # happen when manage_database is set to true (Default).
@@ -94,12 +94,13 @@ class zabbix::database (
     case $database_type {
       'postgresql': {
         # This is the PostgreSQL part.
+
+        include postgresql::server
         # Create the postgres database.
         postgresql::server::db { $database_name:
           user       => $database_user,
           owner      => $database_user,
           password   => postgresql::postgresql_password($database_user, $database_password),
-          require    => Class['postgresql::server'],
           tablespace => $database_tablespace,
         }
 
@@ -145,6 +146,7 @@ class zabbix::database (
       }
       'mysql': {
         # This is the MySQL part.
+        include mysql::server
 
         # First we check what kind of zabbix component it is. We have to use clear names
         # as it may be confusing when you need to fill in the zabbix-proxy name into the
@@ -180,7 +182,7 @@ class zabbix::database (
         if $zabbix_web != $zabbix_server {
           mysql_user { "${database_user}@${zabbix_web}":
             ensure        => 'present',
-            password_hash => mysql_password($database_password),
+            password_hash => mysql::password($database_password),
           }
 
           # And this is the grant part. It will grant the users which is created earlier
@@ -195,7 +197,7 @@ class zabbix::database (
             require    => [
               Class['mysql::server'],
               Mysql::Db[$database_name],
-              Mysql_user["${database_user}@${zabbix_web}"]
+              Mysql_user["${database_user}@${zabbix_web}"],
             ],
           }
         } # END if $zabbix_web != $zabbix_server

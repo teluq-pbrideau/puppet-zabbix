@@ -7,7 +7,7 @@ describe 'zabbix::database' do
     'rspec.puppet.com'
   end
 
-  on_supported_os(baseline_os_hash).each do |os, facts|
+  on_supported_os.each do |os, facts|
     next if facts[:os]['name'] == 'windows'
 
     context "on #{os}" do
@@ -17,14 +17,12 @@ describe 'zabbix::database' do
 
       let :pre_condition do
         <<-EOS
-          include 'postgresql::server'
-          if $::osfamily == 'Gentoo' {
+          if $facts['os']['family'] == 'Gentoo' {
             # We don't need the package to be installed as its the same for the server.
             class { 'mysql::client':
               package_manage => false,
             }
           }
-          include 'mysql::server'
         EOS
       end
 
@@ -41,7 +39,7 @@ describe 'zabbix::database' do
             zabbix_type: 'server',
             zabbix_web_ip: '127.0.0.2',
             zabbix_server_ip: '127.0.0.1',
-            database_host_ip: '127.0.0.3'
+            database_host_ip: '127.0.0.3',
           }
         end
 
@@ -66,7 +64,7 @@ describe 'zabbix::database' do
             database_user: 'zabbix-server',
             zabbix_type: 'server',
             zabbix_web_ip: '127.0.0.1',
-            zabbix_server_ip: '127.0.0.1'
+            zabbix_server_ip: '127.0.0.1',
           }
         end
 
@@ -92,7 +90,7 @@ describe 'zabbix::database' do
             zabbix_type: 'server',
             zabbix_web_ip: '127.0.0.1',
             zabbix_server_ip: '127.0.0.1',
-            database_host_ip: '127.0.0.2'
+            database_host_ip: '127.0.0.2',
           }
         end
 
@@ -116,7 +114,7 @@ describe 'zabbix::database' do
             database_name: 'zabbix-proxy',
             database_user: 'zabbix-proxy',
             zabbix_type: 'proxy',
-            zabbix_proxy_ip: '127.0.0.1'
+            zabbix_proxy_ip: '127.0.0.1',
           }
         end
 
@@ -133,7 +131,7 @@ describe 'zabbix::database' do
             database_type: 'postgresql',
             database_name: 'zabbix-server',
             database_user: 'zabbix-server',
-            zabbix_type: 'server'
+            zabbix_type: 'server',
           }
         end
 
@@ -147,7 +145,7 @@ describe 'zabbix::database' do
             database_name: 'zabbix-server',
             database_user: 'zabbix-server',
             zabbix_type: 'server',
-            database_tablespace: 'zabbix'
+            database_tablespace: 'zabbix',
           }
         end
 
@@ -162,7 +160,7 @@ describe 'zabbix::database' do
             database_user: 'zabbix-server',
             zabbix_type: 'server',
             zabbix_web: 'node1.example.com',
-            zabbix_server: 'node0.example.com'
+            zabbix_server: 'node0.example.com',
           }
         end
 
@@ -185,7 +183,7 @@ describe 'zabbix::database' do
             database_user: 'zabbix-server',
             zabbix_type: 'server',
             zabbix_web: 'node0.example.com',
-            zabbix_server: 'node0.example.com'
+            zabbix_server: 'node0.example.com',
           }
         end
 
@@ -207,7 +205,7 @@ describe 'zabbix::database' do
             database_name: 'zabbix-proxy',
             database_user: 'zabbix-proxy',
             zabbix_type: 'proxy',
-            zabbix_proxy: 'node0.example.com'
+            zabbix_proxy: 'node0.example.com',
           }
         end
 
@@ -223,7 +221,7 @@ describe 'zabbix::database' do
             database_user: 'zabbix-server',
             zabbix_type: 'proxy',
             zabbix_web: 'node0.example.com',
-            zabbix_server: 'node1.example.com'
+            zabbix_server: 'node1.example.com',
           }
         end
 

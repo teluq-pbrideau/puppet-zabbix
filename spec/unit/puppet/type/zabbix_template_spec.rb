@@ -7,11 +7,11 @@ describe Puppet::Type.type(:zabbix_template) do
   let(:resource) do
     Puppet::Type.type(:zabbix_template).new(
       template_name: 'MyTemplate',
-      template_source: '/path/to/template.xml'
+      template_source: '/path/to/template.xml',
     )
   end
   let(:provider_class) { Puppet::Type.type(:zabbix_template).provider(:ruby) }
-  let(:provider) { stub('provider', class: provider_class, clear: nil) }
+  let(:provider) { instance_double(provider_class, class: provider_class, clear: nil) }
 
   describe 'when validating attributes' do
     %i[
@@ -51,13 +51,13 @@ describe Puppet::Type.type(:zabbix_template) do
     context 'when testing whether \'ensure\' is in sync' do
       it 'is insync if ensure is set to :present and the server template matches' do
         property.should = :present
-        property.expects(:template_xmls_match?).returns true
+        expect(property).to receive(:template_xmls_match?).and_return(true)
         expect(property).to be_safe_insync(:present)
       end
 
       it 'is not insync if ensure is set to :present but the source and server templates don\'t match' do
         property.should = :present
-        property.expects(:template_xmls_match?).returns false
+        expect(property).to receive(:template_xmls_match?).and_return(false)
         expect(property).not_to be_safe_insync(:present)
       end
     end
@@ -99,15 +99,16 @@ describe Puppet::Type.type(:zabbix_template) do
         <zabbix_export><version>3.2</version><date>2016-11-30T12:06:25Z</date><groups><group><name>Templates</name></group></groups><templates><template><template>MyTemplate</template><name>MyTemplate</name><description>foo</description><groups><group><name>Templates</name></group></groups><applications/><items/><discovery_rules/><httptests/><macros/><templates/><screens/></template></templates></zabbix_export>
       EOS
       it 'returns true when cleaned source xml matches cleaned server xml' do
-        provider_class.stubs(:new).returns(provider)
-        property.expects(:source_xml).returns(mock_source_xml)
-        provider.expects(:xml).returns(mock_provider_xml)
-        expect(property.template_xmls_match?).to eq true
+        allow(provider_class).to receive(:new).and_return(provider)
+        expect(property).to receive(:source_xml).and_return(mock_source_xml)
+        expect(provider).to receive(:xml).and_return(mock_provider_xml)
+        expect(property.template_xmls_match?).to be true
       end
     end
 
     describe '.source_xml' do
       include FakeFS::SpecHelpers
+
       it 'returns content of :template_source as string' do
         mock_template_source_file = '/path/to/template.xml'
         mock_file_content = <<-EOS
@@ -116,9 +117,7 @@ describe Puppet::Type.type(:zabbix_template) do
           content
         EOS
         FileUtils.mkdir_p '/path/to'
-        File.open(mock_template_source_file, 'w') do |f|
-          f.write mock_file_content
-        end
+        File.write(mock_template_source_file, mock_file_content)
         expect(property.source_xml).to eq mock_file_content
       end
     end

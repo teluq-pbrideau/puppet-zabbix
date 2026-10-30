@@ -7,13 +7,15 @@ describe 'zabbix::sender' do
     'agent.example.com'
   end
 
-  on_supported_os(baseline_os_hash).each do |os, facts|
+  on_supported_os.each do |os, facts|
     next if facts[:os]['name'] == 'windows'
 
     context "on #{os}" do
       let :facts do
         facts
       end
+
+      zabbix_version = ENV.fetch('BEAKER_FACTER_zabbix_version', '7.0')
 
       context 'with all defaults' do
         it { is_expected.to contain_class('zabbix::sender') }
@@ -27,14 +29,15 @@ describe 'zabbix::sender' do
       context 'when declaring manage_repo is true' do
         let :params do
           {
-            manage_repo: true
+            manage_repo: true,
+            zabbix_version: zabbix_version.to_s,
           }
         end
 
-        if %w[Archlinux Gentoo].include?(facts[:osfamily])
+        if %w[Archlinux Gentoo FreeBSD].include?(facts[:os]['family'])
           it { is_expected.not_to compile.with_all_deps }
         else
-          it { is_expected.to contain_class('zabbix::repo').with_zabbix_version('5.0') }
+          it { is_expected.to contain_class('zabbix::repo').with_zabbix_version(zabbix_version) }
           it { is_expected.to contain_package('zabbix-sender').with_require('Class[Zabbix::Repo]') }
         end
 

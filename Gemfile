@@ -4,12 +4,11 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 group :test do
-  gem 'voxpupuli-test', '~> 5.4',   :require => false
-  gem 'coveralls',                  :require => false
-  gem 'simplecov-console',          :require => false
-  gem 'puppet_metadata', '~> 2.0',  :require => false
+  gem 'voxpupuli-test', '~> 14.0',  :require => false
+  gem 'puppet_metadata', '~> 6.1',  :require => false
   gem 'fakefs',                     :require => false
   gem 'zabbixapi',                  :require => false
+  gem 'rexml',                      :require => false
 end
 
 group :development do
@@ -18,19 +17,15 @@ group :development do
 end
 
 group :system_tests do
-  gem 'voxpupuli-acceptance', '~> 1.0',  :require => false
+  gem 'voxpupuli-acceptance', '~> 4.4',  :require => false
 end
 
 group :release do
-  gem 'github_changelog_generator', '>= 1.16.1',  :require => false if RUBY_VERSION >= '2.5'
-  gem 'voxpupuli-release', '>= 1.2.0',            :require => false
-  gem 'puppet-strings', '>= 2.2',                 :require => false
+  gem 'voxpupuli-release', '~> 5.3',  :require => false
 end
 
 gem 'rake', :require => false
-gem 'facter', ENV['FACTER_GEM_VERSION'], :require => false, :groups => [:test]
 
-puppetversion = ENV['PUPPET_GEM_VERSION'] || '>= 6.0'
-gem 'puppet', puppetversion, :require => false, :groups => [:test]
+gem 'openvox', ENV.fetch('OPENVOX_GEM_VERSION', [">= 7", "< 9"]), :require => false, :groups => [:test]
 
 # vim: syntax=ruby

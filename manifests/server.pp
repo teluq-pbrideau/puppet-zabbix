@@ -8,7 +8,9 @@
 #   /bin:/usr/bin:/usr/local/sbin:/usr/local/bin
 #   you can use this parameter to add the database_path to the above mentioned
 #   path.
-# @param zabbix_version This is the zabbix version. Example: 5.0
+# @param zabbix_version This is the zabbix version. Example: 7.0
+# @param manage_php
+#   If set, version of PHP to install on systems where default one is not supported by Zabbix (actually only EL8).
 # @param manage_repo When true (default) this module will manage the Zabbix repository.
 # @param manage_database When true, it will configure the database and execute the sql scripts.
 # @param zabbix_package_state The state of the package that needs to be installed: present or latest.
@@ -50,6 +52,7 @@
 # @param startpollers Number of pre-forked instances of pollers.
 # @param startpreprocessors Number of pre-forked instances of preprocessing workers
 # @param startipmipollers Number of pre-forked instances of ipmi pollers.
+# @param startodbcpollers Number of pre-forked instances of ODBC pollers.
 # @param startpollersunreachable Number of pre-forked instances of pollers for unreachable hosts (including ipmi).
 # @param starttrappers Number of pre-forked instances of trappers.
 # @param startpingers Number of pre-forked instances of icmp pingers.
@@ -86,6 +89,7 @@
 #   if set to 0 then no limit is used at all. in this case you must know what you are doing!
 # @param cachesize Size of configuration cache, in bytes.
 # @param cacheupdatefrequency How often zabbix will perform update of configuration cache, in seconds.
+# @param smsdevices What devices to use for texting
 # @param startdbsyncers Number of pre-forked instances of db syncers.
 # @param historycachesize Size of history cache, in bytes.
 # @param historyindexcachesize Size of history index cache, in bytes.
@@ -130,6 +134,7 @@
 # @param proxydatafrequency How often zabbix server requests history data from a zabbix proxy in seconds.
 # @param allowroot Allow the server to run as 'root'.
 # @param include_dir You may include individual files or all files in a directory in the configuration file.
+# @param statsallowedip list of allowed ipadresses that can access the internal stats of zabbix server over network
 # @param loadmodulepath Full path to location of server modules.
 # @param loadmodule Module to load at server startup.
 # @param sslcertlocation_dir Location of SSL client certificate files for client authentication.
@@ -139,6 +144,8 @@
 # @param zabbix_user User the zabbix service will run as.
 # @param manage_startup_script If the init script should be managed by this module. Attention: This might cause problems with some config options of this module (e.g server_configfile_path)
 # @param socketdir
+# @param hanodename Node name identifier in HA setup
+# @param nodeaddress Connection details to the HA node, used to check if zabbix-web can talk to zabbix server
 #   IPC socket directory.
 #   Directory to store IPC sockets used by internal Zabbix services.
 # @example
@@ -170,6 +177,7 @@ class zabbix::server (
   $zabbix_version                                                             = $zabbix::params::zabbix_version,
   $zabbix_package_state                                                       = $zabbix::params::zabbix_package_state,
   Boolean $manage_firewall                                                    = $zabbix::params::manage_firewall,
+  Optional[String] $manage_php                                                = undef,
   Boolean $manage_repo                                                        = $zabbix::params::manage_repo,
   Boolean $manage_database                                                    = $zabbix::params::manage_database,
   Boolean $manage_service                                                     = $zabbix::params::manage_service,
@@ -191,7 +199,7 @@ class zabbix::server (
   $database_name                                                              = $zabbix::params::server_database_name,
   $database_schema                                                            = $zabbix::params::server_database_schema,
   $database_user                                                              = $zabbix::params::server_database_user,
-  $database_password                                                          = $zabbix::params::server_database_password,
+  Variant[Sensitive[String], String] $database_password                       = $zabbix::params::server_database_password,
   $database_socket                                                            = $zabbix::params::server_database_socket,
   Optional[Stdlib::Port::Unprivileged] $database_port                         = $zabbix::params::server_database_port,
   Optional[Enum['required', 'verify_ca', 'verify_full']] $database_tlsconnect = $zabbix::params::server_database_tlsconnect,
@@ -200,8 +208,10 @@ class zabbix::server (
   Optional[Stdlib::Absolutepath] $database_tlskeyfile                         = $zabbix::params::server_database_tlskeyfile,
   Optional[String[1]] $database_tlscipher                                     = $zabbix::params::server_database_tlscipher,
   Optional[String[1]] $database_tlscipher13                                   = $zabbix::params::server_database_tlscipher13,
+  Array[String[1]] $smsdevices                                                = $zabbix::params::server_smsdevices,
   $startpollers                                                               = $zabbix::params::server_startpollers,
   $startipmipollers                                                           = $zabbix::params::server_startipmipollers,
+  Integer[0, 1000] $startodbcpollers                                          = $zabbix::params::server_startodbcpollers,
   $startpollersunreachable                                                    = $zabbix::params::server_startpollersunreachable,
   Integer[1, 1000] $startpreprocessors                                        = $zabbix::params::server_startpreprocessors,
   $starttrappers                                                              = $zabbix::params::server_starttrappers,
@@ -266,26 +276,18 @@ class zabbix::server (
   $loadmodule                                                                 = $zabbix::params::server_loadmodule,
   $sslcertlocation_dir                                                        = $zabbix::params::server_sslcertlocation,
   $sslkeylocation_dir                                                         = $zabbix::params::server_sslkeylocation,
+  Optional[String[1]] $statsallowedip                                         = $zabbix::params::server_statsallowedip,
   Boolean $manage_selinux                                                     = $zabbix::params::manage_selinux,
   String $additional_service_params                                           = $zabbix::params::additional_service_params,
   Optional[String[1]] $zabbix_user                                            = $zabbix::params::server_zabbix_user,
   Boolean $manage_startup_script                                              = $zabbix::params::manage_startup_script,
   Optional[Stdlib::Absolutepath] $socketdir                                   = $zabbix::params::server_socketdir,
   Optional[Stdlib::HTTPUrl] $webserviceurl                                    = undef,
+  Optional[String[1]] $hanodename                                             = $zabbix::params::server_hanodename,
+  Optional[String[1]] $nodeaddress                                            = $zabbix::params::server_nodeaddress,
 ) inherits zabbix::params {
-  # zabbix server 5.2, 5.4 and 6.0 is not supported on RHEL 7.
-  # https://www.zabbix.com/documentation/current/manual/installation/install_from_packages/rhel_centos
-  if $facts['os']['family'] == 'RedHat' and versioncmp($zabbix_version, '5.2') >= 0 {
-    if versioncmp($facts['os']['release']['major'], '7') == 0 {
-      fail("${facts['os']['family']} ${$facts['os']['release']['major']} is not supported for zabbix::server (version ${$zabbix_version}) (yet)")
-    }
-  }
-
-  if $facts['os']['family'] == 'Debian' and versioncmp($facts['os']['release']['major'], '11') == 0 {
-    if versioncmp($zabbix_version, '5.2') == 0 {
-      fail('Zabbix 5.2 is not supported on Debian 11!')
-    }
-  }
+  # TODO: use EPP instead of ERB, as EPP can handle Sensitive natively
+  $database_password_unsensitive = $database_password.unwrap
 
   # Only include the repo class if it has not yet been included
   unless defined(Class['Zabbix::Repo']) {
@@ -295,12 +297,10 @@ class zabbix::server (
     }
   }
 
-  if versioncmp($zabbix_version, '5.4') >= 0 {
-    package { 'zabbix-sql-scripts':
-      ensure  => present,
-      require => Class['zabbix::repo'],
-      tag     => 'zabbix',
-    }
+  package { 'zabbix-sql-scripts':
+    ensure  => present,
+    require => Class['zabbix::repo'],
+    tag     => 'zabbix',
   }
 
   # Get the correct database_type. We need this for installing the
@@ -309,12 +309,7 @@ class zabbix::server (
     'postgresql' : {
       $db = 'pgsql'
 
-      # Zabbix version >= 5.4 uses zabbix-sql-scripts for initializing the database.
-      if versioncmp($zabbix_version, '5.4') >= 0 {
-        $zabbix_database_require = [Package["zabbix-server-${db}"], Package['zabbix-sql-scripts']]
-      } else {
-        $zabbix_database_require = Package["zabbix-server-${db}"]
-      }
+      $zabbix_database_require = [Package["zabbix-server-${db}"], Package['zabbix-sql-scripts']]
 
       if $manage_database {
         # Execute the postgresql scripts
@@ -335,12 +330,7 @@ class zabbix::server (
     'mysql' : {
       $db = 'mysql'
 
-      # Zabbix version >= 5.4 uses zabbix-sql-scripts for initializing the database.
-      if versioncmp($zabbix_version, '5.4') >= 0 {
-        $zabbix_database_require = [Package["zabbix-server-${db}"], Package['zabbix-sql-scripts']]
-      } else {
-        $zabbix_database_require = Package["zabbix-server-${db}"]
-      }
+      $zabbix_database_require = [Package["zabbix-server-${db}"], Package['zabbix-sql-scripts']]
 
       if $manage_database {
         # Execute the mysql scripts
@@ -363,10 +353,15 @@ class zabbix::server (
     }
   }
 
+  # If necessary, install correct PHP version
+  class { 'zabbix::php':
+    manage_php => $manage_php,
+  }
+
   # Installing the packages
   package { "zabbix-server-${db}":
     ensure  => $zabbix_package_state,
-    require => Class['zabbix::repo'],
+    require => [Class['zabbix::repo'], Class['zabbix::php']],
     tag     => 'zabbix',
   }
 
@@ -439,6 +434,7 @@ class zabbix::server (
   }
 
   # Configuring the zabbix-server configuration file
+  $content = template('zabbix/zabbix_server.conf.erb')
   file { $server_configfile_path:
     ensure  => file,
     owner   => $server_config_owner,
@@ -446,7 +442,11 @@ class zabbix::server (
     mode    => '0640',
     require => Package["zabbix-server-${db}"],
     replace => true,
-    content => template('zabbix/zabbix_server.conf.erb'),
+    content => if $database_password =~ Sensitive {
+      Sensitive($content)
+    } else {
+      $content
+    },
   }
 
   # Include dir for specific zabbix-server checks.
@@ -460,10 +460,10 @@ class zabbix::server (
   # Manage firewall
   if $manage_firewall {
     firewall { '151 zabbix-server':
-      dport  => $listenport,
-      proto  => 'tcp',
-      action => 'accept',
-      state  => [
+      dport => $listenport,
+      proto => 'tcp',
+      jump  => 'accept',
+      state => [
         'NEW',
         'RELATED',
         'ESTABLISHED',

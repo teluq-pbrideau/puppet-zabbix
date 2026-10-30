@@ -9,21 +9,23 @@
 #### Public Classes
 
 * [`zabbix`](#zabbix): This will install and configure the zabbix-server on a single host.
-* [`zabbix::agent`](#zabbixagent): This will install and configure the zabbix-agent deamon
-* [`zabbix::database`](#zabbixdatabase): This will install the correct database and one or more users for correct usage
-* [`zabbix::database::sqlite`](#zabbixdatabasesqlite): Class to handle sqlite database installations zabbix will automatically create a sqlite schema if one does not already exist.
-* [`zabbix::javagateway`](#zabbixjavagateway): This will install and configure the zabbix-agent deamon
-* [`zabbix::params`](#zabbixparams): This class manages zabbix server parameters
-* [`zabbix::proxy`](#zabbixproxy): This will install and configure the zabbix-proxy deamon
-* [`zabbix::repo`](#zabbixrepo): If enabled, this will install the repository used for installing zabbix
-* [`zabbix::resources::agent`](#zabbixresourcesagent): This will create resources into puppetdb for automatically configuring agent into zabbix front-end.
-* [`zabbix::resources::proxy`](#zabbixresourcesproxy): This will create resources into puppetdb for automatically configuring proxy agent into zabbix front-end.
-* [`zabbix::resources::web`](#zabbixresourcesweb): This will load all zabbix related items from the puppet database and uses the zabbixapi gem to add/configure hosts via the zabbix-api
-* [`zabbix::sender`](#zabbixsender): This will install and configure the zabbix-agent deamon
-* [`zabbix::server`](#zabbixserver): This will install and configure the zabbix-server deamon
-* [`zabbix::userparameter`](#zabbixuserparameter): This class can be used when you use hiera or The Foreman. With this tools you can't use and define. This make use of "create_resources".
-* [`zabbix::web`](#zabbixweb): This will install the zabbix-web package and install an virtual host.
-* [`zabbix::zapache`](#zabbixzapache): This will install and configure the zapache monitoring script Upstream: https://github.com/lorf/zapache
+* [`zabbix::agent`](#zabbix--agent): This will install and configure the zabbix-agent deamon
+* [`zabbix::database`](#zabbix--database): This will install the correct database and one or more users for correct usage
+* [`zabbix::database::sqlite`](#zabbix--database--sqlite): Class to handle sqlite database installations zabbix will automatically create a sqlite schema if one does not already exist.
+* [`zabbix::javagateway`](#zabbix--javagateway): This will install and configure the zabbix-agent deamon
+* [`zabbix::params`](#zabbix--params): This class manages zabbix server parameters
+* [`zabbix::php`](#zabbix--php): Install a version of PHP supported by Zabbix on system where the default one is too old
+* [`zabbix::proxy`](#zabbix--proxy): This will install and configure the zabbix-proxy deamon
+* [`zabbix::repo`](#zabbix--repo): If enabled, this will install the repository used for installing zabbix
+* [`zabbix::resources::agent`](#zabbix--resources--agent): This will create resources into puppetdb for automatically configuring agent into zabbix front-end.
+* [`zabbix::resources::proxy`](#zabbix--resources--proxy): This will create resources into puppetdb for automatically configuring proxy agent into zabbix front-end.
+* [`zabbix::resources::web`](#zabbix--resources--web): This will load all zabbix related items from the puppet database and uses the zabbixapi gem to add/configure hosts via the zabbix-api
+* [`zabbix::sender`](#zabbix--sender): This will install and configure the zabbix-agent deamon
+* [`zabbix::server`](#zabbix--server): This will install and configure the zabbix-server deamon
+* [`zabbix::userparameter`](#zabbix--userparameter): This class can be used when you use hiera or The Foreman. With this tools you can't use and define. This make use of "create_resources".
+* [`zabbix::web`](#zabbix--web): This will install the zabbix-web package and install an virtual host.
+* [`zabbix::zabbixapi`](#zabbix--zabbixapi): This will install the zabbixapi gem.
+* [`zabbix::zapache`](#zabbix--zapache): This will install and configure the zapache monitoring script Upstream: https://github.com/lorf/zapache
 
 #### Private Classes
 
@@ -32,26 +34,24 @@
 
 ### Defined types
 
-* [`zabbix::resources::template`](#zabbixresourcestemplate): This will create resources into puppetdb for automatically configuring agent into zabbix front-end.
-* [`zabbix::resources::userparameters`](#zabbixresourcesuserparameters): This will create resources into puppetdb for automatically configuring agent into zabbix front-end.
-* [`zabbix::startup`](#zabbixstartup): This manage the zabbix related service startup script.
-* [`zabbix::template`](#zabbixtemplate): This will upload an Zabbix Template (XML format)
-* [`zabbix::userparameters`](#zabbixuserparameters): This will install an userparameters file with keys for items that can be checked with zabbix.
+* [`zabbix::resources::template`](#zabbix--resources--template): This will create resources into puppetdb for automatically configuring agent into zabbix front-end.
+* [`zabbix::resources::userparameters`](#zabbix--resources--userparameters): This will create resources into puppetdb for automatically configuring agent into zabbix front-end.
+* [`zabbix::startup`](#zabbix--startup): This manage the zabbix related service startup script.
+* [`zabbix::template`](#zabbix--template): This will upload an Zabbix Template (XML format)
+* [`zabbix::userparameters`](#zabbix--userparameters): This will install an userparameters file with keys for items that can be checked with zabbix.
 
 ### Resource types
 
-* [`zabbix_application`](#zabbix_application): %q(Manage zabbix applications      zabbix_application{"app1":       ensure   => present,       template => 'template1',     }  It Raise excep
-* [`zabbix_host`](#zabbix_host): FQDN of the machine.
+* [`zabbix_host`](#zabbix_host): Manage zabbix hosts
 * [`zabbix_hostgroup`](#zabbix_hostgroup): Manage zabbix hostgroups
-* [`zabbix_proxy`](#zabbix_proxy): FQDN of the proxy.
-* [`zabbix_template`](#zabbix_template): The name of template.
-* [`zabbix_template_host`](#zabbix_template_host): Link or Unlink template to host. Only for Zabbix < 6.0! Example. Name should be in the format of "template_name@hostname"  zabbix_template_ho
-* [`zabbix_userparameters`](#zabbix_userparameters): An unique name for this define.
+* [`zabbix_proxy`](#zabbix_proxy): Manage zabbix proxies
+* [`zabbix_template`](#zabbix_template): Manage zabbix templates
+* [`zabbix_userparameters`](#zabbix_userparameters): Manage zabbix user templates
 
 ### Data types
 
-* [`Zabbix::Databases`](#zabbixdatabases): Type for supported databases by the zabbix module
-* [`Zabbix::Historyics`](#zabbixhistoryics)
+* [`Zabbix::Databases`](#Zabbix--Databases): Type for supported databases by the zabbix module
+* [`Zabbix::Historyics`](#Zabbix--Historyics): Type for size values in bytes (also allows k/K and m/M as appendix)
 
 ## Classes
 
@@ -84,138 +84,142 @@ class { 'zabbix':
 
 The following parameters are available in the `zabbix` class:
 
-* [`zabbix_url`](#zabbix_url)
-* [`zabbix_version`](#zabbix_version)
-* [`zabbix_timezone`](#zabbix_timezone)
-* [`zabbix_template_dir`](#zabbix_template_dir)
-* [`zabbix_package_state`](#zabbix_package_state)
-* [`zabbix_server`](#zabbix_server)
-* [`zabbix_server_ip`](#zabbix_server_ip)
-* [`zabbix_web`](#zabbix_web)
-* [`zabbix_web_ip`](#zabbix_web_ip)
-* [`database_type`](#database_type)
-* [`database_path`](#database_path)
-* [`manage_database`](#manage_database)
-* [`manage_repo`](#manage_repo)
-* [`manage_firewall`](#manage_firewall)
-* [`manage_service`](#manage_service)
-* [`manage_resources`](#manage_resources)
-* [`manage_vhost`](#manage_vhost)
-* [`default_vhost`](#default_vhost)
-* [`apache_use_ssl`](#apache_use_ssl)
-* [`apache_ssl_cert`](#apache_ssl_cert)
-* [`apache_ssl_key`](#apache_ssl_key)
-* [`apache_ssl_cipher`](#apache_ssl_cipher)
-* [`apache_ssl_chain`](#apache_ssl_chain)
-* [`apache_listen_ip`](#apache_listen_ip)
-* [`apache_listenport`](#apache_listenport)
-* [`apache_listenport_ssl`](#apache_listenport_ssl)
-* [`apache_php_max_execution_time`](#apache_php_max_execution_time)
-* [`apache_php_memory_limit`](#apache_php_memory_limit)
-* [`apache_php_post_max_size`](#apache_php_post_max_size)
-* [`apache_php_upload_max_filesize`](#apache_php_upload_max_filesize)
-* [`apache_php_max_input_time`](#apache_php_max_input_time)
-* [`apache_php_always_populate_raw_post_data`](#apache_php_always_populate_raw_post_data)
-* [`ldap_cacert`](#ldap_cacert)
-* [`ldap_clientcert`](#ldap_clientcert)
-* [`ldap_clientkey`](#ldap_clientkey)
-* [`ldap_reqcert`](#ldap_reqcert)
-* [`zabbix_api_user`](#zabbix_api_user)
-* [`zabbix_api_pass`](#zabbix_api_pass)
-* [`listenport`](#listenport)
-* [`sourceip`](#sourceip)
-* [`logfile`](#logfile)
-* [`logfilesize`](#logfilesize)
-* [`logtype`](#logtype)
-* [`debuglevel`](#debuglevel)
-* [`pidfile`](#pidfile)
-* [`database_host`](#database_host)
-* [`database_name`](#database_name)
-* [`database_schema`](#database_schema)
-* [`database_double_ieee754`](#database_double_ieee754)
-* [`database_user`](#database_user)
-* [`database_password`](#database_password)
-* [`database_socket`](#database_socket)
-* [`database_port`](#database_port)
-* [`database_charset`](#database_charset)
-* [`database_collate`](#database_collate)
-* [`database_tablespace`](#database_tablespace)
-* [`database_tlsconnect`](#database_tlsconnect)
-* [`database_tlscafile`](#database_tlscafile)
-* [`startpollers`](#startpollers)
-* [`startpreprocessors`](#startpreprocessors)
-* [`startipmipollers`](#startipmipollers)
-* [`startpollersunreachable`](#startpollersunreachable)
-* [`starttrappers`](#starttrappers)
-* [`startpingers`](#startpingers)
-* [`startalerters`](#startalerters)
-* [`startdiscoverers`](#startdiscoverers)
-* [`startescalators`](#startescalators)
-* [`starthttppollers`](#starthttppollers)
-* [`starttimers`](#starttimers)
-* [`javagateway`](#javagateway)
-* [`javagatewayport`](#javagatewayport)
-* [`startjavapollers`](#startjavapollers)
-* [`startlldprocessors`](#startlldprocessors)
-* [`startvmwarecollectors`](#startvmwarecollectors)
-* [`vaultdbpath`](#vaultdbpath)
-* [`vaulttoken`](#vaulttoken)
-* [`vaulturl`](#vaulturl)
-* [`vmwarefrequency`](#vmwarefrequency)
-* [`vmwarecachesize`](#vmwarecachesize)
-* [`vmwaretimeout`](#vmwaretimeout)
-* [`snmptrapperfile`](#snmptrapperfile)
-* [`startsnmptrapper`](#startsnmptrapper)
-* [`listenip`](#listenip)
-* [`housekeepingfrequency`](#housekeepingfrequency)
-* [`maxhousekeeperdelete`](#maxhousekeeperdelete)
-* [`cachesize`](#cachesize)
-* [`cacheupdatefrequency`](#cacheupdatefrequency)
-* [`startdbsyncers`](#startdbsyncers)
-* [`historycachesize`](#historycachesize)
-* [`historyindexcachesize`](#historyindexcachesize)
-* [`trendcachesize`](#trendcachesize)
-* [`valuecachesize`](#valuecachesize)
-* [`timeout`](#timeout)
-* [`tlscafile`](#tlscafile)
-* [`tlscertfile`](#tlscertfile)
-* [`tlscrlfile`](#tlscrlfile)
-* [`tlskeyfile`](#tlskeyfile)
-* [`tlscipherall`](#tlscipherall)
-* [`tlscipherall13`](#tlscipherall13)
-* [`tlsciphercert`](#tlsciphercert)
-* [`tlsciphercert13`](#tlsciphercert13)
-* [`tlscipherpsk`](#tlscipherpsk)
-* [`tlscipherpsk13`](#tlscipherpsk13)
-* [`trappertimeout`](#trappertimeout)
-* [`unreachableperiod`](#unreachableperiod)
-* [`unavailabledelay`](#unavailabledelay)
-* [`unreachabledelay`](#unreachabledelay)
-* [`alertscriptspath`](#alertscriptspath)
-* [`externalscripts`](#externalscripts)
-* [`fpinglocation`](#fpinglocation)
-* [`fping6location`](#fping6location)
-* [`sshkeylocation`](#sshkeylocation)
-* [`logslowqueries`](#logslowqueries)
-* [`tmpdir`](#tmpdir)
-* [`startproxypollers`](#startproxypollers)
-* [`proxyconfigfrequency`](#proxyconfigfrequency)
-* [`proxydatafrequency`](#proxydatafrequency)
-* [`allowroot`](#allowroot)
-* [`include_dir`](#include_dir)
-* [`loadmodulepath`](#loadmodulepath)
-* [`loadmodule`](#loadmodule)
-* [`socketdir`](#socketdir)
-* [`manage_selinux`](#manage_selinux)
-* [`additional_service_params`](#additional_service_params)
-* [`zabbix_user`](#zabbix_user)
-* [`zabbix_server_name`](#zabbix_server_name)
-* [`saml_sp_key`](#saml_sp_key)
-* [`saml_sp_cert`](#saml_sp_cert)
-* [`saml_idp_cert`](#saml_idp_cert)
-* [`saml_settings`](#saml_settings)
+* [`zabbix_url`](#-zabbix--zabbix_url)
+* [`zabbix_version`](#-zabbix--zabbix_version)
+* [`zabbix_timezone`](#-zabbix--zabbix_timezone)
+* [`zabbix_template_dir`](#-zabbix--zabbix_template_dir)
+* [`zabbix_package_state`](#-zabbix--zabbix_package_state)
+* [`zabbix_server`](#-zabbix--zabbix_server)
+* [`zabbix_server_ip`](#-zabbix--zabbix_server_ip)
+* [`zabbix_web`](#-zabbix--zabbix_web)
+* [`zabbix_web_ip`](#-zabbix--zabbix_web_ip)
+* [`database_type`](#-zabbix--database_type)
+* [`database_path`](#-zabbix--database_path)
+* [`manage_database`](#-zabbix--manage_database)
+* [`manage_php`](#-zabbix--manage_php)
+* [`manage_repo`](#-zabbix--manage_repo)
+* [`manage_firewall`](#-zabbix--manage_firewall)
+* [`manage_service`](#-zabbix--manage_service)
+* [`manage_resources`](#-zabbix--manage_resources)
+* [`manage_vhost`](#-zabbix--manage_vhost)
+* [`default_vhost`](#-zabbix--default_vhost)
+* [`apache_use_ssl`](#-zabbix--apache_use_ssl)
+* [`apache_ssl_cert`](#-zabbix--apache_ssl_cert)
+* [`apache_ssl_key`](#-zabbix--apache_ssl_key)
+* [`apache_ssl_cipher`](#-zabbix--apache_ssl_cipher)
+* [`apache_ssl_chain`](#-zabbix--apache_ssl_chain)
+* [`apache_listen_ip`](#-zabbix--apache_listen_ip)
+* [`apache_listenport`](#-zabbix--apache_listenport)
+* [`apache_listenport_ssl`](#-zabbix--apache_listenport_ssl)
+* [`apache_php_max_execution_time`](#-zabbix--apache_php_max_execution_time)
+* [`apache_php_memory_limit`](#-zabbix--apache_php_memory_limit)
+* [`apache_php_post_max_size`](#-zabbix--apache_php_post_max_size)
+* [`apache_php_upload_max_filesize`](#-zabbix--apache_php_upload_max_filesize)
+* [`apache_php_max_input_time`](#-zabbix--apache_php_max_input_time)
+* [`apache_php_always_populate_raw_post_data`](#-zabbix--apache_php_always_populate_raw_post_data)
+* [`ldap_cacert`](#-zabbix--ldap_cacert)
+* [`ldap_clientcert`](#-zabbix--ldap_clientcert)
+* [`ldap_clientkey`](#-zabbix--ldap_clientkey)
+* [`ldap_reqcert`](#-zabbix--ldap_reqcert)
+* [`zabbix_api_user`](#-zabbix--zabbix_api_user)
+* [`zabbix_api_pass`](#-zabbix--zabbix_api_pass)
+* [`zabbix_api_access`](#-zabbix--zabbix_api_access)
+* [`listenport`](#-zabbix--listenport)
+* [`sourceip`](#-zabbix--sourceip)
+* [`logfile`](#-zabbix--logfile)
+* [`logfilesize`](#-zabbix--logfilesize)
+* [`logtype`](#-zabbix--logtype)
+* [`debuglevel`](#-zabbix--debuglevel)
+* [`pidfile`](#-zabbix--pidfile)
+* [`database_host`](#-zabbix--database_host)
+* [`database_name`](#-zabbix--database_name)
+* [`database_schema`](#-zabbix--database_schema)
+* [`database_double_ieee754`](#-zabbix--database_double_ieee754)
+* [`database_user`](#-zabbix--database_user)
+* [`database_password`](#-zabbix--database_password)
+* [`database_socket`](#-zabbix--database_socket)
+* [`database_port`](#-zabbix--database_port)
+* [`database_charset`](#-zabbix--database_charset)
+* [`database_collate`](#-zabbix--database_collate)
+* [`database_tablespace`](#-zabbix--database_tablespace)
+* [`database_tlsconnect`](#-zabbix--database_tlsconnect)
+* [`database_tlscafile`](#-zabbix--database_tlscafile)
+* [`startpollers`](#-zabbix--startpollers)
+* [`startpreprocessors`](#-zabbix--startpreprocessors)
+* [`startipmipollers`](#-zabbix--startipmipollers)
+* [`startodbcpollers`](#-zabbix--startodbcpollers)
+* [`startpollersunreachable`](#-zabbix--startpollersunreachable)
+* [`starttrappers`](#-zabbix--starttrappers)
+* [`startpingers`](#-zabbix--startpingers)
+* [`startalerters`](#-zabbix--startalerters)
+* [`startdiscoverers`](#-zabbix--startdiscoverers)
+* [`startescalators`](#-zabbix--startescalators)
+* [`starthttppollers`](#-zabbix--starthttppollers)
+* [`starttimers`](#-zabbix--starttimers)
+* [`javagateway`](#-zabbix--javagateway)
+* [`javagatewayport`](#-zabbix--javagatewayport)
+* [`smsdevices`](#-zabbix--smsdevices)
+* [`startjavapollers`](#-zabbix--startjavapollers)
+* [`startlldprocessors`](#-zabbix--startlldprocessors)
+* [`startvmwarecollectors`](#-zabbix--startvmwarecollectors)
+* [`vaultdbpath`](#-zabbix--vaultdbpath)
+* [`vaulttoken`](#-zabbix--vaulttoken)
+* [`vaulturl`](#-zabbix--vaulturl)
+* [`vmwarefrequency`](#-zabbix--vmwarefrequency)
+* [`vmwarecachesize`](#-zabbix--vmwarecachesize)
+* [`vmwaretimeout`](#-zabbix--vmwaretimeout)
+* [`snmptrapperfile`](#-zabbix--snmptrapperfile)
+* [`startsnmptrapper`](#-zabbix--startsnmptrapper)
+* [`listenip`](#-zabbix--listenip)
+* [`housekeepingfrequency`](#-zabbix--housekeepingfrequency)
+* [`maxhousekeeperdelete`](#-zabbix--maxhousekeeperdelete)
+* [`cachesize`](#-zabbix--cachesize)
+* [`cacheupdatefrequency`](#-zabbix--cacheupdatefrequency)
+* [`startdbsyncers`](#-zabbix--startdbsyncers)
+* [`historycachesize`](#-zabbix--historycachesize)
+* [`historyindexcachesize`](#-zabbix--historyindexcachesize)
+* [`trendcachesize`](#-zabbix--trendcachesize)
+* [`valuecachesize`](#-zabbix--valuecachesize)
+* [`timeout`](#-zabbix--timeout)
+* [`tlscafile`](#-zabbix--tlscafile)
+* [`tlscertfile`](#-zabbix--tlscertfile)
+* [`tlscrlfile`](#-zabbix--tlscrlfile)
+* [`tlskeyfile`](#-zabbix--tlskeyfile)
+* [`tlscipherall`](#-zabbix--tlscipherall)
+* [`tlscipherall13`](#-zabbix--tlscipherall13)
+* [`tlsciphercert`](#-zabbix--tlsciphercert)
+* [`tlsciphercert13`](#-zabbix--tlsciphercert13)
+* [`tlscipherpsk`](#-zabbix--tlscipherpsk)
+* [`tlscipherpsk13`](#-zabbix--tlscipherpsk13)
+* [`trappertimeout`](#-zabbix--trappertimeout)
+* [`unreachableperiod`](#-zabbix--unreachableperiod)
+* [`unavailabledelay`](#-zabbix--unavailabledelay)
+* [`unreachabledelay`](#-zabbix--unreachabledelay)
+* [`alertscriptspath`](#-zabbix--alertscriptspath)
+* [`externalscripts`](#-zabbix--externalscripts)
+* [`fpinglocation`](#-zabbix--fpinglocation)
+* [`fping6location`](#-zabbix--fping6location)
+* [`sshkeylocation`](#-zabbix--sshkeylocation)
+* [`logslowqueries`](#-zabbix--logslowqueries)
+* [`tmpdir`](#-zabbix--tmpdir)
+* [`startproxypollers`](#-zabbix--startproxypollers)
+* [`proxyconfigfrequency`](#-zabbix--proxyconfigfrequency)
+* [`proxydatafrequency`](#-zabbix--proxydatafrequency)
+* [`allowroot`](#-zabbix--allowroot)
+* [`include_dir`](#-zabbix--include_dir)
+* [`loadmodulepath`](#-zabbix--loadmodulepath)
+* [`loadmodule`](#-zabbix--loadmodule)
+* [`socketdir`](#-zabbix--socketdir)
+* [`manage_selinux`](#-zabbix--manage_selinux)
+* [`additional_service_params`](#-zabbix--additional_service_params)
+* [`zabbix_user`](#-zabbix--zabbix_user)
+* [`zabbix_server_name`](#-zabbix--zabbix_server_name)
+* [`saml_sp_key`](#-zabbix--saml_sp_key)
+* [`saml_sp_cert`](#-zabbix--saml_sp_cert)
+* [`saml_idp_cert`](#-zabbix--saml_idp_cert)
+* [`saml_settings`](#-zabbix--saml_settings)
 
-##### <a name="zabbix_url"></a>`zabbix_url`
+##### <a name="-zabbix--zabbix_url"></a>`zabbix_url`
 
 Data type: `Any`
 
@@ -225,7 +229,7 @@ Example: zabbix.example.com
 
 Default value: `''`
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix--zabbix_version"></a>`zabbix_version`
 
 Data type: `Any`
 
@@ -233,7 +237,7 @@ This is the zabbix version.
 
 Default value: `$zabbix::params::zabbix_version`
 
-##### <a name="zabbix_timezone"></a>`zabbix_timezone`
+##### <a name="-zabbix--zabbix_timezone"></a>`zabbix_timezone`
 
 Data type: `Any`
 
@@ -241,7 +245,7 @@ The current timezone for vhost configuration needed for the php timezone. Exampl
 
 Default value: `$zabbix::params::zabbix_timezone`
 
-##### <a name="zabbix_template_dir"></a>`zabbix_template_dir`
+##### <a name="-zabbix--zabbix_template_dir"></a>`zabbix_template_dir`
 
 Data type: `Any`
 
@@ -249,7 +253,7 @@ The directory where all templates are stored before uploading via API
 
 Default value: `$zabbix::params::zabbix_template_dir`
 
-##### <a name="zabbix_package_state"></a>`zabbix_package_state`
+##### <a name="-zabbix--zabbix_package_state"></a>`zabbix_package_state`
 
 Data type: `Any`
 
@@ -257,7 +261,7 @@ The state of the package that needs to be installed: present or latest.
 
 Default value: `$zabbix::params::zabbix_package_state`
 
-##### <a name="zabbix_server"></a>`zabbix_server`
+##### <a name="-zabbix--zabbix_server"></a>`zabbix_server`
 
 Data type: `Any`
 
@@ -266,7 +270,7 @@ is used when database_type = mysql. Default: localhost
 
 Default value: `$zabbix::params::zabbix_server`
 
-##### <a name="zabbix_server_ip"></a>`zabbix_server_ip`
+##### <a name="-zabbix--zabbix_server_ip"></a>`zabbix_server_ip`
 
 Data type: `Any`
 
@@ -276,7 +280,7 @@ This parameter is used when database_type = postgresql. Default:
 
 Default value: `$zabbix::params::zabbix_server_ip`
 
-##### <a name="zabbix_web"></a>`zabbix_web`
+##### <a name="-zabbix--zabbix_web"></a>`zabbix_web`
 
 Data type: `Any`
 
@@ -286,7 +290,7 @@ mysql. When single node: localhost
 
 Default value: `$zabbix::params::zabbix_web`
 
-##### <a name="zabbix_web_ip"></a>`zabbix_web_ip`
+##### <a name="-zabbix--zabbix_web_ip"></a>`zabbix_web_ip`
 
 Data type: `Any`
 
@@ -296,7 +300,7 @@ postgresql. When single node: 127.0.0.1
 
 Default value: `$zabbix::params::zabbix_web_ip`
 
-##### <a name="database_type"></a>`database_type`
+##### <a name="-zabbix--database_type"></a>`database_type`
 
 Data type: `Zabbix::Databases`
 
@@ -306,7 +310,7 @@ Type of database. Can use the following 2 databases:
 
 Default value: `$zabbix::params::database_type`
 
-##### <a name="database_path"></a>`database_path`
+##### <a name="-zabbix--database_path"></a>`database_path`
 
 Data type: `Any`
 
@@ -317,7 +321,7 @@ path.
 
 Default value: `$zabbix::params::database_path`
 
-##### <a name="manage_database"></a>`manage_database`
+##### <a name="-zabbix--manage_database"></a>`manage_database`
 
 Data type: `Any`
 
@@ -325,7 +329,15 @@ When true, it will configure the database and execute the sql scripts.
 
 Default value: `$zabbix::params::manage_database`
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-zabbix--manage_php"></a>`manage_php`
+
+Data type: `Optional[String]`
+
+If set, version of PHP to install on systems where default one is not supported by Zabbix (actually only EL8).
+
+Default value: `undef`
+
+##### <a name="-zabbix--manage_repo"></a>`manage_repo`
 
 Data type: `Any`
 
@@ -333,7 +345,7 @@ When true (default) this module will manage the Zabbix repository.
 
 Default value: `$zabbix::params::manage_repo`
 
-##### <a name="manage_firewall"></a>`manage_firewall`
+##### <a name="-zabbix--manage_firewall"></a>`manage_firewall`
 
 Data type: `Any`
 
@@ -341,7 +353,7 @@ When true, it will create iptables rules.
 
 Default value: `$zabbix::params::manage_firewall`
 
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-zabbix--manage_service"></a>`manage_service`
 
 Data type: `Any`
 
@@ -350,7 +362,7 @@ When false, it does not care about service
 
 Default value: `$zabbix::params::manage_service`
 
-##### <a name="manage_resources"></a>`manage_resources`
+##### <a name="-zabbix--manage_resources"></a>`manage_resources`
 
 Data type: `Any`
 
@@ -361,7 +373,7 @@ enabled.
 
 Default value: `$zabbix::params::manage_resources`
 
-##### <a name="manage_vhost"></a>`manage_vhost`
+##### <a name="-zabbix--manage_vhost"></a>`manage_vhost`
 
 Data type: `Any`
 
@@ -369,7 +381,7 @@ When true, it will create an vhost for apache. The parameter zabbix_url has to b
 
 Default value: `$zabbix::params::manage_vhost`
 
-##### <a name="default_vhost"></a>`default_vhost`
+##### <a name="-zabbix--default_vhost"></a>`default_vhost`
 
 Data type: `Any`
 
@@ -378,7 +390,7 @@ with marking zabbix vhost as default one, when false priority is set to 25
 
 Default value: `$zabbix::params::default_vhost`
 
-##### <a name="apache_use_ssl"></a>`apache_use_ssl`
+##### <a name="-zabbix--apache_use_ssl"></a>`apache_use_ssl`
 
 Data type: `Any`
 
@@ -387,7 +399,7 @@ nonssl to ssl vhost.
 
 Default value: `$zabbix::params::apache_use_ssl`
 
-##### <a name="apache_ssl_cert"></a>`apache_ssl_cert`
+##### <a name="-zabbix--apache_ssl_cert"></a>`apache_ssl_cert`
 
 Data type: `Any`
 
@@ -396,7 +408,7 @@ file is present on the system, this module will not install this file.
 
 Default value: `$zabbix::params::apache_ssl_cert`
 
-##### <a name="apache_ssl_key"></a>`apache_ssl_key`
+##### <a name="-zabbix--apache_ssl_key"></a>`apache_ssl_key`
 
 Data type: `Any`
 
@@ -405,7 +417,7 @@ present on the system, this module will not install this file.
 
 Default value: `$zabbix::params::apache_ssl_key`
 
-##### <a name="apache_ssl_cipher"></a>`apache_ssl_cipher`
+##### <a name="-zabbix--apache_ssl_cipher"></a>`apache_ssl_cipher`
 
 Data type: `Any`
 
@@ -414,7 +426,7 @@ https://wiki.mozilla.org/Security/Server_Side_TLS
 
 Default value: `$zabbix::params::apache_ssl_cipher`
 
-##### <a name="apache_ssl_chain"></a>`apache_ssl_chain`
+##### <a name="-zabbix--apache_ssl_chain"></a>`apache_ssl_chain`
 
 Data type: `Any`
 
@@ -422,7 +434,7 @@ The ssl chain file.
 
 Default value: `$zabbix::params::apache_ssl_chain`
 
-##### <a name="apache_listen_ip"></a>`apache_listen_ip`
+##### <a name="-zabbix--apache_listen_ip"></a>`apache_listen_ip`
 
 Data type: `Any`
 
@@ -430,23 +442,23 @@ The IP the apache service should listen on.
 
 Default value: `$zabbix::params::apache_listen_ip`
 
-##### <a name="apache_listenport"></a>`apache_listenport`
+##### <a name="-zabbix--apache_listenport"></a>`apache_listenport`
 
-Data type: `Any`
+Data type: `Variant[Array[Stdlib::Port], Stdlib::Port]`
 
 The port for the apache vhost.
 
 Default value: `$zabbix::params::apache_listenport`
 
-##### <a name="apache_listenport_ssl"></a>`apache_listenport_ssl`
+##### <a name="-zabbix--apache_listenport_ssl"></a>`apache_listenport_ssl`
 
-Data type: `Any`
+Data type: `Variant[Array[Stdlib::Port], Stdlib::Port]`
 
 The port for the apache SSL vhost.
 
 Default value: `$zabbix::params::apache_listenport_ssl`
 
-##### <a name="apache_php_max_execution_time"></a>`apache_php_max_execution_time`
+##### <a name="-zabbix--apache_php_max_execution_time"></a>`apache_php_max_execution_time`
 
 Data type: `Any`
 
@@ -454,7 +466,7 @@ Max execution time for php. Default: 300
 
 Default value: `$zabbix::params::apache_php_max_execution_time`
 
-##### <a name="apache_php_memory_limit"></a>`apache_php_memory_limit`
+##### <a name="-zabbix--apache_php_memory_limit"></a>`apache_php_memory_limit`
 
 Data type: `Any`
 
@@ -462,7 +474,7 @@ PHP memory size limit. Default: 128M
 
 Default value: `$zabbix::params::apache_php_memory_limit`
 
-##### <a name="apache_php_post_max_size"></a>`apache_php_post_max_size`
+##### <a name="-zabbix--apache_php_post_max_size"></a>`apache_php_post_max_size`
 
 Data type: `Any`
 
@@ -470,7 +482,7 @@ PHP maximum post size data. Default: 16M
 
 Default value: `$zabbix::params::apache_php_post_max_size`
 
-##### <a name="apache_php_upload_max_filesize"></a>`apache_php_upload_max_filesize`
+##### <a name="-zabbix--apache_php_upload_max_filesize"></a>`apache_php_upload_max_filesize`
 
 Data type: `Any`
 
@@ -478,7 +490,7 @@ PHP maximum upload filesize. Default: 2M
 
 Default value: `$zabbix::params::apache_php_upload_max_filesize`
 
-##### <a name="apache_php_max_input_time"></a>`apache_php_max_input_time`
+##### <a name="-zabbix--apache_php_max_input_time"></a>`apache_php_max_input_time`
 
 Data type: `Any`
 
@@ -486,7 +498,7 @@ Max input time for php. Default: 300
 
 Default value: `$zabbix::params::apache_php_max_input_time`
 
-##### <a name="apache_php_always_populate_raw_post_data"></a>`apache_php_always_populate_raw_post_data`
+##### <a name="-zabbix--apache_php_always_populate_raw_post_data"></a>`apache_php_always_populate_raw_post_data`
 
 Data type: `Any`
 
@@ -494,7 +506,7 @@ Default: -1
 
 Default value: `$zabbix::params::apache_php_always_populate_raw_post_data`
 
-##### <a name="ldap_cacert"></a>`ldap_cacert`
+##### <a name="-zabbix--ldap_cacert"></a>`ldap_cacert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -502,7 +514,7 @@ Set location of ca_cert used by LDAP authentication.
 
 Default value: `$zabbix::params::ldap_cacert`
 
-##### <a name="ldap_clientcert"></a>`ldap_clientcert`
+##### <a name="-zabbix--ldap_clientcert"></a>`ldap_clientcert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -510,7 +522,7 @@ Set location of client cert used by LDAP authentication.
 
 Default value: `$zabbix::params::ldap_clientcert`
 
-##### <a name="ldap_clientkey"></a>`ldap_clientkey`
+##### <a name="-zabbix--ldap_clientkey"></a>`ldap_clientkey`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -518,7 +530,7 @@ Set location of client key used by LDAP authentication.
 
 Default value: `$zabbix::params::ldap_clientkey`
 
-##### <a name="ldap_reqcert"></a>`ldap_reqcert`
+##### <a name="-zabbix--ldap_reqcert"></a>`ldap_reqcert`
 
 Data type: `Optional[Enum['never', 'allow', 'try', 'demand', 'hard']]`
 
@@ -526,7 +538,7 @@ Specifies what checks to perform on a server certificate
 
 Default value: `$zabbix::params::ldap_reqcert`
 
-##### <a name="zabbix_api_user"></a>`zabbix_api_user`
+##### <a name="-zabbix--zabbix_api_user"></a>`zabbix_api_user`
 
 Data type: `Any`
 
@@ -534,15 +546,23 @@ Name of the user which the api should connect to. Default: Admin
 
 Default value: `$zabbix::params::server_api_user`
 
-##### <a name="zabbix_api_pass"></a>`zabbix_api_pass`
+##### <a name="-zabbix--zabbix_api_pass"></a>`zabbix_api_pass`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Password of the user which connects to the api. Default: zabbix
 
 Default value: `$zabbix::params::server_api_pass`
 
-##### <a name="listenport"></a>`listenport`
+##### <a name="-zabbix--zabbix_api_access"></a>`zabbix_api_access`
+
+Data type: `Optional[Array[Stdlib::Host,1]]`
+
+Which host has access to the api. Default: no restriction
+
+Default value: `$zabbix::params::server_api_access`
+
+##### <a name="-zabbix--listenport"></a>`listenport`
 
 Data type: `Any`
 
@@ -550,7 +570,7 @@ Listen port for the zabbix-server. Default: 10051
 
 Default value: `$zabbix::params::server_listenport`
 
-##### <a name="sourceip"></a>`sourceip`
+##### <a name="-zabbix--sourceip"></a>`sourceip`
 
 Data type: `Any`
 
@@ -558,7 +578,7 @@ Source ip address for outgoing connections.
 
 Default value: `$zabbix::params::server_sourceip`
 
-##### <a name="logfile"></a>`logfile`
+##### <a name="-zabbix--logfile"></a>`logfile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -566,7 +586,7 @@ Name of log file.
 
 Default value: `$zabbix::params::server_logfile`
 
-##### <a name="logfilesize"></a>`logfilesize`
+##### <a name="-zabbix--logfilesize"></a>`logfilesize`
 
 Data type: `Any`
 
@@ -574,7 +594,7 @@ Maximum size of log file in MB.
 
 Default value: `$zabbix::params::server_logfilesize`
 
-##### <a name="logtype"></a>`logtype`
+##### <a name="-zabbix--logtype"></a>`logtype`
 
 Data type: `Enum['console', 'file', 'system']`
 
@@ -582,7 +602,7 @@ Specifies where log messages are written to. (options: console, file, system)
 
 Default value: `$zabbix::params::server_logtype`
 
-##### <a name="debuglevel"></a>`debuglevel`
+##### <a name="-zabbix--debuglevel"></a>`debuglevel`
 
 Data type: `Any`
 
@@ -590,7 +610,7 @@ Specifies debug level.
 
 Default value: `$zabbix::params::server_debuglevel`
 
-##### <a name="pidfile"></a>`pidfile`
+##### <a name="-zabbix--pidfile"></a>`pidfile`
 
 Data type: `Any`
 
@@ -598,7 +618,7 @@ Name of pid file.
 
 Default value: `$zabbix::params::server_pidfile`
 
-##### <a name="database_host"></a>`database_host`
+##### <a name="-zabbix--database_host"></a>`database_host`
 
 Data type: `Any`
 
@@ -606,7 +626,7 @@ Database host name.
 
 Default value: `$zabbix::params::server_database_host`
 
-##### <a name="database_name"></a>`database_name`
+##### <a name="-zabbix--database_name"></a>`database_name`
 
 Data type: `Any`
 
@@ -614,7 +634,7 @@ Database name.
 
 Default value: `$zabbix::params::server_database_name`
 
-##### <a name="database_schema"></a>`database_schema`
+##### <a name="-zabbix--database_schema"></a>`database_schema`
 
 Data type: `Any`
 
@@ -622,7 +642,7 @@ Schema name. used for ibm db2.
 
 Default value: `$zabbix::params::server_database_schema`
 
-##### <a name="database_double_ieee754"></a>`database_double_ieee754`
+##### <a name="-zabbix--database_double_ieee754"></a>`database_double_ieee754`
 
 Data type: `Boolean`
 
@@ -632,7 +652,7 @@ https://www.zabbix.com/documentation/5.0/manual/installation/upgrade_notes_500#e
 
 Default value: `$zabbix::params::server_database_double_ieee754`
 
-##### <a name="database_user"></a>`database_user`
+##### <a name="-zabbix--database_user"></a>`database_user`
 
 Data type: `Any`
 
@@ -640,15 +660,15 @@ Database user. ignored for sqlite.
 
 Default value: `$zabbix::params::server_database_user`
 
-##### <a name="database_password"></a>`database_password`
+##### <a name="-zabbix--database_password"></a>`database_password`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Database password. ignored for sqlite.
 
 Default value: `$zabbix::params::server_database_password`
 
-##### <a name="database_socket"></a>`database_socket`
+##### <a name="-zabbix--database_socket"></a>`database_socket`
 
 Data type: `Any`
 
@@ -656,7 +676,7 @@ Path to mysql socket.
 
 Default value: `$zabbix::params::server_database_socket`
 
-##### <a name="database_port"></a>`database_port`
+##### <a name="-zabbix--database_port"></a>`database_port`
 
 Data type: `Any`
 
@@ -664,7 +684,7 @@ Database port when not using local socket. Ignored for sqlite.
 
 Default value: `$zabbix::params::server_database_port`
 
-##### <a name="database_charset"></a>`database_charset`
+##### <a name="-zabbix--database_charset"></a>`database_charset`
 
 Data type: `Any`
 
@@ -672,7 +692,7 @@ The default charset of the database.
 
 Default value: `$zabbix::params::server_database_charset`
 
-##### <a name="database_collate"></a>`database_collate`
+##### <a name="-zabbix--database_collate"></a>`database_collate`
 
 Data type: `Any`
 
@@ -680,7 +700,7 @@ The default collation of the database.
 
 Default value: `$zabbix::params::server_database_collate`
 
-##### <a name="database_tablespace"></a>`database_tablespace`
+##### <a name="-zabbix--database_tablespace"></a>`database_tablespace`
 
 Data type: `Any`
 
@@ -688,7 +708,7 @@ The tablespace the database will be created in. This setting only affects Postgr
 
 Default value: `$zabbix::params::server_database_tablespace`
 
-##### <a name="database_tlsconnect"></a>`database_tlsconnect`
+##### <a name="-zabbix--database_tlsconnect"></a>`database_tlsconnect`
 
 Data type: `Optional[Enum['required', 'verify_ca', 'verify_full']]`
 
@@ -699,7 +719,7 @@ Available options:
 
 Default value: `$zabbix::params::server_database_tlsconnect`
 
-##### <a name="database_tlscafile"></a>`database_tlscafile`
+##### <a name="-zabbix--database_tlscafile"></a>`database_tlscafile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -707,7 +727,7 @@ Full pathname of a file containing the top-level CA(s) certificates for database
 
 Default value: `$zabbix::params::server_database_tlscafile`
 
-##### <a name="startpollers"></a>`startpollers`
+##### <a name="-zabbix--startpollers"></a>`startpollers`
 
 Data type: `Any`
 
@@ -715,7 +735,7 @@ Number of pre-forked instances of pollers.
 
 Default value: `$zabbix::params::server_startpollers`
 
-##### <a name="startpreprocessors"></a>`startpreprocessors`
+##### <a name="-zabbix--startpreprocessors"></a>`startpreprocessors`
 
 Data type: `Integer[1, 1000]`
 
@@ -723,7 +743,7 @@ Number of pre-forked instances of preprocessing workers
 
 Default value: `$zabbix::params::server_startpreprocessors`
 
-##### <a name="startipmipollers"></a>`startipmipollers`
+##### <a name="-zabbix--startipmipollers"></a>`startipmipollers`
 
 Data type: `Any`
 
@@ -731,7 +751,15 @@ Number of pre-forked instances of ipmi pollers.
 
 Default value: `$zabbix::params::server_startipmipollers`
 
-##### <a name="startpollersunreachable"></a>`startpollersunreachable`
+##### <a name="-zabbix--startodbcpollers"></a>`startodbcpollers`
+
+Data type: `Integer[0, 1000]`
+
+Number of pre-forked instances of ODBC pollers.
+
+Default value: `$zabbix::params::server_startodbcpollers`
+
+##### <a name="-zabbix--startpollersunreachable"></a>`startpollersunreachable`
 
 Data type: `Any`
 
@@ -739,7 +767,7 @@ Number of pre-forked instances of pollers for unreachable hosts (including ipmi)
 
 Default value: `$zabbix::params::server_startpollersunreachable`
 
-##### <a name="starttrappers"></a>`starttrappers`
+##### <a name="-zabbix--starttrappers"></a>`starttrappers`
 
 Data type: `Any`
 
@@ -747,7 +775,7 @@ Number of pre-forked instances of trappers.
 
 Default value: `$zabbix::params::server_starttrappers`
 
-##### <a name="startpingers"></a>`startpingers`
+##### <a name="-zabbix--startpingers"></a>`startpingers`
 
 Data type: `Any`
 
@@ -755,7 +783,7 @@ Number of pre-forked instances of icmp pingers.
 
 Default value: `$zabbix::params::server_startpingers`
 
-##### <a name="startalerters"></a>`startalerters`
+##### <a name="-zabbix--startalerters"></a>`startalerters`
 
 Data type: `Integer[1, 100]`
 
@@ -763,7 +791,7 @@ Number of pre-forked instances of alerters.
 
 Default value: `$zabbix::params::server_startalerters`
 
-##### <a name="startdiscoverers"></a>`startdiscoverers`
+##### <a name="-zabbix--startdiscoverers"></a>`startdiscoverers`
 
 Data type: `Any`
 
@@ -771,7 +799,7 @@ Number of pre-forked instances of discoverers.
 
 Default value: `$zabbix::params::server_startdiscoverers`
 
-##### <a name="startescalators"></a>`startescalators`
+##### <a name="-zabbix--startescalators"></a>`startescalators`
 
 Data type: `Integer[1, 100]`
 
@@ -779,7 +807,7 @@ Number of pre-forked instances of escalators.
 
 Default value: `$zabbix::params::server_startescalators`
 
-##### <a name="starthttppollers"></a>`starthttppollers`
+##### <a name="-zabbix--starthttppollers"></a>`starthttppollers`
 
 Data type: `Any`
 
@@ -787,7 +815,7 @@ Number of pre-forked instances of http pollers.
 
 Default value: `$zabbix::params::server_starthttppollers`
 
-##### <a name="starttimers"></a>`starttimers`
+##### <a name="-zabbix--starttimers"></a>`starttimers`
 
 Data type: `Any`
 
@@ -795,7 +823,7 @@ Number of pre-forked instances of timers.
 
 Default value: `$zabbix::params::server_starttimers`
 
-##### <a name="javagateway"></a>`javagateway`
+##### <a name="-zabbix--javagateway"></a>`javagateway`
 
 Data type: `Any`
 
@@ -803,7 +831,7 @@ IP address (or hostname) of zabbix java gateway.
 
 Default value: `$zabbix::params::server_javagateway`
 
-##### <a name="javagatewayport"></a>`javagatewayport`
+##### <a name="-zabbix--javagatewayport"></a>`javagatewayport`
 
 Data type: `Any`
 
@@ -811,7 +839,15 @@ Port that zabbix java gateway listens on.
 
 Default value: `$zabbix::params::server_javagatewayport`
 
-##### <a name="startjavapollers"></a>`startjavapollers`
+##### <a name="-zabbix--smsdevices"></a>`smsdevices`
+
+Data type: `Array[String[1]]`
+
+Which devices to use for sms texting
+
+Default value: `$zabbix::params::server_smsdevices`
+
+##### <a name="-zabbix--startjavapollers"></a>`startjavapollers`
 
 Data type: `Any`
 
@@ -819,7 +855,7 @@ Number of pre-forked instances of java pollers.
 
 Default value: `$zabbix::params::server_startjavapollers`
 
-##### <a name="startlldprocessors"></a>`startlldprocessors`
+##### <a name="-zabbix--startlldprocessors"></a>`startlldprocessors`
 
 Data type: `Integer[1, 100]`
 
@@ -827,7 +863,7 @@ Number of pre-forked instances of low-level discovery (LLD) workers.
 
 Default value: `$zabbix::params::server_startlldprocessors`
 
-##### <a name="startvmwarecollectors"></a>`startvmwarecollectors`
+##### <a name="-zabbix--startvmwarecollectors"></a>`startvmwarecollectors`
 
 Data type: `Any`
 
@@ -835,7 +871,7 @@ Number of pre-forked vmware collector instances.
 
 Default value: `$zabbix::params::server_startvmwarecollectors`
 
-##### <a name="vaultdbpath"></a>`vaultdbpath`
+##### <a name="-zabbix--vaultdbpath"></a>`vaultdbpath`
 
 Data type: `Optional[String[1]]`
 
@@ -843,7 +879,7 @@ Vault path from where credentials for database will be retrieved by keys 'passwo
 
 Default value: `$zabbix::params::server_vaultdbpath`
 
-##### <a name="vaulttoken"></a>`vaulttoken`
+##### <a name="-zabbix--vaulttoken"></a>`vaulttoken`
 
 Data type: `Optional[String[1]]`
 
@@ -852,7 +888,7 @@ permission to the path specified in the optional VaultDBPath configuration param
 
 Default value: `$zabbix::params::server_vaulttoken`
 
-##### <a name="vaulturl"></a>`vaulturl`
+##### <a name="-zabbix--vaulturl"></a>`vaulturl`
 
 Data type: `Stdlib::HTTPSUrl`
 
@@ -860,7 +896,7 @@ Vault server HTTP[S] URL. System-wide CA certificates directory will be used if 
 
 Default value: `$zabbix::params::server_vaulturl`
 
-##### <a name="vmwarefrequency"></a>`vmwarefrequency`
+##### <a name="-zabbix--vmwarefrequency"></a>`vmwarefrequency`
 
 Data type: `Any`
 
@@ -868,7 +904,7 @@ How often zabbix will connect to vmware service to obtain a new datan.
 
 Default value: `$zabbix::params::server_vmwarefrequency`
 
-##### <a name="vmwarecachesize"></a>`vmwarecachesize`
+##### <a name="-zabbix--vmwarecachesize"></a>`vmwarecachesize`
 
 Data type: `Any`
 
@@ -876,7 +912,7 @@ Size of vmware cache, in bytes.
 
 Default value: `$zabbix::params::server_vmwarecachesize`
 
-##### <a name="vmwaretimeout"></a>`vmwaretimeout`
+##### <a name="-zabbix--vmwaretimeout"></a>`vmwaretimeout`
 
 Data type: `Any`
 
@@ -884,7 +920,7 @@ The maximum number of seconds vmware collector will wait for a response from VMw
 
 Default value: `$zabbix::params::server_vmwaretimeout`
 
-##### <a name="snmptrapperfile"></a>`snmptrapperfile`
+##### <a name="-zabbix--snmptrapperfile"></a>`snmptrapperfile`
 
 Data type: `Any`
 
@@ -892,7 +928,7 @@ Temporary file used for passing data from snmp trap daemon to the server.
 
 Default value: `$zabbix::params::server_snmptrapperfile`
 
-##### <a name="startsnmptrapper"></a>`startsnmptrapper`
+##### <a name="-zabbix--startsnmptrapper"></a>`startsnmptrapper`
 
 Data type: `Any`
 
@@ -900,7 +936,7 @@ If 1, snmp trapper process is started.
 
 Default value: `$zabbix::params::server_startsnmptrapper`
 
-##### <a name="listenip"></a>`listenip`
+##### <a name="-zabbix--listenip"></a>`listenip`
 
 Data type: `Any`
 
@@ -908,7 +944,7 @@ List of comma delimited ip addresses that the zabbix-server should listen on.
 
 Default value: `$zabbix::params::server_listenip`
 
-##### <a name="housekeepingfrequency"></a>`housekeepingfrequency`
+##### <a name="-zabbix--housekeepingfrequency"></a>`housekeepingfrequency`
 
 Data type: `Any`
 
@@ -916,7 +952,7 @@ How often zabbix will perform housekeeping procedure (in hours).
 
 Default value: `$zabbix::params::server_housekeepingfrequency`
 
-##### <a name="maxhousekeeperdelete"></a>`maxhousekeeperdelete`
+##### <a name="-zabbix--maxhousekeeperdelete"></a>`maxhousekeeperdelete`
 
 Data type: `Any`
 
@@ -929,7 +965,7 @@ if set to 0 then no limit is used at all. in this case you must know what you ar
 
 Default value: `$zabbix::params::server_maxhousekeeperdelete`
 
-##### <a name="cachesize"></a>`cachesize`
+##### <a name="-zabbix--cachesize"></a>`cachesize`
 
 Data type: `Any`
 
@@ -937,7 +973,7 @@ Size of configuration cache, in bytes.
 
 Default value: `$zabbix::params::server_cachesize`
 
-##### <a name="cacheupdatefrequency"></a>`cacheupdatefrequency`
+##### <a name="-zabbix--cacheupdatefrequency"></a>`cacheupdatefrequency`
 
 Data type: `Any`
 
@@ -945,7 +981,7 @@ How often zabbix will perform update of configuration cache, in seconds.
 
 Default value: `$zabbix::params::server_cacheupdatefrequency`
 
-##### <a name="startdbsyncers"></a>`startdbsyncers`
+##### <a name="-zabbix--startdbsyncers"></a>`startdbsyncers`
 
 Data type: `Any`
 
@@ -953,7 +989,7 @@ Number of pre-forked instances of db syncers.
 
 Default value: `$zabbix::params::server_startdbsyncers`
 
-##### <a name="historycachesize"></a>`historycachesize`
+##### <a name="-zabbix--historycachesize"></a>`historycachesize`
 
 Data type: `Any`
 
@@ -961,7 +997,7 @@ Size of history cache, in bytes.
 
 Default value: `$zabbix::params::server_historycachesize`
 
-##### <a name="historyindexcachesize"></a>`historyindexcachesize`
+##### <a name="-zabbix--historyindexcachesize"></a>`historyindexcachesize`
 
 Data type: `Zabbix::Historyics`
 
@@ -969,7 +1005,7 @@ Size of history index cache, in bytes.
 
 Default value: `$zabbix::params::server_historyindexcachesize`
 
-##### <a name="trendcachesize"></a>`trendcachesize`
+##### <a name="-zabbix--trendcachesize"></a>`trendcachesize`
 
 Data type: `Any`
 
@@ -977,7 +1013,7 @@ Size of trend cache, in bytes.
 
 Default value: `$zabbix::params::server_trendcachesize`
 
-##### <a name="valuecachesize"></a>`valuecachesize`
+##### <a name="-zabbix--valuecachesize"></a>`valuecachesize`
 
 Data type: `Any`
 
@@ -985,7 +1021,7 @@ Size of history value cache, in bytes.
 
 Default value: `$zabbix::params::server_valuecachesize`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-zabbix--timeout"></a>`timeout`
 
 Data type: `Any`
 
@@ -993,7 +1029,7 @@ Specifies how long we wait for agent, snmp device or external check (in seconds)
 
 Default value: `$zabbix::params::server_timeout`
 
-##### <a name="tlscafile"></a>`tlscafile`
+##### <a name="-zabbix--tlscafile"></a>`tlscafile`
 
 Data type: `Any`
 
@@ -1001,7 +1037,7 @@ Full pathname of a file containing the top-level CA(s) certificates for peer cer
 
 Default value: `$zabbix::params::server_tlscafile`
 
-##### <a name="tlscertfile"></a>`tlscertfile`
+##### <a name="-zabbix--tlscertfile"></a>`tlscertfile`
 
 Data type: `Any`
 
@@ -1009,7 +1045,7 @@ Full pathname of a file containing the server certificate or certificate chain.
 
 Default value: `$zabbix::params::server_tlscertfile`
 
-##### <a name="tlscrlfile"></a>`tlscrlfile`
+##### <a name="-zabbix--tlscrlfile"></a>`tlscrlfile`
 
 Data type: `Any`
 
@@ -1017,7 +1053,7 @@ Full pathname of a file containing revoked certificates.
 
 Default value: `$zabbix::params::server_tlscrlfile`
 
-##### <a name="tlskeyfile"></a>`tlskeyfile`
+##### <a name="-zabbix--tlskeyfile"></a>`tlskeyfile`
 
 Data type: `Any`
 
@@ -1025,7 +1061,7 @@ Full pathname of a file containing the server private key.
 
 Default value: `$zabbix::params::server_tlskeyfile`
 
-##### <a name="tlscipherall"></a>`tlscipherall`
+##### <a name="-zabbix--tlscipherall"></a>`tlscipherall`
 
 Data type: `Any`
 
@@ -1034,7 +1070,7 @@ for certificate- and PSK-based encryption.
 
 Default value: `$zabbix::params::server_tlscipherall`
 
-##### <a name="tlscipherall13"></a>`tlscipherall13`
+##### <a name="-zabbix--tlscipherall13"></a>`tlscipherall13`
 
 Data type: `Any`
 
@@ -1043,7 +1079,7 @@ for certificate- and PSK-based encryption.
 
 Default value: `$zabbix::params::server_tlscipherall13`
 
-##### <a name="tlsciphercert"></a>`tlsciphercert`
+##### <a name="-zabbix--tlsciphercert"></a>`tlsciphercert`
 
 Data type: `Any`
 
@@ -1052,7 +1088,7 @@ for certificate-based encryption.
 
 Default value: `$zabbix::params::server_tlsciphercert`
 
-##### <a name="tlsciphercert13"></a>`tlsciphercert13`
+##### <a name="-zabbix--tlsciphercert13"></a>`tlsciphercert13`
 
 Data type: `Any`
 
@@ -1061,7 +1097,7 @@ for certificate-based encryption.
 
 Default value: `$zabbix::params::server_tlsciphercert13`
 
-##### <a name="tlscipherpsk"></a>`tlscipherpsk`
+##### <a name="-zabbix--tlscipherpsk"></a>`tlscipherpsk`
 
 Data type: `Any`
 
@@ -1070,7 +1106,7 @@ for PSK-based encryption.
 
 Default value: `$zabbix::params::server_tlscipherpsk`
 
-##### <a name="tlscipherpsk13"></a>`tlscipherpsk13`
+##### <a name="-zabbix--tlscipherpsk13"></a>`tlscipherpsk13`
 
 Data type: `Any`
 
@@ -1079,7 +1115,7 @@ for PSK-based encryption.
 
 Default value: `$zabbix::params::server_tlscipherpsk13`
 
-##### <a name="trappertimeout"></a>`trappertimeout`
+##### <a name="-zabbix--trappertimeout"></a>`trappertimeout`
 
 Data type: `Any`
 
@@ -1087,7 +1123,7 @@ Specifies how many seconds trapper may spend processing new data.
 
 Default value: `$zabbix::params::server_trappertimeout`
 
-##### <a name="unreachableperiod"></a>`unreachableperiod`
+##### <a name="-zabbix--unreachableperiod"></a>`unreachableperiod`
 
 Data type: `Any`
 
@@ -1095,7 +1131,7 @@ After how many seconds of unreachability treat a host as unavailable.
 
 Default value: `$zabbix::params::server_unreachableperiod`
 
-##### <a name="unavailabledelay"></a>`unavailabledelay`
+##### <a name="-zabbix--unavailabledelay"></a>`unavailabledelay`
 
 Data type: `Any`
 
@@ -1103,7 +1139,7 @@ How often host is checked for availability during the unavailability period, in 
 
 Default value: `$zabbix::params::server_unavailabledelay`
 
-##### <a name="unreachabledelay"></a>`unreachabledelay`
+##### <a name="-zabbix--unreachabledelay"></a>`unreachabledelay`
 
 Data type: `Any`
 
@@ -1111,7 +1147,7 @@ How often host is checked for availability during the unreachability period, in 
 
 Default value: `$zabbix::params::server_unreachabledelay`
 
-##### <a name="alertscriptspath"></a>`alertscriptspath`
+##### <a name="-zabbix--alertscriptspath"></a>`alertscriptspath`
 
 Data type: `Any`
 
@@ -1119,7 +1155,7 @@ Full path to location of custom alert scripts.
 
 Default value: `$zabbix::params::server_alertscriptspath`
 
-##### <a name="externalscripts"></a>`externalscripts`
+##### <a name="-zabbix--externalscripts"></a>`externalscripts`
 
 Data type: `Any`
 
@@ -1127,7 +1163,7 @@ Full path to location of external scripts.
 
 Default value: `$zabbix::params::server_externalscripts`
 
-##### <a name="fpinglocation"></a>`fpinglocation`
+##### <a name="-zabbix--fpinglocation"></a>`fpinglocation`
 
 Data type: `Any`
 
@@ -1135,7 +1171,7 @@ Location of fping.
 
 Default value: `$zabbix::params::server_fpinglocation`
 
-##### <a name="fping6location"></a>`fping6location`
+##### <a name="-zabbix--fping6location"></a>`fping6location`
 
 Data type: `Any`
 
@@ -1143,7 +1179,7 @@ Location of fping6.
 
 Default value: `$zabbix::params::server_fping6location`
 
-##### <a name="sshkeylocation"></a>`sshkeylocation`
+##### <a name="-zabbix--sshkeylocation"></a>`sshkeylocation`
 
 Data type: `Any`
 
@@ -1151,7 +1187,7 @@ Location of public and private keys for ssh checks and actions.
 
 Default value: `$zabbix::params::server_sshkeylocation`
 
-##### <a name="logslowqueries"></a>`logslowqueries`
+##### <a name="-zabbix--logslowqueries"></a>`logslowqueries`
 
 Data type: `Any`
 
@@ -1159,7 +1195,7 @@ How long a database query may take before being logged (in milliseconds).
 
 Default value: `$zabbix::params::server_logslowqueries`
 
-##### <a name="tmpdir"></a>`tmpdir`
+##### <a name="-zabbix--tmpdir"></a>`tmpdir`
 
 Data type: `Any`
 
@@ -1167,7 +1203,7 @@ Temporary directory.
 
 Default value: `$zabbix::params::server_tmpdir`
 
-##### <a name="startproxypollers"></a>`startproxypollers`
+##### <a name="-zabbix--startproxypollers"></a>`startproxypollers`
 
 Data type: `Any`
 
@@ -1175,7 +1211,7 @@ Number of pre-forked instances of pollers for passive proxies.
 
 Default value: `$zabbix::params::server_startproxypollers`
 
-##### <a name="proxyconfigfrequency"></a>`proxyconfigfrequency`
+##### <a name="-zabbix--proxyconfigfrequency"></a>`proxyconfigfrequency`
 
 Data type: `Any`
 
@@ -1183,7 +1219,7 @@ How often zabbix server sends configuration data to a zabbix proxy in seconds.
 
 Default value: `$zabbix::params::server_proxyconfigfrequency`
 
-##### <a name="proxydatafrequency"></a>`proxydatafrequency`
+##### <a name="-zabbix--proxydatafrequency"></a>`proxydatafrequency`
 
 Data type: `Any`
 
@@ -1191,7 +1227,7 @@ How often zabbix server requests history data from a zabbix proxy in seconds.
 
 Default value: `$zabbix::params::server_proxydatafrequency`
 
-##### <a name="allowroot"></a>`allowroot`
+##### <a name="-zabbix--allowroot"></a>`allowroot`
 
 Data type: `Any`
 
@@ -1199,7 +1235,7 @@ Allow the server to run as 'root'.
 
 Default value: `$zabbix::params::server_allowroot`
 
-##### <a name="include_dir"></a>`include_dir`
+##### <a name="-zabbix--include_dir"></a>`include_dir`
 
 Data type: `Any`
 
@@ -1207,7 +1243,7 @@ You may include individual files or all files in a directory in the configuratio
 
 Default value: `$zabbix::params::server_include`
 
-##### <a name="loadmodulepath"></a>`loadmodulepath`
+##### <a name="-zabbix--loadmodulepath"></a>`loadmodulepath`
 
 Data type: `Any`
 
@@ -1215,7 +1251,7 @@ Full path to location of server modules.
 
 Default value: `$zabbix::params::server_loadmodulepath`
 
-##### <a name="loadmodule"></a>`loadmodule`
+##### <a name="-zabbix--loadmodule"></a>`loadmodule`
 
 Data type: `Any`
 
@@ -1223,7 +1259,7 @@ Module to load at server startup.
 
 Default value: `$zabbix::params::server_loadmodule`
 
-##### <a name="socketdir"></a>`socketdir`
+##### <a name="-zabbix--socketdir"></a>`socketdir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1232,7 +1268,7 @@ Directory to store IPC sockets used by internal Zabbix services.
 
 Default value: `$zabbix::params::server_socketdir`
 
-##### <a name="manage_selinux"></a>`manage_selinux`
+##### <a name="-zabbix--manage_selinux"></a>`manage_selinux`
 
 Data type: `Boolean`
 
@@ -1240,7 +1276,7 @@ Whether we should manage SELinux rules.
 
 Default value: `$zabbix::params::manage_selinux`
 
-##### <a name="additional_service_params"></a>`additional_service_params`
+##### <a name="-zabbix--additional_service_params"></a>`additional_service_params`
 
 Data type: `String`
 
@@ -1248,7 +1284,7 @@ Additional parameters to pass to the service.
 
 Default value: `$zabbix::params::additional_service_params`
 
-##### <a name="zabbix_user"></a>`zabbix_user`
+##### <a name="-zabbix--zabbix_user"></a>`zabbix_user`
 
 Data type: `Optional[String[1]]`
 
@@ -1256,7 +1292,7 @@ User the zabbix service will run as.
 
 Default value: `$zabbix::params::server_zabbix_user`
 
-##### <a name="zabbix_server_name"></a>`zabbix_server_name`
+##### <a name="-zabbix--zabbix_server_name"></a>`zabbix_server_name`
 
 Data type: `Optional[String]`
 
@@ -1266,7 +1302,7 @@ This can also be used to upave a different name such as "Zabbix DEV"
 
 Default value: `$zabbix::params::zabbix_server`
 
-##### <a name="saml_sp_key"></a>`saml_sp_key`
+##### <a name="-zabbix--saml_sp_key"></a>`saml_sp_key`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1274,7 +1310,7 @@ The location of the SAML Service Provider Key file.
 
 Default value: `$zabbix::params::saml_sp_key`
 
-##### <a name="saml_sp_cert"></a>`saml_sp_cert`
+##### <a name="-zabbix--saml_sp_cert"></a>`saml_sp_cert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1282,7 +1318,7 @@ The location of the SAML Service Provider Certificate.
 
 Default value: `$zabbix::params::saml_sp_cert`
 
-##### <a name="saml_idp_cert"></a>`saml_idp_cert`
+##### <a name="-zabbix--saml_idp_cert"></a>`saml_idp_cert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1290,7 +1326,7 @@ The location of the SAML Identity Provider Certificate.
 
 Default value: `$zabbix::params::saml_idp_cert`
 
-##### <a name="saml_settings"></a>`saml_settings`
+##### <a name="-zabbix--saml_settings"></a>`saml_settings`
 
 Data type: `Hash[String[1], Variant[ScalarData, Hash]]`
 
@@ -1298,7 +1334,7 @@ A hash of additional SAML SSO settings.
 
 Default value: `$zabbix::params::saml_settings`
 
-### <a name="zabbixagent"></a>`zabbix::agent`
+### <a name="zabbix--agent"></a>`zabbix::agent`
 
 This will install and configure the zabbix-agent deamon
 
@@ -1308,7 +1344,7 @@ This will install and configure the zabbix-agent deamon
 
 ```puppet
 class { 'zabbix::agent':
-  zabbix_version => '5.2',
+  zabbix_version => '6.0',
   server         => '192.168.1.1',
 }
 ```
@@ -1323,93 +1359,107 @@ class { 'zabbix::agent':
 }
 ```
 
+##### Using Zabbix Agent 2
+
+```puppet
+class { 'zabbix::agent':
+  agent_configfile_path => '/etc/zabbix/zabbix_agent2.conf',
+  include_dir           => '/etc/zabbix/zabbix_agent2.d',
+  include_dir_purge     => false,
+  zabbix_package_agent  => 'zabbix-agent2',
+  servicename           => 'zabbix-agent2',
+  manage_startup_script => false,
+}
+```
+
 #### Parameters
 
 The following parameters are available in the `zabbix::agent` class:
 
-* [`zabbix_version`](#zabbix_version)
-* [`zabbix_package_state`](#zabbix_package_state)
-* [`zabbix_package_agent`](#zabbix_package_agent)
-* [`manage_firewall`](#manage_firewall)
-* [`manage_repo`](#manage_repo)
-* [`manage_choco`](#manage_choco)
-* [`zabbix_package_provider`](#zabbix_package_provider)
-* [`zabbix_package_source`](#zabbix_package_source)
-* [`manage_resources`](#manage_resources)
-* [`monitored_by_proxy`](#monitored_by_proxy)
-* [`agent_use_ip`](#agent_use_ip)
-* [`zbx_group`](#zbx_group)
-* [`zbx_groups`](#zbx_groups)
-* [`zbx_group_create`](#zbx_group_create)
-* [`zbx_templates`](#zbx_templates)
-* [`zbx_macros`](#zbx_macros)
-* [`zbx_interface_type`](#zbx_interface_type)
-* [`zbx_interface_details`](#zbx_interface_details)
-* [`agent_configfile_path`](#agent_configfile_path)
-* [`pidfile`](#pidfile)
-* [`servicename`](#servicename)
-* [`logfile`](#logfile)
-* [`logfilesize`](#logfilesize)
-* [`logtype`](#logtype)
-* [`debuglevel`](#debuglevel)
-* [`sourceip`](#sourceip)
-* [`allowkey`](#allowkey)
-* [`denykey`](#denykey)
-* [`enableremotecommands`](#enableremotecommands)
-* [`logremotecommands`](#logremotecommands)
-* [`server`](#server)
-* [`listenport`](#listenport)
-* [`listenip`](#listenip)
-* [`startagents`](#startagents)
-* [`serveractive`](#serveractive)
-* [`service_ensure`](#service_ensure)
-* [`service_enable`](#service_enable)
-* [`hostname`](#hostname)
-* [`hostnameitem`](#hostnameitem)
-* [`hostmetadata`](#hostmetadata)
-* [`hostmetadataitem`](#hostmetadataitem)
-* [`hostinterface`](#hostinterface)
-* [`hostinterfaceitem`](#hostinterfaceitem)
-* [`refreshactivechecks`](#refreshactivechecks)
-* [`buffersend`](#buffersend)
-* [`buffersize`](#buffersize)
-* [`maxlinespersecond`](#maxlinespersecond)
-* [`allowroot`](#allowroot)
-* [`zabbix_user`](#zabbix_user)
-* [`zabbix_alias`](#zabbix_alias)
-* [`timeout`](#timeout)
-* [`tlsaccept`](#tlsaccept)
-* [`tlscafile`](#tlscafile)
-* [`tlscertfile`](#tlscertfile)
-* [`tlsconnect`](#tlsconnect)
-* [`tlscrlfile`](#tlscrlfile)
-* [`tlskeyfile`](#tlskeyfile)
-* [`tlspskfile`](#tlspskfile)
-* [`tlspskidentity`](#tlspskidentity)
-* [`tlscipherall`](#tlscipherall)
-* [`tlscipherall13`](#tlscipherall13)
-* [`tlsciphercert`](#tlsciphercert)
-* [`tlsciphercert13`](#tlsciphercert13)
-* [`tlscipherpsk`](#tlscipherpsk)
-* [`tlscipherpsk13`](#tlscipherpsk13)
-* [`tlsservercertissuer`](#tlsservercertissuer)
-* [`tlsservercertsubject`](#tlsservercertsubject)
-* [`agent_config_owner`](#agent_config_owner)
-* [`agent_config_group`](#agent_config_group)
-* [`manage_selinux`](#manage_selinux)
-* [`selinux_require`](#selinux_require)
-* [`selinux_rules`](#selinux_rules)
-* [`additional_service_params`](#additional_service_params)
-* [`service_type`](#service_type)
-* [`include_dir`](#include_dir)
-* [`include_dir_purge`](#include_dir_purge)
-* [`unsafeuserparameters`](#unsafeuserparameters)
-* [`userparameter`](#userparameter)
-* [`loadmodulepath`](#loadmodulepath)
-* [`loadmodule`](#loadmodule)
-* [`manage_startup_script`](#manage_startup_script)
+* [`zabbix_version`](#-zabbix--agent--zabbix_version)
+* [`zabbix_package_state`](#-zabbix--agent--zabbix_package_state)
+* [`zabbix_package_agent`](#-zabbix--agent--zabbix_package_agent)
+* [`manage_firewall`](#-zabbix--agent--manage_firewall)
+* [`manage_repo`](#-zabbix--agent--manage_repo)
+* [`manage_choco`](#-zabbix--agent--manage_choco)
+* [`zabbix_package_provider`](#-zabbix--agent--zabbix_package_provider)
+* [`zabbix_package_source`](#-zabbix--agent--zabbix_package_source)
+* [`manage_resources`](#-zabbix--agent--manage_resources)
+* [`monitored_by_proxy`](#-zabbix--agent--monitored_by_proxy)
+* [`agent_use_ip`](#-zabbix--agent--agent_use_ip)
+* [`zbx_groups`](#-zabbix--agent--zbx_groups)
+* [`zbx_group_create`](#-zabbix--agent--zbx_group_create)
+* [`zbx_templates`](#-zabbix--agent--zbx_templates)
+* [`zbx_macros`](#-zabbix--agent--zbx_macros)
+* [`zbx_interface_type`](#-zabbix--agent--zbx_interface_type)
+* [`zbx_interface_details`](#-zabbix--agent--zbx_interface_details)
+* [`agent_configfile_path`](#-zabbix--agent--agent_configfile_path)
+* [`pidfile`](#-zabbix--agent--pidfile)
+* [`servicename`](#-zabbix--agent--servicename)
+* [`logfile`](#-zabbix--agent--logfile)
+* [`logfilesize`](#-zabbix--agent--logfilesize)
+* [`logtype`](#-zabbix--agent--logtype)
+* [`debuglevel`](#-zabbix--agent--debuglevel)
+* [`sourceip`](#-zabbix--agent--sourceip)
+* [`allowkey`](#-zabbix--agent--allowkey)
+* [`denykey`](#-zabbix--agent--denykey)
+* [`enableremotecommands`](#-zabbix--agent--enableremotecommands)
+* [`logremotecommands`](#-zabbix--agent--logremotecommands)
+* [`server`](#-zabbix--agent--server)
+* [`listenport`](#-zabbix--agent--listenport)
+* [`listenip`](#-zabbix--agent--listenip)
+* [`startagents`](#-zabbix--agent--startagents)
+* [`serveractive`](#-zabbix--agent--serveractive)
+* [`service_ensure`](#-zabbix--agent--service_ensure)
+* [`service_enable`](#-zabbix--agent--service_enable)
+* [`hostname`](#-zabbix--agent--hostname)
+* [`hostnameitem`](#-zabbix--agent--hostnameitem)
+* [`hostmetadata`](#-zabbix--agent--hostmetadata)
+* [`hostmetadataitem`](#-zabbix--agent--hostmetadataitem)
+* [`hostinterface`](#-zabbix--agent--hostinterface)
+* [`hostinterfaceitem`](#-zabbix--agent--hostinterfaceitem)
+* [`refreshactivechecks`](#-zabbix--agent--refreshactivechecks)
+* [`buffersend`](#-zabbix--agent--buffersend)
+* [`buffersize`](#-zabbix--agent--buffersize)
+* [`maxlinespersecond`](#-zabbix--agent--maxlinespersecond)
+* [`allowroot`](#-zabbix--agent--allowroot)
+* [`zabbix_user`](#-zabbix--agent--zabbix_user)
+* [`zabbix_alias`](#-zabbix--agent--zabbix_alias)
+* [`timeout`](#-zabbix--agent--timeout)
+* [`tlsaccept`](#-zabbix--agent--tlsaccept)
+* [`tlscafile`](#-zabbix--agent--tlscafile)
+* [`tlscertfile`](#-zabbix--agent--tlscertfile)
+* [`tlscertissuer`](#-zabbix--agent--tlscertissuer)
+* [`tlscertsubject`](#-zabbix--agent--tlscertsubject)
+* [`tlsconnect`](#-zabbix--agent--tlsconnect)
+* [`tlscrlfile`](#-zabbix--agent--tlscrlfile)
+* [`tlskeyfile`](#-zabbix--agent--tlskeyfile)
+* [`tlspskfile`](#-zabbix--agent--tlspskfile)
+* [`tlspskidentity`](#-zabbix--agent--tlspskidentity)
+* [`tlscipherall`](#-zabbix--agent--tlscipherall)
+* [`tlscipherall13`](#-zabbix--agent--tlscipherall13)
+* [`tlsciphercert`](#-zabbix--agent--tlsciphercert)
+* [`tlsciphercert13`](#-zabbix--agent--tlsciphercert13)
+* [`tlscipherpsk`](#-zabbix--agent--tlscipherpsk)
+* [`tlscipherpsk13`](#-zabbix--agent--tlscipherpsk13)
+* [`tlsservercertissuer`](#-zabbix--agent--tlsservercertissuer)
+* [`tlsservercertsubject`](#-zabbix--agent--tlsservercertsubject)
+* [`agent_config_owner`](#-zabbix--agent--agent_config_owner)
+* [`agent_config_group`](#-zabbix--agent--agent_config_group)
+* [`manage_selinux`](#-zabbix--agent--manage_selinux)
+* [`selinux_require`](#-zabbix--agent--selinux_require)
+* [`selinux_rules`](#-zabbix--agent--selinux_rules)
+* [`additional_service_params`](#-zabbix--agent--additional_service_params)
+* [`service_type`](#-zabbix--agent--service_type)
+* [`include_dir`](#-zabbix--agent--include_dir)
+* [`include_dir_purge`](#-zabbix--agent--include_dir_purge)
+* [`unsafeuserparameters`](#-zabbix--agent--unsafeuserparameters)
+* [`userparameter`](#-zabbix--agent--userparameter)
+* [`loadmodulepath`](#-zabbix--agent--loadmodulepath)
+* [`loadmodule`](#-zabbix--agent--loadmodule)
+* [`manage_startup_script`](#-zabbix--agent--manage_startup_script)
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix--agent--zabbix_version"></a>`zabbix_version`
 
 Data type: `Any`
 
@@ -1417,7 +1467,7 @@ This is the zabbix version.
 
 Default value: `$zabbix::params::zabbix_version`
 
-##### <a name="zabbix_package_state"></a>`zabbix_package_state`
+##### <a name="-zabbix--agent--zabbix_package_state"></a>`zabbix_package_state`
 
 Data type: `Any`
 
@@ -1425,7 +1475,7 @@ The state of the package that needs to be installed: present or latest.
 
 Default value: `$zabbix::params::zabbix_package_state`
 
-##### <a name="zabbix_package_agent"></a>`zabbix_package_agent`
+##### <a name="-zabbix--agent--zabbix_package_agent"></a>`zabbix_package_agent`
 
 Data type: `Any`
 
@@ -1433,7 +1483,7 @@ The name of the agent package that we manage
 
 Default value: `$zabbix::params::zabbix_package_agent`
 
-##### <a name="manage_firewall"></a>`manage_firewall`
+##### <a name="-zabbix--agent--manage_firewall"></a>`manage_firewall`
 
 Data type: `Boolean`
 
@@ -1441,7 +1491,7 @@ When true, it will create iptables rules.
 
 Default value: `$zabbix::params::manage_firewall`
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-zabbix--agent--manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
@@ -1449,7 +1499,7 @@ When true, it will create repository for installing the agent.
 
 Default value: `$zabbix::params::manage_repo`
 
-##### <a name="manage_choco"></a>`manage_choco`
+##### <a name="-zabbix--agent--manage_choco"></a>`manage_choco`
 
 Data type: `Boolean`
 
@@ -1458,7 +1508,7 @@ The module chocolatey is required https://forge.puppet.com/puppetlabs/chocolatey
 
 Default value: `$zabbix::params::manage_choco`
 
-##### <a name="zabbix_package_provider"></a>`zabbix_package_provider`
+##### <a name="-zabbix--agent--zabbix_package_provider"></a>`zabbix_package_provider`
 
 Data type: `Optional[String[1]]`
 
@@ -1467,15 +1517,15 @@ It is undef for all linux os and set to 'chocolatey' on windows.
 
 Default value: `$zabbix::params::zabbix_package_provider`
 
-##### <a name="zabbix_package_source"></a>`zabbix_package_source`
+##### <a name="-zabbix--agent--zabbix_package_source"></a>`zabbix_package_source`
 
 Data type: `Optional[Stdlib::Windowspath]`
 
 Path to a Windows MSI file used to install the agent.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_resources"></a>`manage_resources`
+##### <a name="-zabbix--agent--manage_resources"></a>`manage_resources`
 
 Data type: `Boolean`
 
@@ -1486,7 +1536,7 @@ enabled.
 
 Default value: `$zabbix::params::manage_resources`
 
-##### <a name="monitored_by_proxy"></a>`monitored_by_proxy`
+##### <a name="-zabbix--agent--monitored_by_proxy"></a>`monitored_by_proxy`
 
 Data type: `Any`
 
@@ -1495,7 +1545,7 @@ If the proxy is also installed via this module, please fill in the FQDN
 
 Default value: `$zabbix::params::monitored_by_proxy`
 
-##### <a name="agent_use_ip"></a>`agent_use_ip`
+##### <a name="-zabbix--agent--agent_use_ip"></a>`agent_use_ip`
 
 Data type: `Any`
 
@@ -1504,15 +1554,7 @@ connection should me made via ip, not fqdn.
 
 Default value: `$zabbix::params::agent_use_ip`
 
-##### <a name="zbx_group"></a>`zbx_group`
-
-Data type: `Any`
-
-*Deprecated* (see zbx_groups) Name of the hostgroup where this host needs to be added.
-
-Default value: `$zabbix::params::agent_zbx_group`
-
-##### <a name="zbx_groups"></a>`zbx_groups`
+##### <a name="-zabbix--agent--zbx_groups"></a>`zbx_groups`
 
 Data type: `Variant[String[1],Array[String[1]]]`
 
@@ -1520,7 +1562,7 @@ An array of hostgroups where this host needs to be added.
 
 Default value: `$zabbix::params::agent_zbx_groups`
 
-##### <a name="zbx_group_create"></a>`zbx_group_create`
+##### <a name="-zabbix--agent--zbx_group_create"></a>`zbx_group_create`
 
 Data type: `Any`
 
@@ -1528,7 +1570,7 @@ Whether to create hostgroup if missing.
 
 Default value: `$zabbix::params::agent_zbx_group_create`
 
-##### <a name="zbx_templates"></a>`zbx_templates`
+##### <a name="-zabbix--agent--zbx_templates"></a>`zbx_templates`
 
 Data type: `Any`
 
@@ -1536,7 +1578,7 @@ List of templates which will be added when host is configured.
 
 Default value: `$zabbix::params::agent_zbx_templates`
 
-##### <a name="zbx_macros"></a>`zbx_macros`
+##### <a name="-zabbix--agent--zbx_macros"></a>`zbx_macros`
 
 Data type: `Array[Hash]`
 
@@ -1544,7 +1586,7 @@ List of macros which will be added when host is configured.
 
 Default value: `[]`
 
-##### <a name="zbx_interface_type"></a>`zbx_interface_type`
+##### <a name="-zabbix--agent--zbx_interface_type"></a>`zbx_interface_type`
 
 Data type: `Integer[1,4]`
 
@@ -1552,7 +1594,7 @@ Integer specifying type of interface to be created.
 
 Default value: `1`
 
-##### <a name="zbx_interface_details"></a>`zbx_interface_details`
+##### <a name="-zabbix--agent--zbx_interface_details"></a>`zbx_interface_details`
 
 Data type: `Variant[Array, Hash]`
 
@@ -1560,7 +1602,7 @@ Hash with interface details for SNMP when interface type is 2.
 
 Default value: `[]`
 
-##### <a name="agent_configfile_path"></a>`agent_configfile_path`
+##### <a name="-zabbix--agent--agent_configfile_path"></a>`agent_configfile_path`
 
 Data type: `Any`
 
@@ -1568,7 +1610,7 @@ Agent config file path defaults to /etc/zabbix/zabbix_agentd.conf.
 
 Default value: `$zabbix::params::agent_configfile_path`
 
-##### <a name="pidfile"></a>`pidfile`
+##### <a name="-zabbix--agent--pidfile"></a>`pidfile`
 
 Data type: `Any`
 
@@ -1576,7 +1618,7 @@ Name of pid file.
 
 Default value: `$zabbix::params::agent_pidfile`
 
-##### <a name="servicename"></a>`servicename`
+##### <a name="-zabbix--agent--servicename"></a>`servicename`
 
 Data type: `Any`
 
@@ -1584,7 +1626,7 @@ Zabbix's agent service name.
 
 Default value: `$zabbix::params::agent_servicename`
 
-##### <a name="logfile"></a>`logfile`
+##### <a name="-zabbix--agent--logfile"></a>`logfile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1592,7 +1634,7 @@ Name of log file.
 
 Default value: `$zabbix::params::agent_logfile`
 
-##### <a name="logfilesize"></a>`logfilesize`
+##### <a name="-zabbix--agent--logfilesize"></a>`logfilesize`
 
 Data type: `Any`
 
@@ -1600,7 +1642,7 @@ Maximum size of log file in MB.
 
 Default value: `$zabbix::params::agent_logfilesize`
 
-##### <a name="logtype"></a>`logtype`
+##### <a name="-zabbix--agent--logtype"></a>`logtype`
 
 Data type: `Enum['console', 'file', 'system']`
 
@@ -1608,7 +1650,7 @@ Specifies where log messages are written to. Can be one of: console, file, syste
 
 Default value: `$zabbix::params::agent_logtype`
 
-##### <a name="debuglevel"></a>`debuglevel`
+##### <a name="-zabbix--agent--debuglevel"></a>`debuglevel`
 
 Data type: `Any`
 
@@ -1616,7 +1658,7 @@ Specifies debug level.
 
 Default value: `$zabbix::params::agent_debuglevel`
 
-##### <a name="sourceip"></a>`sourceip`
+##### <a name="-zabbix--agent--sourceip"></a>`sourceip`
 
 Data type: `Any`
 
@@ -1624,7 +1666,7 @@ Source ip address for outgoing connections.
 
 Default value: `$zabbix::params::agent_sourceip`
 
-##### <a name="allowkey"></a>`allowkey`
+##### <a name="-zabbix--agent--allowkey"></a>`allowkey`
 
 Data type: `Optional[String[1]]`
 
@@ -1632,7 +1674,7 @@ Allow execution of item keys matching pattern.
 
 Default value: `$zabbix::params::agent_allowkey`
 
-##### <a name="denykey"></a>`denykey`
+##### <a name="-zabbix--agent--denykey"></a>`denykey`
 
 Data type: `Optional[String[1]]`
 
@@ -1640,7 +1682,7 @@ Deny execution of items keys matching pattern.
 
 Default value: `$zabbix::params::agent_denykey`
 
-##### <a name="enableremotecommands"></a>`enableremotecommands`
+##### <a name="-zabbix--agent--enableremotecommands"></a>`enableremotecommands`
 
 Data type: `Any`
 
@@ -1648,7 +1690,7 @@ Whether remote commands from zabbix server are allowed.
 
 Default value: `$zabbix::params::agent_enableremotecommands`
 
-##### <a name="logremotecommands"></a>`logremotecommands`
+##### <a name="-zabbix--agent--logremotecommands"></a>`logremotecommands`
 
 Data type: `Any`
 
@@ -1656,7 +1698,7 @@ Enable logging of executed shell commands as warnings.
 
 Default value: `$zabbix::params::agent_logremotecommands`
 
-##### <a name="server"></a>`server`
+##### <a name="-zabbix--agent--server"></a>`server`
 
 Data type: `Any`
 
@@ -1664,7 +1706,7 @@ List of comma delimited ip addresses (or hostnames) of zabbix servers.
 
 Default value: `$zabbix::params::agent_server`
 
-##### <a name="listenport"></a>`listenport`
+##### <a name="-zabbix--agent--listenport"></a>`listenport`
 
 Data type: `Any`
 
@@ -1672,7 +1714,7 @@ Agent will listen on this port for connections from the server.
 
 Default value: `$zabbix::params::agent_listenport`
 
-##### <a name="listenip"></a>`listenip`
+##### <a name="-zabbix--agent--listenip"></a>`listenip`
 
 Data type: `Any`
 
@@ -1687,7 +1729,7 @@ if more than 1 interface is on the server.
 
 Default value: `$zabbix::params::agent_listenip`
 
-##### <a name="startagents"></a>`startagents`
+##### <a name="-zabbix--agent--startagents"></a>`startagents`
 
 Data type: `Any`
 
@@ -1695,7 +1737,7 @@ Number of pre-forked instances of zabbix_agentd that process passive checks.
 
 Default value: `$zabbix::params::agent_startagents`
 
-##### <a name="serveractive"></a>`serveractive`
+##### <a name="-zabbix--agent--serveractive"></a>`serveractive`
 
 Data type: `Any`
 
@@ -1703,7 +1745,7 @@ List of comma delimited ip:port (or hostname:port) pairs of zabbix servers for a
 
 Default value: `$zabbix::params::agent_serveractive`
 
-##### <a name="service_ensure"></a>`service_ensure`
+##### <a name="-zabbix--agent--service_ensure"></a>`service_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
@@ -1711,7 +1753,7 @@ Start / stop the agent service. E.g. to preconfigure a hosts agent and turn on t
 
 Default value: `$zabbix::params::agent_service_ensure`
 
-##### <a name="service_enable"></a>`service_enable`
+##### <a name="-zabbix--agent--service_enable"></a>`service_enable`
 
 Data type: `Boolean`
 
@@ -1719,7 +1761,7 @@ Automatically start the agent on system boot
 
 Default value: `$zabbix::params::agent_service_enable`
 
-##### <a name="hostname"></a>`hostname`
+##### <a name="-zabbix--agent--hostname"></a>`hostname`
 
 Data type: `Any`
 
@@ -1727,7 +1769,7 @@ Unique, case sensitive hostname.
 
 Default value: `$zabbix::params::agent_hostname`
 
-##### <a name="hostnameitem"></a>`hostnameitem`
+##### <a name="-zabbix--agent--hostnameitem"></a>`hostnameitem`
 
 Data type: `Any`
 
@@ -1735,7 +1777,7 @@ Zabbix item used for generating hostname if it is undefined.
 
 Default value: `$zabbix::params::agent_hostnameitem`
 
-##### <a name="hostmetadata"></a>`hostmetadata`
+##### <a name="-zabbix--agent--hostmetadata"></a>`hostmetadata`
 
 Data type: `Any`
 
@@ -1743,7 +1785,7 @@ Optional parameter that defines host metadata.
 
 Default value: `$zabbix::params::agent_hostmetadata`
 
-##### <a name="hostmetadataitem"></a>`hostmetadataitem`
+##### <a name="-zabbix--agent--hostmetadataitem"></a>`hostmetadataitem`
 
 Data type: `Any`
 
@@ -1751,7 +1793,7 @@ Optional parameter that defines a zabbix item used for getting host metadata.
 
 Default value: `$zabbix::params::agent_hostmetadataitem`
 
-##### <a name="hostinterface"></a>`hostinterface`
+##### <a name="-zabbix--agent--hostinterface"></a>`hostinterface`
 
 Data type: `Optional[Stdlib::Fqdn]`
 
@@ -1760,7 +1802,7 @@ auto-registration process (active agent).
 
 Default value: `$zabbix::params::agent_hostinterface`
 
-##### <a name="hostinterfaceitem"></a>`hostinterfaceitem`
+##### <a name="-zabbix--agent--hostinterfaceitem"></a>`hostinterfaceitem`
 
 Data type: `Optional[Stdlib::Fqdn]`
 
@@ -1769,7 +1811,7 @@ Host interface is used at host auto-registration process.
 
 Default value: `$zabbix::params::agent_hostinterfaceitem`
 
-##### <a name="refreshactivechecks"></a>`refreshactivechecks`
+##### <a name="-zabbix--agent--refreshactivechecks"></a>`refreshactivechecks`
 
 Data type: `Any`
 
@@ -1777,7 +1819,7 @@ How often list of active checks is refreshed, in seconds.
 
 Default value: `$zabbix::params::agent_refreshactivechecks`
 
-##### <a name="buffersend"></a>`buffersend`
+##### <a name="-zabbix--agent--buffersend"></a>`buffersend`
 
 Data type: `Any`
 
@@ -1785,7 +1827,7 @@ Do not keep data longer than n seconds in buffer.
 
 Default value: `$zabbix::params::agent_buffersend`
 
-##### <a name="buffersize"></a>`buffersize`
+##### <a name="-zabbix--agent--buffersize"></a>`buffersize`
 
 Data type: `Any`
 
@@ -1793,7 +1835,7 @@ Maximum number of values in a memory buffer.
 
 Default value: `$zabbix::params::agent_buffersize`
 
-##### <a name="maxlinespersecond"></a>`maxlinespersecond`
+##### <a name="-zabbix--agent--maxlinespersecond"></a>`maxlinespersecond`
 
 Data type: `Any`
 
@@ -1801,7 +1843,7 @@ Maximum number of new lines the agent will send per second to zabbix server or p
 
 Default value: `$zabbix::params::agent_maxlinespersecond`
 
-##### <a name="allowroot"></a>`allowroot`
+##### <a name="-zabbix--agent--allowroot"></a>`allowroot`
 
 Data type: `Any`
 
@@ -1809,7 +1851,7 @@ Allow the agent to run as 'root'.
 
 Default value: `$zabbix::params::agent_allowroot`
 
-##### <a name="zabbix_user"></a>`zabbix_user`
+##### <a name="-zabbix--agent--zabbix_user"></a>`zabbix_user`
 
 Data type: `Optional[String[1]]`
 
@@ -1817,7 +1859,7 @@ Drop privileges to a specific, existing user on the system. Only has effect if r
 
 Default value: `$zabbix::params::agent_zabbix_user`
 
-##### <a name="zabbix_alias"></a>`zabbix_alias`
+##### <a name="-zabbix--agent--zabbix_alias"></a>`zabbix_alias`
 
 Data type: `Optional[Array]`
 
@@ -1825,7 +1867,7 @@ Sets an alias for parameter.
 
 Default value: `$zabbix::params::agent_zabbix_alias`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-zabbix--agent--timeout"></a>`timeout`
 
 Data type: `Any`
 
@@ -1833,15 +1875,24 @@ Spend no more than timeout seconds on processing.
 
 Default value: `$zabbix::params::agent_timeout`
 
-##### <a name="tlsaccept"></a>`tlsaccept`
+##### <a name="-zabbix--agent--tlsaccept"></a>`tlsaccept`
 
-Data type: `Any`
+Data type:
+
+```puppet
+Optional[
+    Variant[
+      Array[Enum['unencrypted','psk','cert']],
+      Enum['unencrypted','psk','cert']
+    ]
+  ]
+```
 
 What incoming connections to accept from Zabbix server. Used for a passive proxy, ignored on an active proxy.
 
 Default value: `$zabbix::params::agent_tlsaccept`
 
-##### <a name="tlscafile"></a>`tlscafile`
+##### <a name="-zabbix--agent--tlscafile"></a>`tlscafile`
 
 Data type: `Any`
 
@@ -1849,7 +1900,7 @@ Full pathname of a file containing the top-level CA(s) certificates for peer cer
 
 Default value: `$zabbix::params::agent_tlscafile`
 
-##### <a name="tlscertfile"></a>`tlscertfile`
+##### <a name="-zabbix--agent--tlscertfile"></a>`tlscertfile`
 
 Data type: `Any`
 
@@ -1857,15 +1908,31 @@ Full pathname of a file containing the proxy certificate or certificate chain.
 
 Default value: `$zabbix::params::agent_tlscertfile`
 
-##### <a name="tlsconnect"></a>`tlsconnect`
+##### <a name="-zabbix--agent--tlscertissuer"></a>`tlscertissuer`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
+
+Issuer of the certificate that is allowed to talk with the serve
+
+Default value: `undef`
+
+##### <a name="-zabbix--agent--tlscertsubject"></a>`tlscertsubject`
+
+Data type: `Optional[String[1]]`
+
+Subject of the certificate that is allowed to talk with the server
+
+Default value: `undef`
+
+##### <a name="-zabbix--agent--tlsconnect"></a>`tlsconnect`
+
+Data type: `Optional[Enum['unencrypted','psk','cert']]`
 
 How the proxy should connect to Zabbix server. Used for an active proxy, ignored on a passive proxy.
 
 Default value: `$zabbix::params::agent_tlsconnect`
 
-##### <a name="tlscrlfile"></a>`tlscrlfile`
+##### <a name="-zabbix--agent--tlscrlfile"></a>`tlscrlfile`
 
 Data type: `Any`
 
@@ -1873,7 +1940,7 @@ Full pathname of a file containing revoked certificates.
 
 Default value: `$zabbix::params::agent_tlscrlfile`
 
-##### <a name="tlskeyfile"></a>`tlskeyfile`
+##### <a name="-zabbix--agent--tlskeyfile"></a>`tlskeyfile`
 
 Data type: `Any`
 
@@ -1881,7 +1948,7 @@ Full pathname of a file containing the proxy private key.
 
 Default value: `$zabbix::params::agent_tlskeyfile`
 
-##### <a name="tlspskfile"></a>`tlspskfile`
+##### <a name="-zabbix--agent--tlspskfile"></a>`tlspskfile`
 
 Data type: `Any`
 
@@ -1889,7 +1956,7 @@ Full pathname of a file containing the pre-shared key.
 
 Default value: `$zabbix::params::agent_tlspskfile`
 
-##### <a name="tlspskidentity"></a>`tlspskidentity`
+##### <a name="-zabbix--agent--tlspskidentity"></a>`tlspskidentity`
 
 Data type: `Any`
 
@@ -1897,7 +1964,7 @@ Unique, case sensitive string used to identify the pre-shared key.
 
 Default value: `$zabbix::params::agent_tlspskidentity`
 
-##### <a name="tlscipherall"></a>`tlscipherall`
+##### <a name="-zabbix--agent--tlscipherall"></a>`tlscipherall`
 
 Data type: `Optional[String[1]]`
 
@@ -1906,7 +1973,7 @@ for certificate- and PSK-based encryption.
 
 Default value: `$zabbix::params::agent_tlscipherall`
 
-##### <a name="tlscipherall13"></a>`tlscipherall13`
+##### <a name="-zabbix--agent--tlscipherall13"></a>`tlscipherall13`
 
 Data type: `Optional[String[1]]`
 
@@ -1915,7 +1982,7 @@ for certificate- and PSK-based encryption.
 
 Default value: `$zabbix::params::agent_tlscipherall13`
 
-##### <a name="tlsciphercert"></a>`tlsciphercert`
+##### <a name="-zabbix--agent--tlsciphercert"></a>`tlsciphercert`
 
 Data type: `Optional[String[1]]`
 
@@ -1924,7 +1991,7 @@ for certificate-based encryption.
 
 Default value: `$zabbix::params::agent_tlsciphercert`
 
-##### <a name="tlsciphercert13"></a>`tlsciphercert13`
+##### <a name="-zabbix--agent--tlsciphercert13"></a>`tlsciphercert13`
 
 Data type: `Optional[String[1]]`
 
@@ -1933,7 +2000,7 @@ for certificate-based encryption.
 
 Default value: `$zabbix::params::agent_tlsciphercert13`
 
-##### <a name="tlscipherpsk"></a>`tlscipherpsk`
+##### <a name="-zabbix--agent--tlscipherpsk"></a>`tlscipherpsk`
 
 Data type: `Optional[String[1]]`
 
@@ -1942,7 +2009,7 @@ for PSK-based encryption.
 
 Default value: `$zabbix::params::agent_tlscipherpsk`
 
-##### <a name="tlscipherpsk13"></a>`tlscipherpsk13`
+##### <a name="-zabbix--agent--tlscipherpsk13"></a>`tlscipherpsk13`
 
 Data type: `Optional[String[1]]`
 
@@ -1951,7 +2018,7 @@ for PSK-based encryption.
 
 Default value: `$zabbix::params::agent_tlscipherpsk13`
 
-##### <a name="tlsservercertissuer"></a>`tlsservercertissuer`
+##### <a name="-zabbix--agent--tlsservercertissuer"></a>`tlsservercertissuer`
 
 Data type: `Any`
 
@@ -1959,7 +2026,7 @@ Allowed server certificate issuer.
 
 Default value: `$zabbix::params::agent_tlsservercertissuer`
 
-##### <a name="tlsservercertsubject"></a>`tlsservercertsubject`
+##### <a name="-zabbix--agent--tlsservercertsubject"></a>`tlsservercertsubject`
 
 Data type: `Any`
 
@@ -1967,7 +2034,7 @@ Allowed server certificate subject.
 
 Default value: `$zabbix::params::agent_tlsservercertsubject`
 
-##### <a name="agent_config_owner"></a>`agent_config_owner`
+##### <a name="-zabbix--agent--agent_config_owner"></a>`agent_config_owner`
 
 Data type: `Optional[String[1]]`
 
@@ -1975,7 +2042,7 @@ The owner of Zabbix's agent config file.
 
 Default value: `$zabbix::params::agent_config_owner`
 
-##### <a name="agent_config_group"></a>`agent_config_group`
+##### <a name="-zabbix--agent--agent_config_group"></a>`agent_config_group`
 
 Data type: `Optional[String[1]]`
 
@@ -1983,7 +2050,7 @@ The group of Zabbix's agent config file.
 
 Default value: `$zabbix::params::agent_config_group`
 
-##### <a name="manage_selinux"></a>`manage_selinux`
+##### <a name="-zabbix--agent--manage_selinux"></a>`manage_selinux`
 
 Data type: `Boolean`
 
@@ -1991,7 +2058,7 @@ Whether the module should manage SELinux rules or not.
 
 Default value: `$zabbix::params::manage_selinux`
 
-##### <a name="selinux_require"></a>`selinux_require`
+##### <a name="-zabbix--agent--selinux_require"></a>`selinux_require`
 
 Data type: `Array[String]`
 
@@ -1999,7 +2066,7 @@ An array of SELinux require {} rules.
 
 Default value: `$zabbix::params::selinux_require`
 
-##### <a name="selinux_rules"></a>`selinux_rules`
+##### <a name="-zabbix--agent--selinux_rules"></a>`selinux_rules`
 
 Data type: `Hash[String, Array]`
 
@@ -2007,7 +2074,7 @@ A Hash of SELinux rules.
 
 Default value: `$zabbix::params::selinux_rules`
 
-##### <a name="additional_service_params"></a>`additional_service_params`
+##### <a name="-zabbix--agent--additional_service_params"></a>`additional_service_params`
 
 Data type: `String`
 
@@ -2015,7 +2082,7 @@ Additional parameters to pass to the service.
 
 Default value: `$zabbix::params::additional_service_params`
 
-##### <a name="service_type"></a>`service_type`
+##### <a name="-zabbix--agent--service_type"></a>`service_type`
 
 Data type: `String`
 
@@ -2023,7 +2090,7 @@ Systemd service type
 
 Default value: `$zabbix::params::service_type`
 
-##### <a name="include_dir"></a>`include_dir`
+##### <a name="-zabbix--agent--include_dir"></a>`include_dir`
 
 Data type: `Any`
 
@@ -2031,7 +2098,7 @@ You may include individual files or all files in a directory in the configuratio
 
 Default value: `$zabbix::params::agent_include`
 
-##### <a name="include_dir_purge"></a>`include_dir_purge`
+##### <a name="-zabbix--agent--include_dir_purge"></a>`include_dir_purge`
 
 Data type: `Any`
 
@@ -2039,7 +2106,7 @@ Include dir to purge.
 
 Default value: `$zabbix::params::agent_include_purge`
 
-##### <a name="unsafeuserparameters"></a>`unsafeuserparameters`
+##### <a name="-zabbix--agent--unsafeuserparameters"></a>`unsafeuserparameters`
 
 Data type: `Any`
 
@@ -2047,7 +2114,7 @@ Allow all characters to be passed in arguments to user-defined parameters.
 
 Default value: `$zabbix::params::agent_unsafeuserparameters`
 
-##### <a name="userparameter"></a>`userparameter`
+##### <a name="-zabbix--agent--userparameter"></a>`userparameter`
 
 Data type: `Any`
 
@@ -2055,7 +2122,7 @@ User-defined parameter to monitor.
 
 Default value: `$zabbix::params::agent_userparameter`
 
-##### <a name="loadmodulepath"></a>`loadmodulepath`
+##### <a name="-zabbix--agent--loadmodulepath"></a>`loadmodulepath`
 
 Data type: `Optional[String[1]]`
 
@@ -2063,7 +2130,7 @@ Full path to location of agent modules.
 
 Default value: `$zabbix::params::agent_loadmodulepath`
 
-##### <a name="loadmodule"></a>`loadmodule`
+##### <a name="-zabbix--agent--loadmodule"></a>`loadmodule`
 
 Data type: `Any`
 
@@ -2071,7 +2138,7 @@ Module to load at agent startup.
 
 Default value: `$zabbix::params::agent_loadmodule`
 
-##### <a name="manage_startup_script"></a>`manage_startup_script`
+##### <a name="-zabbix--agent--manage_startup_script"></a>`manage_startup_script`
 
 Data type: `Boolean`
 
@@ -2081,7 +2148,7 @@ agent_configfile_path)
 
 Default value: `$zabbix::params::manage_startup_script`
 
-### <a name="zabbixdatabase"></a>`zabbix::database`
+### <a name="zabbix--database"></a>`zabbix::database`
 
 This will install the correct database and one or more users for correct usage
 
@@ -2120,26 +2187,26 @@ the zabbix_server and zabbix_web parameter.
 
 The following parameters are available in the `zabbix::database` class:
 
-* [`zabbix_type`](#zabbix_type)
-* [`zabbix_web`](#zabbix_web)
-* [`zabbix_web_ip`](#zabbix_web_ip)
-* [`zabbix_server`](#zabbix_server)
-* [`zabbix_server_ip`](#zabbix_server_ip)
-* [`zabbix_proxy`](#zabbix_proxy)
-* [`zabbix_proxy_ip`](#zabbix_proxy_ip)
-* [`manage_database`](#manage_database)
-* [`database_type`](#database_type)
-* [`database_schema_path`](#database_schema_path)
-* [`database_name`](#database_name)
-* [`database_user`](#database_user)
-* [`database_password`](#database_password)
-* [`database_host`](#database_host)
-* [`database_host_ip`](#database_host_ip)
-* [`database_charset`](#database_charset)
-* [`database_collate`](#database_collate)
-* [`database_tablespace`](#database_tablespace)
+* [`zabbix_type`](#-zabbix--database--zabbix_type)
+* [`zabbix_web`](#-zabbix--database--zabbix_web)
+* [`zabbix_web_ip`](#-zabbix--database--zabbix_web_ip)
+* [`zabbix_server`](#-zabbix--database--zabbix_server)
+* [`zabbix_server_ip`](#-zabbix--database--zabbix_server_ip)
+* [`zabbix_proxy`](#-zabbix--database--zabbix_proxy)
+* [`zabbix_proxy_ip`](#-zabbix--database--zabbix_proxy_ip)
+* [`manage_database`](#-zabbix--database--manage_database)
+* [`database_type`](#-zabbix--database--database_type)
+* [`database_schema_path`](#-zabbix--database--database_schema_path)
+* [`database_name`](#-zabbix--database--database_name)
+* [`database_user`](#-zabbix--database--database_user)
+* [`database_password`](#-zabbix--database--database_password)
+* [`database_host`](#-zabbix--database--database_host)
+* [`database_host_ip`](#-zabbix--database--database_host_ip)
+* [`database_charset`](#-zabbix--database--database_charset)
+* [`database_collate`](#-zabbix--database--database_collate)
+* [`database_tablespace`](#-zabbix--database--database_tablespace)
 
-##### <a name="zabbix_type"></a>`zabbix_type`
+##### <a name="-zabbix--database--zabbix_type"></a>`zabbix_type`
 
 Data type: `Any`
 
@@ -2148,7 +2215,7 @@ This will determine what sql files will be loaded into database.
 
 Default value: `'server'`
 
-##### <a name="zabbix_web"></a>`zabbix_web`
+##### <a name="-zabbix--database--zabbix_web"></a>`zabbix_web`
 
 Data type: `Any`
 
@@ -2158,7 +2225,7 @@ mysql. When single node: localhost
 
 Default value: `$zabbix::params::zabbix_web`
 
-##### <a name="zabbix_web_ip"></a>`zabbix_web_ip`
+##### <a name="-zabbix--database--zabbix_web_ip"></a>`zabbix_web_ip`
 
 Data type: `Any`
 
@@ -2168,7 +2235,7 @@ postgresql. When single node: 127.0.0.1
 
 Default value: `$zabbix::params::zabbix_web_ip`
 
-##### <a name="zabbix_server"></a>`zabbix_server`
+##### <a name="-zabbix--database--zabbix_server"></a>`zabbix_server`
 
 Data type: `Any`
 
@@ -2177,7 +2244,7 @@ is used when database_type = mysql. Default: localhost
 
 Default value: `$zabbix::params::zabbix_server`
 
-##### <a name="zabbix_server_ip"></a>`zabbix_server_ip`
+##### <a name="-zabbix--database--zabbix_server_ip"></a>`zabbix_server_ip`
 
 Data type: `Any`
 
@@ -2187,7 +2254,7 @@ This parameter is used when database_type = postgresql. Default:
 
 Default value: `$zabbix::params::zabbix_server_ip`
 
-##### <a name="zabbix_proxy"></a>`zabbix_proxy`
+##### <a name="-zabbix--database--zabbix_proxy"></a>`zabbix_proxy`
 
 Data type: `Any`
 
@@ -2196,7 +2263,7 @@ is used when database_type = mysql. Default: localhost
 
 Default value: `$zabbix::params::zabbix_proxy`
 
-##### <a name="zabbix_proxy_ip"></a>`zabbix_proxy_ip`
+##### <a name="-zabbix--database--zabbix_proxy_ip"></a>`zabbix_proxy_ip`
 
 Data type: `Any`
 
@@ -2206,7 +2273,7 @@ This parameter is used when database_type = postgresql. Default:
 
 Default value: `$zabbix::params::zabbix_proxy_ip`
 
-##### <a name="manage_database"></a>`manage_database`
+##### <a name="-zabbix--database--manage_database"></a>`manage_database`
 
 Data type: `Any`
 
@@ -2215,7 +2282,7 @@ the sql files for basic setup. Otherwise you should do this manually.
 
 Default value: `$zabbix::params::manage_database`
 
-##### <a name="database_type"></a>`database_type`
+##### <a name="-zabbix--database--database_type"></a>`database_type`
 
 Data type: `Zabbix::Databases`
 
@@ -2223,7 +2290,7 @@ The database which is used: postgresql or mysql
 
 Default value: `$zabbix::params::database_type`
 
-##### <a name="database_schema_path"></a>`database_schema_path`
+##### <a name="-zabbix--database--database_schema_path"></a>`database_schema_path`
 
 Data type: `Any`
 
@@ -2231,7 +2298,7 @@ The path to the directory containing the .sql schema files
 
 Default value: `$zabbix::params::database_schema_path`
 
-##### <a name="database_name"></a>`database_name`
+##### <a name="-zabbix--database--database_name"></a>`database_name`
 
 Data type: `Any`
 
@@ -2239,7 +2306,7 @@ The name of the database. Default: zabbix-server
 
 Default value: `$zabbix::params::server_database_name`
 
-##### <a name="database_user"></a>`database_user`
+##### <a name="-zabbix--database--database_user"></a>`database_user`
 
 Data type: `Any`
 
@@ -2247,15 +2314,15 @@ The user which is used for connecting to the database
 
 Default value: `$zabbix::params::server_database_user`
 
-##### <a name="database_password"></a>`database_password`
+##### <a name="-zabbix--database--database_password"></a>`database_password`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 The password of the database_user.
 
 Default value: `$zabbix::params::server_database_password`
 
-##### <a name="database_host"></a>`database_host`
+##### <a name="-zabbix--database--database_host"></a>`database_host`
 
 Data type: `Any`
 
@@ -2263,7 +2330,7 @@ The hostname of the server running the database.
 
 Default value: `$zabbix::params::server_database_host`
 
-##### <a name="database_host_ip"></a>`database_host_ip`
+##### <a name="-zabbix--database--database_host_ip"></a>`database_host_ip`
 
 Data type: `Any`
 
@@ -2271,7 +2338,7 @@ IP of the machine the database runs on.
 
 Default value: `$zabbix::params::server_database_host_ip`
 
-##### <a name="database_charset"></a>`database_charset`
+##### <a name="-zabbix--database--database_charset"></a>`database_charset`
 
 Data type: `Any`
 
@@ -2279,7 +2346,7 @@ The default charset of the database.
 
 Default value: `$zabbix::params::server_database_charset`
 
-##### <a name="database_collate"></a>`database_collate`
+##### <a name="-zabbix--database--database_collate"></a>`database_collate`
 
 Data type: `Any`
 
@@ -2287,7 +2354,7 @@ The default collation of the database.
 
 Default value: `$zabbix::params::server_database_collate`
 
-##### <a name="database_tablespace"></a>`database_tablespace`
+##### <a name="-zabbix--database--database_tablespace"></a>`database_tablespace`
 
 Data type: `Optional[String[1]]`
 
@@ -2295,21 +2362,21 @@ The tablespace the database will be created in. This setting only affects Postgr
 
 Default value: `$zabbix::params::server_database_tablespace`
 
-### <a name="zabbixdatabasesqlite"></a>`zabbix::database::sqlite`
+### <a name="zabbix--database--sqlite"></a>`zabbix::database::sqlite`
 
 Class to handle sqlite database installations zabbix will automatically create a sqlite schema if one does not already exist.
 
-### <a name="zabbixjavagateway"></a>`zabbix::javagateway`
+### <a name="zabbix--javagateway"></a>`zabbix::javagateway`
 
 This will install and configure the zabbix-agent deamon
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'zabbix::javagateway':
-  zabbix_version => '5.2',
+  zabbix_version => '6.0',
 }
 ```
 
@@ -2317,17 +2384,17 @@ class { 'zabbix::javagateway':
 
 The following parameters are available in the `zabbix::javagateway` class:
 
-* [`zabbix_version`](#zabbix_version)
-* [`zabbix_package_state`](#zabbix_package_state)
-* [`manage_firewall`](#manage_firewall)
-* [`manage_repo`](#manage_repo)
-* [`pidfile`](#pidfile)
-* [`listenip`](#listenip)
-* [`listenport`](#listenport)
-* [`startpollers`](#startpollers)
-* [`timeout`](#timeout)
+* [`zabbix_version`](#-zabbix--javagateway--zabbix_version)
+* [`zabbix_package_state`](#-zabbix--javagateway--zabbix_package_state)
+* [`manage_firewall`](#-zabbix--javagateway--manage_firewall)
+* [`manage_repo`](#-zabbix--javagateway--manage_repo)
+* [`pidfile`](#-zabbix--javagateway--pidfile)
+* [`listenip`](#-zabbix--javagateway--listenip)
+* [`listenport`](#-zabbix--javagateway--listenport)
+* [`startpollers`](#-zabbix--javagateway--startpollers)
+* [`timeout`](#-zabbix--javagateway--timeout)
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix--javagateway--zabbix_version"></a>`zabbix_version`
 
 Data type: `Any`
 
@@ -2335,7 +2402,7 @@ This is the zabbix version.
 
 Default value: `$zabbix::params::zabbix_version`
 
-##### <a name="zabbix_package_state"></a>`zabbix_package_state`
+##### <a name="-zabbix--javagateway--zabbix_package_state"></a>`zabbix_package_state`
 
 Data type: `Any`
 
@@ -2343,7 +2410,7 @@ The state of the package that needs to be installed: present or latest.
 
 Default value: `$zabbix::params::zabbix_package_state`
 
-##### <a name="manage_firewall"></a>`manage_firewall`
+##### <a name="-zabbix--javagateway--manage_firewall"></a>`manage_firewall`
 
 Data type: `Boolean`
 
@@ -2351,7 +2418,7 @@ When true, it will create iptables rules.
 
 Default value: `$zabbix::params::manage_firewall`
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-zabbix--javagateway--manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
@@ -2359,7 +2426,7 @@ When true, it will create repository for installing the javagateway.
 
 Default value: `$zabbix::params::manage_repo`
 
-##### <a name="pidfile"></a>`pidfile`
+##### <a name="-zabbix--javagateway--pidfile"></a>`pidfile`
 
 Data type: `Any`
 
@@ -2367,7 +2434,7 @@ Name of pid file.
 
 Default value: `$zabbix::params::javagateway_pidfile`
 
-##### <a name="listenip"></a>`listenip`
+##### <a name="-zabbix--javagateway--listenip"></a>`listenip`
 
 Data type: `Any`
 
@@ -2375,7 +2442,7 @@ List of comma delimited ip addresses that the agent should listen on.
 
 Default value: `$zabbix::params::javagateway_listenip`
 
-##### <a name="listenport"></a>`listenport`
+##### <a name="-zabbix--javagateway--listenport"></a>`listenport`
 
 Data type: `Any`
 
@@ -2383,7 +2450,7 @@ Agent will listen on this port for connections from the server.
 
 Default value: `$zabbix::params::javagateway_listenport`
 
-##### <a name="startpollers"></a>`startpollers`
+##### <a name="-zabbix--javagateway--startpollers"></a>`startpollers`
 
 Data type: `Any`
 
@@ -2391,7 +2458,7 @@ Number of worker threads to start.
 
 Default value: `$zabbix::params::javagateway_startpollers`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-zabbix--javagateway--timeout"></a>`timeout`
 
 Data type: `Any`
 
@@ -2399,11 +2466,29 @@ Number of worker threads to start.
 
 Default value: `$zabbix::params::javagateway_timeout`
 
-### <a name="zabbixparams"></a>`zabbix::params`
+### <a name="zabbix--params"></a>`zabbix::params`
 
 This class manages zabbix server parameters
 
-### <a name="zabbixproxy"></a>`zabbix::proxy`
+### <a name="zabbix--php"></a>`zabbix::php`
+
+Install a version of PHP supported by Zabbix on system where the default one is too old
+
+#### Parameters
+
+The following parameters are available in the `zabbix::php` class:
+
+* [`manage_php`](#-zabbix--php--manage_php)
+
+##### <a name="-zabbix--php--manage_php"></a>`manage_php`
+
+Data type: `Optional[String]`
+
+If set, version of PHP to install on systems where default one is not supported by Zabbix (actually only EL8).
+
+Default value: `undef`
+
+### <a name="zabbix--proxy"></a>`zabbix::proxy`
 
 This will install and configure the zabbix-proxy deamon
 
@@ -2469,121 +2554,124 @@ node 'wdpuppet04.dj-wasabi.local' {
 
 The following parameters are available in the `zabbix::proxy` class:
 
-* [`database_type`](#database_type)
-* [`database_path`](#database_path)
-* [`zabbix_version`](#zabbix_version)
-* [`zabbix_package_state`](#zabbix_package_state)
-* [`manage_database`](#manage_database)
-* [`manage_firewall`](#manage_firewall)
-* [`manage_repo`](#manage_repo)
-* [`manage_resources`](#manage_resources)
-* [`manage_service`](#manage_service)
-* [`zabbix_proxy`](#zabbix_proxy)
-* [`zabbix_proxy_ip`](#zabbix_proxy_ip)
-* [`use_ip`](#use_ip)
-* [`zbx_templates`](#zbx_templates)
-* [`proxy_configfile_path`](#proxy_configfile_path)
-* [`proxy_service_name`](#proxy_service_name)
-* [`mode`](#mode)
-* [`zabbix_server_host`](#zabbix_server_host)
-* [`zabbix_server_port`](#zabbix_server_port)
-* [`hostname`](#hostname)
-* [`listenport`](#listenport)
-* [`sourceip`](#sourceip)
-* [`enableremotecommands`](#enableremotecommands)
-* [`logremotecommands`](#logremotecommands)
-* [`logfile`](#logfile)
-* [`logfilesize`](#logfilesize)
-* [`logtype`](#logtype)
-* [`debuglevel`](#debuglevel)
-* [`pidfile`](#pidfile)
-* [`database_schema_path`](#database_schema_path)
-* [`database_host`](#database_host)
-* [`database_name`](#database_name)
-* [`database_schema`](#database_schema)
-* [`database_user`](#database_user)
-* [`database_password`](#database_password)
-* [`database_socket`](#database_socket)
-* [`database_port`](#database_port)
-* [`database_charset`](#database_collate)
-* [`database_collate`](#database_collate)
-* [`database_tlsconnect`](#database_tlsconnect)
-* [`database_tlscafile`](#database_tlscafile)
-* [`database_tlscertfile`](#database_tlscertfile)
-* [`database_tlskeyfile`](#database_tlskeyfile)
-* [`database_tlscipher`](#database_tlscipher)
-* [`database_tlscipher13`](#database_tlscipher13)
-* [`localbuffer`](#localbuffer)
-* [`offlinebuffer`](#offlinebuffer)
-* [`heartbeatfrequency`](#heartbeatfrequency)
-* [`configfrequency`](#configfrequency)
-* [`datasenderfrequency`](#datasenderfrequency)
-* [`startpollers`](#startpollers)
-* [`startpreprocessors`](#startpreprocessors)
-* [`startipmipollers`](#startipmipollers)
-* [`startpollersunreachable`](#startpollersunreachable)
-* [`starttrappers`](#starttrappers)
-* [`startpingers`](#startpingers)
-* [`startdiscoverers`](#startdiscoverers)
-* [`starthttppollers`](#starthttppollers)
-* [`javagateway`](#javagateway)
-* [`javagatewayport`](#javagatewayport)
-* [`startjavapollers`](#startjavapollers)
-* [`startvmwarecollectors`](#startvmwarecollectors)
-* [`vmwarefrequency`](#vmwarefrequency)
-* [`vmwareperffrequency`](#vmwareperffrequency)
-* [`vmwaretimeout`](#vmwaretimeout)
-* [`vmwarecachesize`](#vmwarecachesize)
-* [`vaultdbpath`](#vaultdbpath)
-* [`vaulttoken`](#vaulttoken)
-* [`vaulturl`](#vaulturl)
-* [`snmptrapperfile`](#snmptrapperfile)
-* [`snmptrapper`](#snmptrapper)
-* [`listenip`](#listenip)
-* [`housekeepingfrequency`](#housekeepingfrequency)
-* [`cachesize`](#cachesize)
-* [`startdbsyncers`](#startdbsyncers)
-* [`historycachesize`](#historycachesize)
-* [`historyindexcachesize`](#historyindexcachesize)
-* [`historytextcachesize`](#historytextcachesize)
-* [`timeout`](#timeout)
-* [`tlsaccept`](#tlsaccept)
-* [`tlscafile`](#tlscafile)
-* [`tlscertfile`](#tlscertfile)
-* [`tlsconnect`](#tlsconnect)
-* [`tlscrlfile`](#tlscrlfile)
-* [`tlskeyfile`](#tlskeyfile)
-* [`tlspskfile`](#tlspskfile)
-* [`tlspskidentity`](#tlspskidentity)
-* [`tlscipherall`](#tlscipherall)
-* [`tlscipherall13`](#tlscipherall13)
-* [`tlsciphercert`](#tlsciphercert)
-* [`tlsciphercert13`](#tlsciphercert13)
-* [`tlscipherpsk`](#tlscipherpsk)
-* [`tlscipherpsk13`](#tlscipherpsk13)
-* [`tlsservercertissuer`](#tlsservercertissuer)
-* [`tlsservercertsubject`](#tlsservercertsubject)
-* [`trappertimeout`](#trappertimeout)
-* [`unreachableperiod`](#unreachableperiod)
-* [`unavaliabledelay`](#unavaliabledelay)
-* [`unreachabedelay`](#unreachabedelay)
-* [`externalscripts`](#externalscripts)
-* [`fpinglocation`](#fpinglocation)
-* [`fping6location`](#fping6location)
-* [`sshkeylocation`](#sshkeylocation)
-* [`sslcalocation_dir`](#sslcalocation_dir)
-* [`sslcertlocation_dir`](#sslcertlocation_dir)
-* [`sslkeylocation_dir`](#sslkeylocation_dir)
-* [`logslowqueries`](#logslowqueries)
-* [`tmpdir`](#tmpdir)
-* [`allowroot`](#allowroot)
-* [`include_dir`](#include_dir)
-* [`loadmodulepath`](#loadmodulepath)
-* [`loadmodule`](#loadmodule)
-* [`manage_selinux`](#manage_selinux)
-* [`socketdir`](#socketdir)
+* [`database_type`](#-zabbix--proxy--database_type)
+* [`database_path`](#-zabbix--proxy--database_path)
+* [`zabbix_version`](#-zabbix--proxy--zabbix_version)
+* [`zabbix_package_state`](#-zabbix--proxy--zabbix_package_state)
+* [`manage_database`](#-zabbix--proxy--manage_database)
+* [`manage_firewall`](#-zabbix--proxy--manage_firewall)
+* [`manage_repo`](#-zabbix--proxy--manage_repo)
+* [`manage_resources`](#-zabbix--proxy--manage_resources)
+* [`manage_service`](#-zabbix--proxy--manage_service)
+* [`zabbix_proxy`](#-zabbix--proxy--zabbix_proxy)
+* [`zabbix_proxy_ip`](#-zabbix--proxy--zabbix_proxy_ip)
+* [`use_ip`](#-zabbix--proxy--use_ip)
+* [`zbx_templates`](#-zabbix--proxy--zbx_templates)
+* [`proxy_configfile_path`](#-zabbix--proxy--proxy_configfile_path)
+* [`proxy_service_name`](#-zabbix--proxy--proxy_service_name)
+* [`mode`](#-zabbix--proxy--mode)
+* [`zabbix_server_host`](#-zabbix--proxy--zabbix_server_host)
+* [`zabbix_server_port`](#-zabbix--proxy--zabbix_server_port)
+* [`hostname`](#-zabbix--proxy--hostname)
+* [`listenport`](#-zabbix--proxy--listenport)
+* [`sourceip`](#-zabbix--proxy--sourceip)
+* [`enableremotecommands`](#-zabbix--proxy--enableremotecommands)
+* [`logremotecommands`](#-zabbix--proxy--logremotecommands)
+* [`logfile`](#-zabbix--proxy--logfile)
+* [`logfilesize`](#-zabbix--proxy--logfilesize)
+* [`logtype`](#-zabbix--proxy--logtype)
+* [`debuglevel`](#-zabbix--proxy--debuglevel)
+* [`pidfile`](#-zabbix--proxy--pidfile)
+* [`database_schema_path`](#-zabbix--proxy--database_schema_path)
+* [`database_host`](#-zabbix--proxy--database_host)
+* [`database_name`](#-zabbix--proxy--database_name)
+* [`database_schema`](#-zabbix--proxy--database_schema)
+* [`database_user`](#-zabbix--proxy--database_user)
+* [`database_password`](#-zabbix--proxy--database_password)
+* [`database_socket`](#-zabbix--proxy--database_socket)
+* [`database_port`](#-zabbix--proxy--database_port)
+* [`database_charset`](#-zabbix--proxy--database_charset)
+* [`database_collate`](#-zabbix--proxy--database_collate)
+* [`database_tlsconnect`](#-zabbix--proxy--database_tlsconnect)
+* [`database_tlscafile`](#-zabbix--proxy--database_tlscafile)
+* [`database_tlscertfile`](#-zabbix--proxy--database_tlscertfile)
+* [`database_tlskeyfile`](#-zabbix--proxy--database_tlskeyfile)
+* [`database_tlscipher`](#-zabbix--proxy--database_tlscipher)
+* [`database_tlscipher13`](#-zabbix--proxy--database_tlscipher13)
+* [`localbuffer`](#-zabbix--proxy--localbuffer)
+* [`offlinebuffer`](#-zabbix--proxy--offlinebuffer)
+* [`heartbeatfrequency`](#-zabbix--proxy--heartbeatfrequency)
+* [`configfrequency`](#-zabbix--proxy--configfrequency)
+* [`proxyconfigfrequency`](#-zabbix--proxy--proxyconfigfrequency)
+* [`datasenderfrequency`](#-zabbix--proxy--datasenderfrequency)
+* [`startpollers`](#-zabbix--proxy--startpollers)
+* [`startpreprocessors`](#-zabbix--proxy--startpreprocessors)
+* [`startipmipollers`](#-zabbix--proxy--startipmipollers)
+* [`startodbcpollers`](#-zabbix--proxy--startodbcpollers)
+* [`startpollersunreachable`](#-zabbix--proxy--startpollersunreachable)
+* [`starttrappers`](#-zabbix--proxy--starttrappers)
+* [`startpingers`](#-zabbix--proxy--startpingers)
+* [`startdiscoverers`](#-zabbix--proxy--startdiscoverers)
+* [`starthttppollers`](#-zabbix--proxy--starthttppollers)
+* [`javagateway`](#-zabbix--proxy--javagateway)
+* [`javagatewayport`](#-zabbix--proxy--javagatewayport)
+* [`startjavapollers`](#-zabbix--proxy--startjavapollers)
+* [`startvmwarecollectors`](#-zabbix--proxy--startvmwarecollectors)
+* [`vmwarefrequency`](#-zabbix--proxy--vmwarefrequency)
+* [`vmwareperffrequency`](#-zabbix--proxy--vmwareperffrequency)
+* [`vmwaretimeout`](#-zabbix--proxy--vmwaretimeout)
+* [`vmwarecachesize`](#-zabbix--proxy--vmwarecachesize)
+* [`vaultdbpath`](#-zabbix--proxy--vaultdbpath)
+* [`vaulttoken`](#-zabbix--proxy--vaulttoken)
+* [`vaulturl`](#-zabbix--proxy--vaulturl)
+* [`snmptrapperfile`](#-zabbix--proxy--snmptrapperfile)
+* [`snmptrapper`](#-zabbix--proxy--snmptrapper)
+* [`listenip`](#-zabbix--proxy--listenip)
+* [`housekeepingfrequency`](#-zabbix--proxy--housekeepingfrequency)
+* [`cachesize`](#-zabbix--proxy--cachesize)
+* [`startdbsyncers`](#-zabbix--proxy--startdbsyncers)
+* [`historycachesize`](#-zabbix--proxy--historycachesize)
+* [`historyindexcachesize`](#-zabbix--proxy--historyindexcachesize)
+* [`historytextcachesize`](#-zabbix--proxy--historytextcachesize)
+* [`timeout`](#-zabbix--proxy--timeout)
+* [`tlsaccept`](#-zabbix--proxy--tlsaccept)
+* [`tlscafile`](#-zabbix--proxy--tlscafile)
+* [`tlscertfile`](#-zabbix--proxy--tlscertfile)
+* [`tlsconnect`](#-zabbix--proxy--tlsconnect)
+* [`tlscrlfile`](#-zabbix--proxy--tlscrlfile)
+* [`tlskeyfile`](#-zabbix--proxy--tlskeyfile)
+* [`tlspskfile`](#-zabbix--proxy--tlspskfile)
+* [`tlspskidentity`](#-zabbix--proxy--tlspskidentity)
+* [`tlscipherall`](#-zabbix--proxy--tlscipherall)
+* [`tlscipherall13`](#-zabbix--proxy--tlscipherall13)
+* [`tlsciphercert`](#-zabbix--proxy--tlsciphercert)
+* [`tlsciphercert13`](#-zabbix--proxy--tlsciphercert13)
+* [`tlscipherpsk`](#-zabbix--proxy--tlscipherpsk)
+* [`tlscipherpsk13`](#-zabbix--proxy--tlscipherpsk13)
+* [`tlsservercertissuer`](#-zabbix--proxy--tlsservercertissuer)
+* [`tlsservercertsubject`](#-zabbix--proxy--tlsservercertsubject)
+* [`trappertimeout`](#-zabbix--proxy--trappertimeout)
+* [`unreachableperiod`](#-zabbix--proxy--unreachableperiod)
+* [`unavaliabledelay`](#-zabbix--proxy--unavaliabledelay)
+* [`unreachabedelay`](#-zabbix--proxy--unreachabedelay)
+* [`externalscripts`](#-zabbix--proxy--externalscripts)
+* [`fpinglocation`](#-zabbix--proxy--fpinglocation)
+* [`fping6location`](#-zabbix--proxy--fping6location)
+* [`sshkeylocation`](#-zabbix--proxy--sshkeylocation)
+* [`statsallowedip`](#-zabbix--proxy--statsallowedip)
+* [`sslcalocation_dir`](#-zabbix--proxy--sslcalocation_dir)
+* [`sslcertlocation_dir`](#-zabbix--proxy--sslcertlocation_dir)
+* [`sslkeylocation_dir`](#-zabbix--proxy--sslkeylocation_dir)
+* [`logslowqueries`](#-zabbix--proxy--logslowqueries)
+* [`tmpdir`](#-zabbix--proxy--tmpdir)
+* [`allowroot`](#-zabbix--proxy--allowroot)
+* [`include_dir`](#-zabbix--proxy--include_dir)
+* [`loadmodulepath`](#-zabbix--proxy--loadmodulepath)
+* [`loadmodule`](#-zabbix--proxy--loadmodule)
+* [`manage_selinux`](#-zabbix--proxy--manage_selinux)
+* [`socketdir`](#-zabbix--proxy--socketdir)
 
-##### <a name="database_type"></a>`database_type`
+##### <a name="-zabbix--proxy--database_type"></a>`database_type`
 
 Data type: `Zabbix::Databases`
 
@@ -2591,7 +2679,7 @@ Type of database. Can use the following 3 databases: postgresql, mysql, sqlite
 
 Default value: `$zabbix::params::database_type`
 
-##### <a name="database_path"></a>`database_path`
+##### <a name="-zabbix--proxy--database_path"></a>`database_path`
 
 Data type: `Any`
 
@@ -2602,7 +2690,7 @@ path.
 
 Default value: `$zabbix::params::database_path`
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix--proxy--zabbix_version"></a>`zabbix_version`
 
 Data type: `Any`
 
@@ -2610,7 +2698,7 @@ This is the zabbix version.
 
 Default value: `$zabbix::params::zabbix_version`
 
-##### <a name="zabbix_package_state"></a>`zabbix_package_state`
+##### <a name="-zabbix--proxy--zabbix_package_state"></a>`zabbix_package_state`
 
 Data type: `Any`
 
@@ -2618,7 +2706,7 @@ The state of the package that needs to be installed: present or latest.
 
 Default value: `$zabbix::params::zabbix_package_state`
 
-##### <a name="manage_database"></a>`manage_database`
+##### <a name="-zabbix--proxy--manage_database"></a>`manage_database`
 
 Data type: `Boolean`
 
@@ -2626,7 +2714,7 @@ When true, it will configure the database and execute the sql scripts.
 
 Default value: `$zabbix::params::manage_database`
 
-##### <a name="manage_firewall"></a>`manage_firewall`
+##### <a name="-zabbix--proxy--manage_firewall"></a>`manage_firewall`
 
 Data type: `Boolean`
 
@@ -2634,7 +2722,7 @@ When true, it will create iptables rules.
 
 Default value: `$zabbix::params::manage_firewall`
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-zabbix--proxy--manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
@@ -2642,7 +2730,7 @@ When true, it will create repository for installing the proxy.
 
 Default value: `$zabbix::params::manage_repo`
 
-##### <a name="manage_resources"></a>`manage_resources`
+##### <a name="-zabbix--proxy--manage_resources"></a>`manage_resources`
 
 Data type: `Boolean`
 
@@ -2650,7 +2738,7 @@ When true, it will export resources so that the zabbix-server can create via the
 
 Default value: `$zabbix::params::manage_resources`
 
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-zabbix--proxy--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
@@ -2659,7 +2747,7 @@ When false, it does not care about service
 
 Default value: `$zabbix::params::manage_service`
 
-##### <a name="zabbix_proxy"></a>`zabbix_proxy`
+##### <a name="-zabbix--proxy--zabbix_proxy"></a>`zabbix_proxy`
 
 Data type: `Any`
 
@@ -2667,7 +2755,7 @@ Hostname of zabbix proxy.
 
 Default value: `$zabbix::params::zabbix_proxy`
 
-##### <a name="zabbix_proxy_ip"></a>`zabbix_proxy_ip`
+##### <a name="-zabbix--proxy--zabbix_proxy_ip"></a>`zabbix_proxy_ip`
 
 Data type: `Any`
 
@@ -2675,7 +2763,7 @@ IP of zabbix proxy.
 
 Default value: `$zabbix::params::zabbix_proxy_ip`
 
-##### <a name="use_ip"></a>`use_ip`
+##### <a name="-zabbix--proxy--use_ip"></a>`use_ip`
 
 Data type: `Any`
 
@@ -2684,7 +2772,7 @@ connection should me made via ip, not fqdn.
 
 Default value: `$zabbix::params::proxy_use_ip`
 
-##### <a name="zbx_templates"></a>`zbx_templates`
+##### <a name="-zabbix--proxy--zbx_templates"></a>`zbx_templates`
 
 Data type: `Any`
 
@@ -2692,7 +2780,7 @@ Template which will be added when proxy is configured.
 
 Default value: `$zabbix::params::proxy_zbx_templates`
 
-##### <a name="proxy_configfile_path"></a>`proxy_configfile_path`
+##### <a name="-zabbix--proxy--proxy_configfile_path"></a>`proxy_configfile_path`
 
 Data type: `Any`
 
@@ -2700,7 +2788,7 @@ Proxy config file path defaults to /etc/zabbix/zabbix_proxy.conf
 
 Default value: `$zabbix::params::proxy_configfile_path`
 
-##### <a name="proxy_service_name"></a>`proxy_service_name`
+##### <a name="-zabbix--proxy--proxy_service_name"></a>`proxy_service_name`
 
 Data type: `Any`
 
@@ -2708,7 +2796,7 @@ The service name of Zabbix proxy.
 
 Default value: `$zabbix::params::proxy_service_name`
 
-##### <a name="mode"></a>`mode`
+##### <a name="-zabbix--proxy--mode"></a>`mode`
 
 Data type: `Any`
 
@@ -2716,7 +2804,7 @@ Proxy operating mode.
 
 Default value: `$zabbix::params::proxy_mode`
 
-##### <a name="zabbix_server_host"></a>`zabbix_server_host`
+##### <a name="-zabbix--proxy--zabbix_server_host"></a>`zabbix_server_host`
 
 Data type: `Any`
 
@@ -2724,7 +2812,7 @@ Hostname or the ipaddress of the zabbix-server.
 
 Default value: `$zabbix::params::proxy_zabbix_server_host`
 
-##### <a name="zabbix_server_port"></a>`zabbix_server_port`
+##### <a name="-zabbix--proxy--zabbix_server_port"></a>`zabbix_server_port`
 
 Data type: `Any`
 
@@ -2732,7 +2820,7 @@ Port on which the server is listening.
 
 Default value: `$zabbix::params::proxy_zabbix_server_port`
 
-##### <a name="hostname"></a>`hostname`
+##### <a name="-zabbix--proxy--hostname"></a>`hostname`
 
 Data type: `Any`
 
@@ -2740,7 +2828,7 @@ Hostname for the proxy. Default is $::fqdn or this parameter.
 
 Default value: `$zabbix::params::proxy_hostname`
 
-##### <a name="listenport"></a>`listenport`
+##### <a name="-zabbix--proxy--listenport"></a>`listenport`
 
 Data type: `Any`
 
@@ -2748,7 +2836,7 @@ Listen port for trapper.
 
 Default value: `$zabbix::params::proxy_listenport`
 
-##### <a name="sourceip"></a>`sourceip`
+##### <a name="-zabbix--proxy--sourceip"></a>`sourceip`
 
 Data type: `Any`
 
@@ -2756,7 +2844,7 @@ Source ip address for outgoing connections.
 
 Default value: `$zabbix::params::proxy_sourceip`
 
-##### <a name="enableremotecommands"></a>`enableremotecommands`
+##### <a name="-zabbix--proxy--enableremotecommands"></a>`enableremotecommands`
 
 Data type: `Integer[0]`
 
@@ -2764,7 +2852,7 @@ Whether remote commands from zabbix server are allowed.
 
 Default value: `$zabbix::params::proxy_enableremotecommands`
 
-##### <a name="logremotecommands"></a>`logremotecommands`
+##### <a name="-zabbix--proxy--logremotecommands"></a>`logremotecommands`
 
 Data type: `Integer[0]`
 
@@ -2772,7 +2860,7 @@ Enable logging of executed shell commands as warnings.
 
 Default value: `$zabbix::params::proxy_logremotecommands`
 
-##### <a name="logfile"></a>`logfile`
+##### <a name="-zabbix--proxy--logfile"></a>`logfile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2780,7 +2868,7 @@ Name of log file.
 
 Default value: `$zabbix::params::proxy_logfile`
 
-##### <a name="logfilesize"></a>`logfilesize`
+##### <a name="-zabbix--proxy--logfilesize"></a>`logfilesize`
 
 Data type: `Any`
 
@@ -2788,7 +2876,7 @@ Maximum size of log file in MB.
 
 Default value: `$zabbix::params::proxy_logfilesize`
 
-##### <a name="logtype"></a>`logtype`
+##### <a name="-zabbix--proxy--logtype"></a>`logtype`
 
 Data type: `Enum['console', 'file', 'system']`
 
@@ -2796,7 +2884,7 @@ Specifies where log messages are written to. Can be one of: console, file, syste
 
 Default value: `$zabbix::params::proxy_logtype`
 
-##### <a name="debuglevel"></a>`debuglevel`
+##### <a name="-zabbix--proxy--debuglevel"></a>`debuglevel`
 
 Data type: `Any`
 
@@ -2804,7 +2892,7 @@ Specifies debug level.
 
 Default value: `$zabbix::params::proxy_debuglevel`
 
-##### <a name="pidfile"></a>`pidfile`
+##### <a name="-zabbix--proxy--pidfile"></a>`pidfile`
 
 Data type: `Any`
 
@@ -2812,7 +2900,7 @@ Name of pid file.
 
 Default value: `$zabbix::params::proxy_pidfile`
 
-##### <a name="database_schema_path"></a>`database_schema_path`
+##### <a name="-zabbix--proxy--database_schema_path"></a>`database_schema_path`
 
 Data type: `Any`
 
@@ -2820,7 +2908,7 @@ The path to the directory containing the .sql schema files
 
 Default value: `$zabbix::params::database_schema_path`
 
-##### <a name="database_host"></a>`database_host`
+##### <a name="-zabbix--proxy--database_host"></a>`database_host`
 
 Data type: `Any`
 
@@ -2828,7 +2916,7 @@ Database host name.
 
 Default value: `$zabbix::params::proxy_database_host`
 
-##### <a name="database_name"></a>`database_name`
+##### <a name="-zabbix--proxy--database_name"></a>`database_name`
 
 Data type: `Any`
 
@@ -2836,7 +2924,7 @@ Database name.
 
 Default value: `$zabbix::params::proxy_database_name`
 
-##### <a name="database_schema"></a>`database_schema`
+##### <a name="-zabbix--proxy--database_schema"></a>`database_schema`
 
 Data type: `Any`
 
@@ -2844,7 +2932,7 @@ Schema name. used for ibm db2.
 
 Default value: `$zabbix::params::proxy_database_schema`
 
-##### <a name="database_user"></a>`database_user`
+##### <a name="-zabbix--proxy--database_user"></a>`database_user`
 
 Data type: `Any`
 
@@ -2852,15 +2940,15 @@ Database user. ignored for sqlite.
 
 Default value: `$zabbix::params::proxy_database_user`
 
-##### <a name="database_password"></a>`database_password`
+##### <a name="-zabbix--proxy--database_password"></a>`database_password`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Database password. ignored for sqlite.
 
 Default value: `$zabbix::params::proxy_database_password`
 
-##### <a name="database_socket"></a>`database_socket`
+##### <a name="-zabbix--proxy--database_socket"></a>`database_socket`
 
 Data type: `Any`
 
@@ -2868,7 +2956,7 @@ Path to mysql socket.
 
 Default value: `$zabbix::params::proxy_database_socket`
 
-##### <a name="database_port"></a>`database_port`
+##### <a name="-zabbix--proxy--database_port"></a>`database_port`
 
 Data type: `Any`
 
@@ -2876,7 +2964,7 @@ Database port when not using local socket. Ignored for sqlite.
 
 Default value: `$zabbix::params::proxy_database_port`
 
-##### <a name="database_charset"></a>`database_charset`
+##### <a name="-zabbix--proxy--database_charset"></a>`database_charset`
 
 Data type: `Any`
 
@@ -2884,7 +2972,7 @@ The default charset of the database.
 
 Default value: `$zabbix::params::server_database_charset`
 
-##### <a name="database_collate"></a>`database_collate`
+##### <a name="-zabbix--proxy--database_collate"></a>`database_collate`
 
 Data type: `Any`
 
@@ -2892,7 +2980,7 @@ The default collation of the database.
 
 Default value: `$zabbix::params::server_database_collate`
 
-##### <a name="database_tlsconnect"></a>`database_tlsconnect`
+##### <a name="-zabbix--proxy--database_tlsconnect"></a>`database_tlsconnect`
 
 Data type: `Optional[Enum['required', 'verify_ca', 'verify_full']]`
 
@@ -2903,7 +2991,7 @@ Available options:
 
 Default value: `$zabbix::params::proxy_database_tlsconnect`
 
-##### <a name="database_tlscafile"></a>`database_tlscafile`
+##### <a name="-zabbix--proxy--database_tlscafile"></a>`database_tlscafile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2911,7 +2999,7 @@ Full pathname of a file containing the top-level CA(s) certificates for database
 
 Default value: `$zabbix::params::proxy_database_tlscafile`
 
-##### <a name="database_tlscertfile"></a>`database_tlscertfile`
+##### <a name="-zabbix--proxy--database_tlscertfile"></a>`database_tlscertfile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2919,7 +3007,7 @@ Full pathname of file containing Zabbix server certificate for authenticating to
 
 Default value: `$zabbix::params::proxy_database_tlscertfile`
 
-##### <a name="database_tlskeyfile"></a>`database_tlskeyfile`
+##### <a name="-zabbix--proxy--database_tlskeyfile"></a>`database_tlskeyfile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2927,7 +3015,7 @@ Full pathname of file containing the private key for authenticating to database.
 
 Default value: `$zabbix::params::proxy_database_tlskeyfile`
 
-##### <a name="database_tlscipher"></a>`database_tlscipher`
+##### <a name="-zabbix--proxy--database_tlscipher"></a>`database_tlscipher`
 
 Data type: `Optional[String[1]]`
 
@@ -2935,7 +3023,7 @@ The list of encryption ciphers that Zabbix server permits for TLS protocols up t
 
 Default value: `$zabbix::params::proxy_database_tlscipher`
 
-##### <a name="database_tlscipher13"></a>`database_tlscipher13`
+##### <a name="-zabbix--proxy--database_tlscipher13"></a>`database_tlscipher13`
 
 Data type: `Optional[String[1]]`
 
@@ -2943,7 +3031,7 @@ The list of encryption ciphersuites that Zabbix server permits for TLSv1.3 proto
 
 Default value: `$zabbix::params::proxy_database_tlscipher13`
 
-##### <a name="localbuffer"></a>`localbuffer`
+##### <a name="-zabbix--proxy--localbuffer"></a>`localbuffer`
 
 Data type: `Any`
 
@@ -2951,7 +3039,7 @@ Proxy will keep data locally for N hours, even if the data have already been syn
 
 Default value: `$zabbix::params::proxy_localbuffer`
 
-##### <a name="offlinebuffer"></a>`offlinebuffer`
+##### <a name="-zabbix--proxy--offlinebuffer"></a>`offlinebuffer`
 
 Data type: `Any`
 
@@ -2959,7 +3047,7 @@ Proxy will keep data for N hours in case if no connectivity with Zabbix Server
 
 Default value: `$zabbix::params::proxy_offlinebuffer`
 
-##### <a name="heartbeatfrequency"></a>`heartbeatfrequency`
+##### <a name="-zabbix--proxy--heartbeatfrequency"></a>`heartbeatfrequency`
 
 Data type: `Any`
 
@@ -2967,7 +3055,7 @@ Unique nodeid in distributed setup.
 
 Default value: `$zabbix::params::proxy_heartbeatfrequency`
 
-##### <a name="configfrequency"></a>`configfrequency`
+##### <a name="-zabbix--proxy--configfrequency"></a>`configfrequency`
 
 Data type: `Any`
 
@@ -2975,7 +3063,15 @@ How often proxy retrieves configuration data from Zabbix Server in seconds.
 
 Default value: `$zabbix::params::proxy_configfrequency`
 
-##### <a name="datasenderfrequency"></a>`datasenderfrequency`
+##### <a name="-zabbix--proxy--proxyconfigfrequency"></a>`proxyconfigfrequency`
+
+Data type: `Optional[Integer[1,604800]]`
+
+How often proxy retrieves configuration data from Zabbix Server in seconds (Zabbix 6.4).
+
+Default value: `$zabbix::params::proxy_proxyconfigfrequency`
+
+##### <a name="-zabbix--proxy--datasenderfrequency"></a>`datasenderfrequency`
 
 Data type: `Any`
 
@@ -2983,7 +3079,7 @@ Proxy will send collected data to the Server every N seconds.
 
 Default value: `$zabbix::params::proxy_datasenderfrequency`
 
-##### <a name="startpollers"></a>`startpollers`
+##### <a name="-zabbix--proxy--startpollers"></a>`startpollers`
 
 Data type: `Any`
 
@@ -2991,7 +3087,7 @@ Number of pre-forked instances of pollers.
 
 Default value: `$zabbix::params::proxy_startpollers`
 
-##### <a name="startpreprocessors"></a>`startpreprocessors`
+##### <a name="-zabbix--proxy--startpreprocessors"></a>`startpreprocessors`
 
 Data type: `Integer[1, 1000]`
 
@@ -2999,7 +3095,7 @@ Number of pre-forked instances of preprocessing workers
 
 Default value: `$zabbix::params::proxy_startpreprocessors`
 
-##### <a name="startipmipollers"></a>`startipmipollers`
+##### <a name="-zabbix--proxy--startipmipollers"></a>`startipmipollers`
 
 Data type: `Any`
 
@@ -3007,7 +3103,15 @@ Number of pre-forked instances of ipmi pollers.
 
 Default value: `$zabbix::params::proxy_startipmipollers`
 
-##### <a name="startpollersunreachable"></a>`startpollersunreachable`
+##### <a name="-zabbix--proxy--startodbcpollers"></a>`startodbcpollers`
+
+Data type: `Integer[0, 1000]`
+
+Number of pre-forked instances of ODBC pollers.
+
+Default value: `$zabbix::params::proxy_startodbcpollers`
+
+##### <a name="-zabbix--proxy--startpollersunreachable"></a>`startpollersunreachable`
 
 Data type: `Any`
 
@@ -3015,7 +3119,7 @@ Number of pre-forked instances of pollers for unreachable hosts (including ipmi)
 
 Default value: `$zabbix::params::proxy_startpollersunreachable`
 
-##### <a name="starttrappers"></a>`starttrappers`
+##### <a name="-zabbix--proxy--starttrappers"></a>`starttrappers`
 
 Data type: `Any`
 
@@ -3023,7 +3127,7 @@ Number of pre-forked instances of trappers.
 
 Default value: `$zabbix::params::proxy_starttrappers`
 
-##### <a name="startpingers"></a>`startpingers`
+##### <a name="-zabbix--proxy--startpingers"></a>`startpingers`
 
 Data type: `Any`
 
@@ -3031,7 +3135,7 @@ Number of pre-forked instances of icmp pingers.
 
 Default value: `$zabbix::params::proxy_startpingers`
 
-##### <a name="startdiscoverers"></a>`startdiscoverers`
+##### <a name="-zabbix--proxy--startdiscoverers"></a>`startdiscoverers`
 
 Data type: `Any`
 
@@ -3039,7 +3143,7 @@ Number of pre-forked instances of discoverers.
 
 Default value: `$zabbix::params::proxy_startdiscoverers`
 
-##### <a name="starthttppollers"></a>`starthttppollers`
+##### <a name="-zabbix--proxy--starthttppollers"></a>`starthttppollers`
 
 Data type: `Any`
 
@@ -3047,7 +3151,7 @@ Number of pre-forked instances of http pollers.
 
 Default value: `$zabbix::params::proxy_starthttppollers`
 
-##### <a name="javagateway"></a>`javagateway`
+##### <a name="-zabbix--proxy--javagateway"></a>`javagateway`
 
 Data type: `Any`
 
@@ -3055,7 +3159,7 @@ IP address (or hostname) of zabbix java gateway.
 
 Default value: `$zabbix::params::proxy_javagateway`
 
-##### <a name="javagatewayport"></a>`javagatewayport`
+##### <a name="-zabbix--proxy--javagatewayport"></a>`javagatewayport`
 
 Data type: `Any`
 
@@ -3063,7 +3167,7 @@ Port that zabbix java gateway listens on.
 
 Default value: `$zabbix::params::proxy_javagatewayport`
 
-##### <a name="startjavapollers"></a>`startjavapollers`
+##### <a name="-zabbix--proxy--startjavapollers"></a>`startjavapollers`
 
 Data type: `Any`
 
@@ -3071,7 +3175,7 @@ Number of pre-forked instances of java pollers.
 
 Default value: `$zabbix::params::proxy_startjavapollers`
 
-##### <a name="startvmwarecollectors"></a>`startvmwarecollectors`
+##### <a name="-zabbix--proxy--startvmwarecollectors"></a>`startvmwarecollectors`
 
 Data type: `Any`
 
@@ -3079,7 +3183,7 @@ Number of pre-forked vmware collector instances.
 
 Default value: `$zabbix::params::proxy_startvmwarecollectors`
 
-##### <a name="vmwarefrequency"></a>`vmwarefrequency`
+##### <a name="-zabbix--proxy--vmwarefrequency"></a>`vmwarefrequency`
 
 Data type: `Any`
 
@@ -3087,7 +3191,7 @@ How often zabbix will connect to vmware service to obtain a new datan.
 
 Default value: `$zabbix::params::proxy_vmwarefrequency`
 
-##### <a name="vmwareperffrequency"></a>`vmwareperffrequency`
+##### <a name="-zabbix--proxy--vmwareperffrequency"></a>`vmwareperffrequency`
 
 Data type: `Any`
 
@@ -3096,7 +3200,7 @@ This delay should be set to the least update interval of any VMware monitoring i
 
 Default value: `$zabbix::params::proxy_vmwareperffrequency`
 
-##### <a name="vmwaretimeout"></a>`vmwaretimeout`
+##### <a name="-zabbix--proxy--vmwaretimeout"></a>`vmwaretimeout`
 
 Data type: `Any`
 
@@ -3104,7 +3208,7 @@ The maximum number of seconds vmware collector will wait for a response from VMw
 
 Default value: `$zabbix::params::proxy_vmwaretimeout`
 
-##### <a name="vmwarecachesize"></a>`vmwarecachesize`
+##### <a name="-zabbix--proxy--vmwarecachesize"></a>`vmwarecachesize`
 
 Data type: `Any`
 
@@ -3112,7 +3216,7 @@ Size of vmware cache, in bytes.
 
 Default value: `$zabbix::params::proxy_vmwarecachesize`
 
-##### <a name="vaultdbpath"></a>`vaultdbpath`
+##### <a name="-zabbix--proxy--vaultdbpath"></a>`vaultdbpath`
 
 Data type: `Optional[String[1]]`
 
@@ -3120,7 +3224,7 @@ Vault path from where credentials for database will be retrieved by keys 'passwo
 
 Default value: `$zabbix::params::proxy_vaultdbpath`
 
-##### <a name="vaulttoken"></a>`vaulttoken`
+##### <a name="-zabbix--proxy--vaulttoken"></a>`vaulttoken`
 
 Data type: `Optional[String[1]]`
 
@@ -3129,7 +3233,7 @@ permission to the path specified in the optional VaultDBPath configuration param
 
 Default value: `$zabbix::params::proxy_vaulttoken`
 
-##### <a name="vaulturl"></a>`vaulturl`
+##### <a name="-zabbix--proxy--vaulturl"></a>`vaulturl`
 
 Data type: `Stdlib::HTTPSUrl`
 
@@ -3137,7 +3241,7 @@ Vault server HTTP[S] URL. System-wide CA certificates directory will be used if 
 
 Default value: `$zabbix::params::proxy_vaulturl`
 
-##### <a name="snmptrapperfile"></a>`snmptrapperfile`
+##### <a name="-zabbix--proxy--snmptrapperfile"></a>`snmptrapperfile`
 
 Data type: `Any`
 
@@ -3145,7 +3249,7 @@ Temporary file used for passing data from snmp trap daemon to the server.
 
 Default value: `$zabbix::params::proxy_snmptrapperfile`
 
-##### <a name="snmptrapper"></a>`snmptrapper`
+##### <a name="-zabbix--proxy--snmptrapper"></a>`snmptrapper`
 
 Data type: `Any`
 
@@ -3153,7 +3257,7 @@ If 1, snmp trapper process is started.
 
 Default value: `$zabbix::params::proxy_snmptrapper`
 
-##### <a name="listenip"></a>`listenip`
+##### <a name="-zabbix--proxy--listenip"></a>`listenip`
 
 Data type: `Any`
 
@@ -3161,7 +3265,7 @@ List of comma delimited ip addresses that the trapper should listen on.
 
 Default value: `$zabbix::params::proxy_listenip`
 
-##### <a name="housekeepingfrequency"></a>`housekeepingfrequency`
+##### <a name="-zabbix--proxy--housekeepingfrequency"></a>`housekeepingfrequency`
 
 Data type: `Any`
 
@@ -3169,7 +3273,7 @@ How often Zabbix will perform housekeeping procedure (in hours).
 
 Default value: `$zabbix::params::proxy_housekeepingfrequency`
 
-##### <a name="cachesize"></a>`cachesize`
+##### <a name="-zabbix--proxy--cachesize"></a>`cachesize`
 
 Data type: `Any`
 
@@ -3177,7 +3281,7 @@ Size of configuration cache, in MB.
 
 Default value: `$zabbix::params::proxy_cachesize`
 
-##### <a name="startdbsyncers"></a>`startdbsyncers`
+##### <a name="-zabbix--proxy--startdbsyncers"></a>`startdbsyncers`
 
 Data type: `Any`
 
@@ -3185,7 +3289,7 @@ Number of pre-forked instances of db syncers.
 
 Default value: `$zabbix::params::proxy_startdbsyncers`
 
-##### <a name="historycachesize"></a>`historycachesize`
+##### <a name="-zabbix--proxy--historycachesize"></a>`historycachesize`
 
 Data type: `Any`
 
@@ -3193,7 +3297,7 @@ Size of history cache, in bytes.
 
 Default value: `$zabbix::params::proxy_historycachesize`
 
-##### <a name="historyindexcachesize"></a>`historyindexcachesize`
+##### <a name="-zabbix--proxy--historyindexcachesize"></a>`historyindexcachesize`
 
 Data type: `Any`
 
@@ -3201,7 +3305,7 @@ Size of history index cache, in bytes.
 
 Default value: `$zabbix::params::proxy_historyindexcachesize`
 
-##### <a name="historytextcachesize"></a>`historytextcachesize`
+##### <a name="-zabbix--proxy--historytextcachesize"></a>`historytextcachesize`
 
 Data type: `Any`
 
@@ -3209,7 +3313,7 @@ Size of text history cache, in bytes.
 
 Default value: `$zabbix::params::proxy_historytextcachesize`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-zabbix--proxy--timeout"></a>`timeout`
 
 Data type: `Any`
 
@@ -3217,15 +3321,24 @@ Specifies how long we wait for agent, snmp device or external check (in seconds)
 
 Default value: `$zabbix::params::proxy_timeout`
 
-##### <a name="tlsaccept"></a>`tlsaccept`
+##### <a name="-zabbix--proxy--tlsaccept"></a>`tlsaccept`
 
-Data type: `Any`
+Data type:
+
+```puppet
+Optional[
+    Variant[
+      Array[Enum['unencrypted', 'psk', 'cert']],
+      Enum['unencrypted', 'psk', 'cert']
+    ]
+  ]
+```
 
 What incoming connections to accept from Zabbix server. Used for a passive proxy, ignored on an active proxy.
 
 Default value: `$zabbix::params::proxy_tlsaccept`
 
-##### <a name="tlscafile"></a>`tlscafile`
+##### <a name="-zabbix--proxy--tlscafile"></a>`tlscafile`
 
 Data type: `Any`
 
@@ -3233,7 +3346,7 @@ Full pathname of a file containing the top-level CA(s) certificates for peer cer
 
 Default value: `$zabbix::params::proxy_tlscafile`
 
-##### <a name="tlscertfile"></a>`tlscertfile`
+##### <a name="-zabbix--proxy--tlscertfile"></a>`tlscertfile`
 
 Data type: `Any`
 
@@ -3241,7 +3354,7 @@ Full pathname of a file containing the proxy certificate or certificate chain.
 
 Default value: `$zabbix::params::proxy_tlscertfile`
 
-##### <a name="tlsconnect"></a>`tlsconnect`
+##### <a name="-zabbix--proxy--tlsconnect"></a>`tlsconnect`
 
 Data type: `Any`
 
@@ -3249,7 +3362,7 @@ How the proxy should connect to Zabbix server. Used for an active proxy, ignored
 
 Default value: `$zabbix::params::proxy_tlsconnect`
 
-##### <a name="tlscrlfile"></a>`tlscrlfile`
+##### <a name="-zabbix--proxy--tlscrlfile"></a>`tlscrlfile`
 
 Data type: `Any`
 
@@ -3257,7 +3370,7 @@ Full pathname of a file containing revoked certificates.
 
 Default value: `$zabbix::params::proxy_tlscrlfile`
 
-##### <a name="tlskeyfile"></a>`tlskeyfile`
+##### <a name="-zabbix--proxy--tlskeyfile"></a>`tlskeyfile`
 
 Data type: `Any`
 
@@ -3265,7 +3378,7 @@ Full pathname of a file containing the proxy private key.
 
 Default value: `$zabbix::params::proxy_tlskeyfile`
 
-##### <a name="tlspskfile"></a>`tlspskfile`
+##### <a name="-zabbix--proxy--tlspskfile"></a>`tlspskfile`
 
 Data type: `Any`
 
@@ -3273,7 +3386,7 @@ Full pathname of a file containing the pre-shared key.
 
 Default value: `$zabbix::params::proxy_tlspskfile`
 
-##### <a name="tlspskidentity"></a>`tlspskidentity`
+##### <a name="-zabbix--proxy--tlspskidentity"></a>`tlspskidentity`
 
 Data type: `Any`
 
@@ -3281,7 +3394,7 @@ Unique, case sensitive string used to identify the pre-shared key.
 
 Default value: `$zabbix::params::proxy_tlspskidentity`
 
-##### <a name="tlscipherall"></a>`tlscipherall`
+##### <a name="-zabbix--proxy--tlscipherall"></a>`tlscipherall`
 
 Data type: `Optional[String[1]]`
 
@@ -3290,7 +3403,7 @@ for certificate- and PSK-based encryption.
 
 Default value: `$zabbix::params::proxy_tlscipherall`
 
-##### <a name="tlscipherall13"></a>`tlscipherall13`
+##### <a name="-zabbix--proxy--tlscipherall13"></a>`tlscipherall13`
 
 Data type: `Optional[String[1]]`
 
@@ -3299,7 +3412,7 @@ for certificate- and PSK-based encryption.
 
 Default value: `$zabbix::params::proxy_tlscipherall13`
 
-##### <a name="tlsciphercert"></a>`tlsciphercert`
+##### <a name="-zabbix--proxy--tlsciphercert"></a>`tlsciphercert`
 
 Data type: `Optional[String[1]]`
 
@@ -3308,7 +3421,7 @@ for certificate-based encryption.
 
 Default value: `$zabbix::params::proxy_tlsciphercert`
 
-##### <a name="tlsciphercert13"></a>`tlsciphercert13`
+##### <a name="-zabbix--proxy--tlsciphercert13"></a>`tlsciphercert13`
 
 Data type: `Optional[String[1]]`
 
@@ -3317,7 +3430,7 @@ for certificate-based encryption.
 
 Default value: `$zabbix::params::proxy_tlsciphercert13`
 
-##### <a name="tlscipherpsk"></a>`tlscipherpsk`
+##### <a name="-zabbix--proxy--tlscipherpsk"></a>`tlscipherpsk`
 
 Data type: `Optional[String[1]]`
 
@@ -3326,7 +3439,7 @@ for PSK-based encryption.
 
 Default value: `$zabbix::params::proxy_tlscipherpsk`
 
-##### <a name="tlscipherpsk13"></a>`tlscipherpsk13`
+##### <a name="-zabbix--proxy--tlscipherpsk13"></a>`tlscipherpsk13`
 
 Data type: `Optional[String[1]]`
 
@@ -3335,7 +3448,7 @@ for PSK-based encryption.
 
 Default value: `$zabbix::params::proxy_tlscipherpsk13`
 
-##### <a name="tlsservercertissuer"></a>`tlsservercertissuer`
+##### <a name="-zabbix--proxy--tlsservercertissuer"></a>`tlsservercertissuer`
 
 Data type: `Any`
 
@@ -3343,7 +3456,7 @@ Allowed server certificate issuer.
 
 Default value: `$zabbix::params::proxy_tlsservercertissuer`
 
-##### <a name="tlsservercertsubject"></a>`tlsservercertsubject`
+##### <a name="-zabbix--proxy--tlsservercertsubject"></a>`tlsservercertsubject`
 
 Data type: `Any`
 
@@ -3351,7 +3464,7 @@ Allowed server certificate subject.
 
 Default value: `$zabbix::params::proxy_tlsservercertsubject`
 
-##### <a name="trappertimeout"></a>`trappertimeout`
+##### <a name="-zabbix--proxy--trappertimeout"></a>`trappertimeout`
 
 Data type: `Any`
 
@@ -3359,7 +3472,7 @@ Specifies how many seconds trapper may spend processing new data.
 
 Default value: `$zabbix::params::proxy_trappertimeout`
 
-##### <a name="unreachableperiod"></a>`unreachableperiod`
+##### <a name="-zabbix--proxy--unreachableperiod"></a>`unreachableperiod`
 
 Data type: `Any`
 
@@ -3367,7 +3480,7 @@ After how many seconds of unreachability treat a host as unavailable.
 
 Default value: `$zabbix::params::proxy_unreachableperiod`
 
-##### <a name="unavaliabledelay"></a>`unavaliabledelay`
+##### <a name="-zabbix--proxy--unavaliabledelay"></a>`unavaliabledelay`
 
 Data type: `Any`
 
@@ -3375,7 +3488,7 @@ How often host is checked for availability during the unavailability period, in 
 
 Default value: `$zabbix::params::proxy_unavaliabledelay`
 
-##### <a name="unreachabedelay"></a>`unreachabedelay`
+##### <a name="-zabbix--proxy--unreachabedelay"></a>`unreachabedelay`
 
 Data type: `Any`
 
@@ -3383,7 +3496,7 @@ How often host is checked for availability during the unreachability period, in 
 
 Default value: `$zabbix::params::proxy_unreachabedelay`
 
-##### <a name="externalscripts"></a>`externalscripts`
+##### <a name="-zabbix--proxy--externalscripts"></a>`externalscripts`
 
 Data type: `Any`
 
@@ -3391,7 +3504,7 @@ Full path to location of external scripts.
 
 Default value: `$zabbix::params::proxy_externalscripts`
 
-##### <a name="fpinglocation"></a>`fpinglocation`
+##### <a name="-zabbix--proxy--fpinglocation"></a>`fpinglocation`
 
 Data type: `Any`
 
@@ -3399,7 +3512,7 @@ Location of fping.
 
 Default value: `$zabbix::params::proxy_fpinglocation`
 
-##### <a name="fping6location"></a>`fping6location`
+##### <a name="-zabbix--proxy--fping6location"></a>`fping6location`
 
 Data type: `Any`
 
@@ -3407,7 +3520,7 @@ Location of fping6.
 
 Default value: `$zabbix::params::proxy_fping6location`
 
-##### <a name="sshkeylocation"></a>`sshkeylocation`
+##### <a name="-zabbix--proxy--sshkeylocation"></a>`sshkeylocation`
 
 Data type: `Any`
 
@@ -3415,7 +3528,15 @@ Location of public and private keys for ssh checks and actions.
 
 Default value: `$zabbix::params::proxy_sshkeylocation`
 
-##### <a name="sslcalocation_dir"></a>`sslcalocation_dir`
+##### <a name="-zabbix--proxy--statsallowedip"></a>`statsallowedip`
+
+Data type: `Optional[String[1]]`
+
+list of allowed ipadresses that can access the internal stats of zabbix proxy over network
+
+Default value: `$zabbix::params::proxy_statsallowedip`
+
+##### <a name="-zabbix--proxy--sslcalocation_dir"></a>`sslcalocation_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -3423,7 +3544,7 @@ Location of certificate authority (CA) files for SSL server certificate verifica
 
 Default value: `$zabbix::params::proxy_sslcalocation`
 
-##### <a name="sslcertlocation_dir"></a>`sslcertlocation_dir`
+##### <a name="-zabbix--proxy--sslcertlocation_dir"></a>`sslcertlocation_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -3431,7 +3552,7 @@ Location of SSL client certificate files for client authentication.
 
 Default value: `$zabbix::params::proxy_sslcertlocation`
 
-##### <a name="sslkeylocation_dir"></a>`sslkeylocation_dir`
+##### <a name="-zabbix--proxy--sslkeylocation_dir"></a>`sslkeylocation_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -3439,7 +3560,7 @@ Location of SSL private key files for client authentication.
 
 Default value: `$zabbix::params::proxy_sslkeylocation`
 
-##### <a name="logslowqueries"></a>`logslowqueries`
+##### <a name="-zabbix--proxy--logslowqueries"></a>`logslowqueries`
 
 Data type: `Any`
 
@@ -3447,7 +3568,7 @@ How long a database query may take before being logged (in milliseconds).
 
 Default value: `$zabbix::params::proxy_logslowqueries`
 
-##### <a name="tmpdir"></a>`tmpdir`
+##### <a name="-zabbix--proxy--tmpdir"></a>`tmpdir`
 
 Data type: `Any`
 
@@ -3455,7 +3576,7 @@ Temporary directory.
 
 Default value: `$zabbix::params::proxy_tmpdir`
 
-##### <a name="allowroot"></a>`allowroot`
+##### <a name="-zabbix--proxy--allowroot"></a>`allowroot`
 
 Data type: `Any`
 
@@ -3463,7 +3584,7 @@ Allow the server to run as 'root'.
 
 Default value: `$zabbix::params::proxy_allowroot`
 
-##### <a name="include_dir"></a>`include_dir`
+##### <a name="-zabbix--proxy--include_dir"></a>`include_dir`
 
 Data type: `Any`
 
@@ -3471,7 +3592,7 @@ You may include individual files or all files in a directory in the configuratio
 
 Default value: `$zabbix::params::proxy_include`
 
-##### <a name="loadmodulepath"></a>`loadmodulepath`
+##### <a name="-zabbix--proxy--loadmodulepath"></a>`loadmodulepath`
 
 Data type: `Any`
 
@@ -3479,7 +3600,7 @@ Full path to location of server modules.
 
 Default value: `$zabbix::params::proxy_loadmodulepath`
 
-##### <a name="loadmodule"></a>`loadmodule`
+##### <a name="-zabbix--proxy--loadmodule"></a>`loadmodule`
 
 Data type: `Any`
 
@@ -3487,7 +3608,7 @@ Module to load at server startup.
 
 Default value: `$zabbix::params::proxy_loadmodule`
 
-##### <a name="manage_selinux"></a>`manage_selinux`
+##### <a name="-zabbix--proxy--manage_selinux"></a>`manage_selinux`
 
 Data type: `Boolean`
 
@@ -3495,7 +3616,7 @@ Whether we should manage SELinux rules.
 
 Default value: `$zabbix::params::manage_selinux`
 
-##### <a name="socketdir"></a>`socketdir`
+##### <a name="-zabbix--proxy--socketdir"></a>`socketdir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -3503,7 +3624,7 @@ IPC socket directory. Directory to store IPC sockets used by internal Zabbix ser
 
 Default value: `$zabbix::params::proxy_socketdir`
 
-### <a name="zabbixrepo"></a>`zabbix::repo`
+### <a name="zabbix--repo"></a>`zabbix::repo`
 
 If enabled, this will install the repository used for installing zabbix
 
@@ -3511,14 +3632,16 @@ If enabled, this will install the repository used for installing zabbix
 
 The following parameters are available in the `zabbix::repo` class:
 
-* [`manage_repo`](#manage_repo)
-* [`manage_apt`](#manage_apt)
-* [`zabbix_version`](#zabbix_version)
-* [`repo_location`](#repo_location)
-* [`frontend_repo_location`](#frontend_repo_location)
-* [`unsupported_repo_location`](#unsupported_repo_location)
+* [`manage_repo`](#-zabbix--repo--manage_repo)
+* [`manage_apt`](#-zabbix--repo--manage_apt)
+* [`zabbix_version`](#-zabbix--repo--zabbix_version)
+* [`repo_location`](#-zabbix--repo--repo_location)
+* [`repo_gpg_key_location`](#-zabbix--repo--repo_gpg_key_location)
+* [`frontend_repo_location`](#-zabbix--repo--frontend_repo_location)
+* [`unsupported_repo_location`](#-zabbix--repo--unsupported_repo_location)
+* [`unsupported_repo_gpg_key_location`](#-zabbix--repo--unsupported_repo_gpg_key_location)
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-zabbix--repo--manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
@@ -3526,7 +3649,7 @@ When true, it will create repository for installing the server.
 
 Default value: `$zabbix::params::manage_repo`
 
-##### <a name="manage_apt"></a>`manage_apt`
+##### <a name="-zabbix--repo--manage_apt"></a>`manage_apt`
 
 Data type: `Boolean`
 
@@ -3534,7 +3657,7 @@ Whether the module should manage apt repositories for Debian based systems.
 
 Default value: `$zabbix::params::manage_apt`
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix--repo--zabbix_version"></a>`zabbix_version`
 
 Data type: `String[1]`
 
@@ -3542,7 +3665,7 @@ This is the zabbix version.
 
 Default value: `$zabbix::params::zabbix_version`
 
-##### <a name="repo_location"></a>`repo_location`
+##### <a name="-zabbix--repo--repo_location"></a>`repo_location`
 
 Data type: `Optional[Stdlib::HTTPUrl]`
 
@@ -3550,7 +3673,15 @@ A custom repo location (e.g. your own mirror)
 
 Default value: `$zabbix::params::repo_location`
 
-##### <a name="frontend_repo_location"></a>`frontend_repo_location`
+##### <a name="-zabbix--repo--repo_gpg_key_location"></a>`repo_gpg_key_location`
+
+Data type: `Optional[Stdlib::HTTPUrl]`
+
+A custom repo GPG key location (e.g. an airlocked copy of the gpg key)
+
+Default value: `$zabbix::params::repo_gpg_key_location`
+
+##### <a name="-zabbix--repo--frontend_repo_location"></a>`frontend_repo_location`
 
 Data type: `Optional[Stdlib::HTTPUrl]`
 
@@ -3558,7 +3689,7 @@ A custom repo location for frontend package.
 
 Default value: `$zabbix::params::frontend_repo_location`
 
-##### <a name="unsupported_repo_location"></a>`unsupported_repo_location`
+##### <a name="-zabbix--repo--unsupported_repo_location"></a>`unsupported_repo_location`
 
 Data type: `Optional[Stdlib::HTTPUrl]`
 
@@ -3567,7 +3698,15 @@ Currently only supported under RedHat based systems.
 
 Default value: `$zabbix::params::unsupported_repo_location`
 
-### <a name="zabbixresourcesagent"></a>`zabbix::resources::agent`
+##### <a name="-zabbix--repo--unsupported_repo_gpg_key_location"></a>`unsupported_repo_gpg_key_location`
+
+Data type: `Optional[Stdlib::HTTPUrl]`
+
+A custom repo GPG key location (e.g. an airlocked copy of the gpg key)
+
+Default value: `$zabbix::params::unsupported_repo_gpg_key_location`
+
+### <a name="zabbix--resources--agent"></a>`zabbix::resources::agent`
 
 This will create resources into puppetdb for automatically configuring agent into zabbix front-end.
 
@@ -3575,100 +3714,95 @@ This will create resources into puppetdb for automatically configuring agent int
 
 The following parameters are available in the `zabbix::resources::agent` class:
 
-* [`hostname`](#hostname)
-* [`ipaddress`](#ipaddress)
-* [`use_ip`](#use_ip)
-* [`port`](#port)
-* [`group`](#group)
-* [`groups`](#groups)
-* [`group_create`](#group_create)
-* [`templates`](#templates)
-* [`macros`](#macros)
-* [`proxy`](#proxy)
-* [`interfacetype`](#interfacetype)
-* [`interfacedetails`](#interfacedetails)
+* [`hostname`](#-zabbix--resources--agent--hostname)
+* [`ipaddress`](#-zabbix--resources--agent--ipaddress)
+* [`use_ip`](#-zabbix--resources--agent--use_ip)
+* [`port`](#-zabbix--resources--agent--port)
+* [`groups`](#-zabbix--resources--agent--groups)
+* [`group_create`](#-zabbix--resources--agent--group_create)
+* [`templates`](#-zabbix--resources--agent--templates)
+* [`macros`](#-zabbix--resources--agent--macros)
+* [`proxy`](#-zabbix--resources--agent--proxy)
+* [`interfacetype`](#-zabbix--resources--agent--interfacetype)
+* [`interfacedetails`](#-zabbix--resources--agent--interfacedetails)
+* [`tls_connect`](#-zabbix--resources--agent--tls_connect)
+* [`tls_accept`](#-zabbix--resources--agent--tls_accept)
+* [`tls_issuer`](#-zabbix--resources--agent--tls_issuer)
+* [`tls_subject`](#-zabbix--resources--agent--tls_subject)
 
-##### <a name="hostname"></a>`hostname`
+##### <a name="-zabbix--resources--agent--hostname"></a>`hostname`
 
 Data type: `Any`
 
 Hostname of the machine
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ipaddress"></a>`ipaddress`
+##### <a name="-zabbix--resources--agent--ipaddress"></a>`ipaddress`
 
 Data type: `Any`
 
 The IP address of the machine running zabbix agent.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_ip"></a>`use_ip`
+##### <a name="-zabbix--resources--agent--use_ip"></a>`use_ip`
 
 Data type: `Any`
 
 Use ipadress instead of dns to connect.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-zabbix--resources--agent--port"></a>`port`
 
 Data type: `Any`
 
 The port that the zabbix agent is listening on.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="group"></a>`group`
+##### <a name="-zabbix--resources--agent--groups"></a>`groups`
 
-Data type: `Any`
-
-*Deprecated* (see groups parameter) Name of the hostgroup.
-
-Default value: ``undef``
-
-##### <a name="groups"></a>`groups`
-
-Data type: `Array[String[1]]`
+Data type: `Optional[Array[String[1]]]`
 
 An array of groups the host belongs to.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="group_create"></a>`group_create`
+##### <a name="-zabbix--resources--agent--group_create"></a>`group_create`
 
 Data type: `Any`
 
 Whether to create hostgroup if missing.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="templates"></a>`templates`
+##### <a name="-zabbix--resources--agent--templates"></a>`templates`
 
 Data type: `Any`
 
 List of templates which should be attached to this host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="macros"></a>`macros`
+##### <a name="-zabbix--resources--agent--macros"></a>`macros`
 
 Data type: `Any`
 
 Array of hashes (macros) which should be attached to this host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy"></a>`proxy`
+##### <a name="-zabbix--resources--agent--proxy"></a>`proxy`
 
 Data type: `Any`
 
 Whether it is monitored by an proxy or not.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="interfacetype"></a>`interfacetype`
+##### <a name="-zabbix--resources--agent--interfacetype"></a>`interfacetype`
 
 Data type: `Any`
 
@@ -3676,7 +3810,7 @@ Internally used identifier for the host interface.
 
 Default value: `1`
 
-##### <a name="interfacedetails"></a>`interfacedetails`
+##### <a name="-zabbix--resources--agent--interfacedetails"></a>`interfacedetails`
 
 Data type: `Variant[Array, Hash]`
 
@@ -3684,7 +3818,39 @@ Hash with interface details for SNMP when interface type is 2.
 
 Default value: `[]`
 
-### <a name="zabbixresourcesproxy"></a>`zabbix::resources::proxy`
+##### <a name="-zabbix--resources--agent--tls_connect"></a>`tls_connect`
+
+Data type: `Optional[Enum['unencrypted','psk','cert']]`
+
+How the server must connect to the agent
+
+Default value: `undef`
+
+##### <a name="-zabbix--resources--agent--tls_accept"></a>`tls_accept`
+
+Data type: `Optional[Enum['unencrypted','psk','cert']]`
+
+How the agent can connect to the server
+
+Default value: `undef`
+
+##### <a name="-zabbix--resources--agent--tls_issuer"></a>`tls_issuer`
+
+Data type: `Optional[String[1]]`
+
+Issuer of the certificate that is allowed to talk with the serve
+
+Default value: `undef`
+
+##### <a name="-zabbix--resources--agent--tls_subject"></a>`tls_subject`
+
+Data type: `Optional[String[1]]`
+
+Subject of the certificate that is allowed to talk with the server
+
+Default value: `undef`
+
+### <a name="zabbix--resources--proxy"></a>`zabbix::resources::proxy`
 
 This will create resources into puppetdb for automatically configuring proxy agent into zabbix front-end.
 
@@ -3692,53 +3858,53 @@ This will create resources into puppetdb for automatically configuring proxy age
 
 The following parameters are available in the `zabbix::resources::proxy` class:
 
-* [`hostname`](#hostname)
-* [`ipaddress`](#ipaddress)
-* [`use_ip`](#use_ip)
-* [`mode`](#mode)
-* [`port`](#port)
+* [`hostname`](#-zabbix--resources--proxy--hostname)
+* [`ipaddress`](#-zabbix--resources--proxy--ipaddress)
+* [`use_ip`](#-zabbix--resources--proxy--use_ip)
+* [`mode`](#-zabbix--resources--proxy--mode)
+* [`port`](#-zabbix--resources--proxy--port)
 
-##### <a name="hostname"></a>`hostname`
+##### <a name="-zabbix--resources--proxy--hostname"></a>`hostname`
 
 Data type: `Any`
 
 Hostname of the proxy.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ipaddress"></a>`ipaddress`
+##### <a name="-zabbix--resources--proxy--ipaddress"></a>`ipaddress`
 
 Data type: `Any`
 
 The IP address of the machine running zabbix proxy.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_ip"></a>`use_ip`
+##### <a name="-zabbix--resources--proxy--use_ip"></a>`use_ip`
 
 Data type: `Any`
 
 Whether to use ipadress instead of dns to connect.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mode"></a>`mode`
+##### <a name="-zabbix--resources--proxy--mode"></a>`mode`
 
 Data type: `Any`
 
 The kind of mode the proxy running. Active (0) or passive (1).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-zabbix--resources--proxy--port"></a>`port`
 
 Data type: `Any`
 
 The port that the zabbix proxy is listening on.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="zabbixresourcesweb"></a>`zabbix::resources::web`
+### <a name="zabbix--resources--web"></a>`zabbix::resources::web`
 
 This will load all zabbix related items from the puppet database and uses the zabbixapi gem to add/configure hosts via the zabbix-api
 
@@ -3746,36 +3912,36 @@ This will load all zabbix related items from the puppet database and uses the za
 
 The following parameters are available in the `zabbix::resources::web` class:
 
-* [`zabbix_url`](#zabbix_url)
-* [`zabbix_user`](#zabbix_user)
-* [`zabbix_pass`](#zabbix_pass)
-* [`apache_use_ssl`](#apache_use_ssl)
+* [`zabbix_url`](#-zabbix--resources--web--zabbix_url)
+* [`zabbix_user`](#-zabbix--resources--web--zabbix_user)
+* [`zabbix_pass`](#-zabbix--resources--web--zabbix_pass)
+* [`apache_use_ssl`](#-zabbix--resources--web--apache_use_ssl)
 
-##### <a name="zabbix_url"></a>`zabbix_url`
+##### <a name="-zabbix--resources--web--zabbix_url"></a>`zabbix_url`
 
 Data type: `String[1]`
 
 Url on which zabbix is available.
 
-##### <a name="zabbix_user"></a>`zabbix_user`
+##### <a name="-zabbix--resources--web--zabbix_user"></a>`zabbix_user`
 
 Data type: `String[1]`
 
 API username.
 
-##### <a name="zabbix_pass"></a>`zabbix_pass`
+##### <a name="-zabbix--resources--web--zabbix_pass"></a>`zabbix_pass`
 
-Data type: `String[1]`
+Data type: `Variant[Sensitive[String[1]], String[1]]`
 
 API password.
 
-##### <a name="apache_use_ssl"></a>`apache_use_ssl`
+##### <a name="-zabbix--resources--web--apache_use_ssl"></a>`apache_use_ssl`
 
 Data type: `Boolean`
 
 Whether to use ssl or not.
 
-### <a name="zabbixsender"></a>`zabbix::sender`
+### <a name="zabbix--sender"></a>`zabbix::sender`
 
 This will install and configure the zabbix-agent deamon
 
@@ -3783,11 +3949,11 @@ This will install and configure the zabbix-agent deamon
 
 The following parameters are available in the `zabbix::sender` class:
 
-* [`zabbix_version`](#zabbix_version)
-* [`zabbix_package_state`](#zabbix_package_state)
-* [`manage_repo`](#manage_repo)
+* [`zabbix_version`](#-zabbix--sender--zabbix_version)
+* [`zabbix_package_state`](#-zabbix--sender--zabbix_package_state)
+* [`manage_repo`](#-zabbix--sender--manage_repo)
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix--sender--zabbix_version"></a>`zabbix_version`
 
 Data type: `Any`
 
@@ -3795,7 +3961,7 @@ This is the zabbix version.
 
 Default value: `$zabbix::params::zabbix_version`
 
-##### <a name="zabbix_package_state"></a>`zabbix_package_state`
+##### <a name="-zabbix--sender--zabbix_package_state"></a>`zabbix_package_state`
 
 Data type: `Any`
 
@@ -3803,7 +3969,7 @@ The state of the package that needs to be installed: present or latest.
 
 Default value: `$zabbix::params::zabbix_package_state`
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-zabbix--sender--manage_repo"></a>`manage_repo`
 
 Data type: `Any`
 
@@ -3811,13 +3977,13 @@ When true, it will create repository for installing the agent.
 
 Default value: `$zabbix::params::manage_repo`
 
-### <a name="zabbixserver"></a>`zabbix::server`
+### <a name="zabbix--server"></a>`zabbix::server`
 
 This will install and configure the zabbix-server deamon
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 When running everything on a single node, please check
@@ -3846,115 +4012,121 @@ remove the database_type parameter and comment the mysql::client class.
 
 The following parameters are available in the `zabbix::server` class:
 
-* [`database_type`](#database_type)
-* [`database_path`](#database_path)
-* [`zabbix_version`](#zabbix_version)
-* [`manage_repo`](#manage_repo)
-* [`manage_database`](#manage_database)
-* [`zabbix_package_state`](#zabbix_package_state)
-* [`manage_firewall`](#manage_firewall)
-* [`manage_service`](#manage_service)
-* [`server_configfile_path`](#server_configfile_path)
-* [`server_config_owner`](#server_config_owner)
-* [`server_config_group`](#server_config_group)
-* [`server_service_name`](#server_service_name)
-* [`pacemaker`](#pacemaker)
-* [`pacemaker_resource`](#pacemaker_resource)
-* [`listenport`](#listenport)
-* [`sourceip`](#sourceip)
-* [`logfile`](#logfile)
-* [`logfilesize`](#logfilesize)
-* [`logtype`](#logtype)
-* [`debuglevel`](#debuglevel)
-* [`pidfile`](#pidfile)
-* [`database_schema_path`](#database_schema_path)
-* [`database_host`](#database_host)
-* [`database_name`](#database_name)
-* [`database_schema`](#database_schema)
-* [`database_user`](#database_user)
-* [`database_password`](#database_password)
-* [`database_socket`](#database_socket)
-* [`database_port`](#database_port)
-* [`database_tlsconnect`](#database_tlsconnect)
-* [`database_tlscafile`](#database_tlscafile)
-* [`database_tlscertfile`](#database_tlscertfile)
-* [`database_tlskeyfile`](#database_tlskeyfile)
-* [`database_tlscipher`](#database_tlscipher)
-* [`database_tlscipher13`](#database_tlscipher13)
-* [`startpollers`](#startpollers)
-* [`startpreprocessors`](#startpreprocessors)
-* [`startipmipollers`](#startipmipollers)
-* [`startpollersunreachable`](#startpollersunreachable)
-* [`starttrappers`](#starttrappers)
-* [`startpingers`](#startpingers)
-* [`startalerters`](#startalerters)
-* [`startdiscoverers`](#startdiscoverers)
-* [`startescalators`](#startescalators)
-* [`starthttppollers`](#starthttppollers)
-* [`starttimers`](#starttimers)
-* [`javagateway`](#javagateway)
-* [`javagatewayport`](#javagatewayport)
-* [`startjavapollers`](#startjavapollers)
-* [`startlldprocessors`](#startlldprocessors)
-* [`startvmwarecollectors`](#startvmwarecollectors)
-* [`startreportwriters`](#startreportwriters)
-* [`webserviceurl`](#webserviceurl)
-* [`vmwarefrequency`](#vmwarefrequency)
-* [`vaultdbpath`](#vaultdbpath)
-* [`vaulttoken`](#vaulttoken)
-* [`vaulturl`](#vaulturl)
-* [`vmwarecachesize`](#vmwarecachesize)
-* [`vmwaretimeout`](#vmwaretimeout)
-* [`snmptrapperfile`](#snmptrapperfile)
-* [`startsnmptrapper`](#startsnmptrapper)
-* [`listenip`](#listenip)
-* [`housekeepingfrequency`](#housekeepingfrequency)
-* [`maxhousekeeperdelete`](#maxhousekeeperdelete)
-* [`cachesize`](#cachesize)
-* [`cacheupdatefrequency`](#cacheupdatefrequency)
-* [`startdbsyncers`](#startdbsyncers)
-* [`historycachesize`](#historycachesize)
-* [`historyindexcachesize`](#historyindexcachesize)
-* [`trendcachesize`](#trendcachesize)
-* [`valuecachesize`](#valuecachesize)
-* [`timeout`](#timeout)
-* [`tlscafile`](#tlscafile)
-* [`tlscertfile`](#tlscertfile)
-* [`tlscrlfile`](#tlscrlfile)
-* [`tlskeyfile`](#tlskeyfile)
-* [`tlscipherall`](#tlscipherall)
-* [`tlscipherall13`](#tlscipherall13)
-* [`tlsciphercert`](#tlsciphercert)
-* [`tlsciphercert13`](#tlsciphercert13)
-* [`tlscipherpsk`](#tlscipherpsk)
-* [`tlscipherpsk13`](#tlscipherpsk13)
-* [`trappertimeout`](#trappertimeout)
-* [`unreachableperiod`](#unreachableperiod)
-* [`unavailabledelay`](#unavailabledelay)
-* [`unreachabledelay`](#unreachabledelay)
-* [`alertscriptspath`](#alertscriptspath)
-* [`externalscripts`](#externalscripts)
-* [`fpinglocation`](#fpinglocation)
-* [`fping6location`](#fping6location)
-* [`sshkeylocation`](#sshkeylocation)
-* [`logslowqueries`](#logslowqueries)
-* [`tmpdir`](#tmpdir)
-* [`startproxypollers`](#startproxypollers)
-* [`proxyconfigfrequency`](#proxyconfigfrequency)
-* [`proxydatafrequency`](#proxydatafrequency)
-* [`allowroot`](#allowroot)
-* [`include_dir`](#include_dir)
-* [`loadmodulepath`](#loadmodulepath)
-* [`loadmodule`](#loadmodule)
-* [`sslcertlocation_dir`](#sslcertlocation_dir)
-* [`sslkeylocation_dir`](#sslkeylocation_dir)
-* [`manage_selinux`](#manage_selinux)
-* [`additional_service_params`](#additional_service_params)
-* [`zabbix_user`](#zabbix_user)
-* [`manage_startup_script`](#manage_startup_script)
-* [`socketdir`](#socketdir)
+* [`database_type`](#-zabbix--server--database_type)
+* [`database_path`](#-zabbix--server--database_path)
+* [`zabbix_version`](#-zabbix--server--zabbix_version)
+* [`manage_php`](#-zabbix--server--manage_php)
+* [`manage_repo`](#-zabbix--server--manage_repo)
+* [`manage_database`](#-zabbix--server--manage_database)
+* [`zabbix_package_state`](#-zabbix--server--zabbix_package_state)
+* [`manage_firewall`](#-zabbix--server--manage_firewall)
+* [`manage_service`](#-zabbix--server--manage_service)
+* [`server_configfile_path`](#-zabbix--server--server_configfile_path)
+* [`server_config_owner`](#-zabbix--server--server_config_owner)
+* [`server_config_group`](#-zabbix--server--server_config_group)
+* [`server_service_name`](#-zabbix--server--server_service_name)
+* [`pacemaker`](#-zabbix--server--pacemaker)
+* [`pacemaker_resource`](#-zabbix--server--pacemaker_resource)
+* [`listenport`](#-zabbix--server--listenport)
+* [`sourceip`](#-zabbix--server--sourceip)
+* [`logfile`](#-zabbix--server--logfile)
+* [`logfilesize`](#-zabbix--server--logfilesize)
+* [`logtype`](#-zabbix--server--logtype)
+* [`debuglevel`](#-zabbix--server--debuglevel)
+* [`pidfile`](#-zabbix--server--pidfile)
+* [`database_schema_path`](#-zabbix--server--database_schema_path)
+* [`database_host`](#-zabbix--server--database_host)
+* [`database_name`](#-zabbix--server--database_name)
+* [`database_schema`](#-zabbix--server--database_schema)
+* [`database_user`](#-zabbix--server--database_user)
+* [`database_password`](#-zabbix--server--database_password)
+* [`database_socket`](#-zabbix--server--database_socket)
+* [`database_port`](#-zabbix--server--database_port)
+* [`database_tlsconnect`](#-zabbix--server--database_tlsconnect)
+* [`database_tlscafile`](#-zabbix--server--database_tlscafile)
+* [`database_tlscertfile`](#-zabbix--server--database_tlscertfile)
+* [`database_tlskeyfile`](#-zabbix--server--database_tlskeyfile)
+* [`database_tlscipher`](#-zabbix--server--database_tlscipher)
+* [`database_tlscipher13`](#-zabbix--server--database_tlscipher13)
+* [`startpollers`](#-zabbix--server--startpollers)
+* [`startpreprocessors`](#-zabbix--server--startpreprocessors)
+* [`startipmipollers`](#-zabbix--server--startipmipollers)
+* [`startodbcpollers`](#-zabbix--server--startodbcpollers)
+* [`startpollersunreachable`](#-zabbix--server--startpollersunreachable)
+* [`starttrappers`](#-zabbix--server--starttrappers)
+* [`startpingers`](#-zabbix--server--startpingers)
+* [`startalerters`](#-zabbix--server--startalerters)
+* [`startdiscoverers`](#-zabbix--server--startdiscoverers)
+* [`startescalators`](#-zabbix--server--startescalators)
+* [`starthttppollers`](#-zabbix--server--starthttppollers)
+* [`starttimers`](#-zabbix--server--starttimers)
+* [`javagateway`](#-zabbix--server--javagateway)
+* [`javagatewayport`](#-zabbix--server--javagatewayport)
+* [`startjavapollers`](#-zabbix--server--startjavapollers)
+* [`startlldprocessors`](#-zabbix--server--startlldprocessors)
+* [`startvmwarecollectors`](#-zabbix--server--startvmwarecollectors)
+* [`startreportwriters`](#-zabbix--server--startreportwriters)
+* [`webserviceurl`](#-zabbix--server--webserviceurl)
+* [`vmwarefrequency`](#-zabbix--server--vmwarefrequency)
+* [`vaultdbpath`](#-zabbix--server--vaultdbpath)
+* [`vaulttoken`](#-zabbix--server--vaulttoken)
+* [`vaulturl`](#-zabbix--server--vaulturl)
+* [`vmwarecachesize`](#-zabbix--server--vmwarecachesize)
+* [`vmwaretimeout`](#-zabbix--server--vmwaretimeout)
+* [`snmptrapperfile`](#-zabbix--server--snmptrapperfile)
+* [`startsnmptrapper`](#-zabbix--server--startsnmptrapper)
+* [`listenip`](#-zabbix--server--listenip)
+* [`housekeepingfrequency`](#-zabbix--server--housekeepingfrequency)
+* [`maxhousekeeperdelete`](#-zabbix--server--maxhousekeeperdelete)
+* [`cachesize`](#-zabbix--server--cachesize)
+* [`cacheupdatefrequency`](#-zabbix--server--cacheupdatefrequency)
+* [`smsdevices`](#-zabbix--server--smsdevices)
+* [`startdbsyncers`](#-zabbix--server--startdbsyncers)
+* [`historycachesize`](#-zabbix--server--historycachesize)
+* [`historyindexcachesize`](#-zabbix--server--historyindexcachesize)
+* [`trendcachesize`](#-zabbix--server--trendcachesize)
+* [`valuecachesize`](#-zabbix--server--valuecachesize)
+* [`timeout`](#-zabbix--server--timeout)
+* [`tlscafile`](#-zabbix--server--tlscafile)
+* [`tlscertfile`](#-zabbix--server--tlscertfile)
+* [`tlscrlfile`](#-zabbix--server--tlscrlfile)
+* [`tlskeyfile`](#-zabbix--server--tlskeyfile)
+* [`tlscipherall`](#-zabbix--server--tlscipherall)
+* [`tlscipherall13`](#-zabbix--server--tlscipherall13)
+* [`tlsciphercert`](#-zabbix--server--tlsciphercert)
+* [`tlsciphercert13`](#-zabbix--server--tlsciphercert13)
+* [`tlscipherpsk`](#-zabbix--server--tlscipherpsk)
+* [`tlscipherpsk13`](#-zabbix--server--tlscipherpsk13)
+* [`trappertimeout`](#-zabbix--server--trappertimeout)
+* [`unreachableperiod`](#-zabbix--server--unreachableperiod)
+* [`unavailabledelay`](#-zabbix--server--unavailabledelay)
+* [`unreachabledelay`](#-zabbix--server--unreachabledelay)
+* [`alertscriptspath`](#-zabbix--server--alertscriptspath)
+* [`externalscripts`](#-zabbix--server--externalscripts)
+* [`fpinglocation`](#-zabbix--server--fpinglocation)
+* [`fping6location`](#-zabbix--server--fping6location)
+* [`sshkeylocation`](#-zabbix--server--sshkeylocation)
+* [`logslowqueries`](#-zabbix--server--logslowqueries)
+* [`tmpdir`](#-zabbix--server--tmpdir)
+* [`startproxypollers`](#-zabbix--server--startproxypollers)
+* [`proxyconfigfrequency`](#-zabbix--server--proxyconfigfrequency)
+* [`proxydatafrequency`](#-zabbix--server--proxydatafrequency)
+* [`allowroot`](#-zabbix--server--allowroot)
+* [`include_dir`](#-zabbix--server--include_dir)
+* [`statsallowedip`](#-zabbix--server--statsallowedip)
+* [`loadmodulepath`](#-zabbix--server--loadmodulepath)
+* [`loadmodule`](#-zabbix--server--loadmodule)
+* [`sslcertlocation_dir`](#-zabbix--server--sslcertlocation_dir)
+* [`sslkeylocation_dir`](#-zabbix--server--sslkeylocation_dir)
+* [`manage_selinux`](#-zabbix--server--manage_selinux)
+* [`additional_service_params`](#-zabbix--server--additional_service_params)
+* [`zabbix_user`](#-zabbix--server--zabbix_user)
+* [`manage_startup_script`](#-zabbix--server--manage_startup_script)
+* [`socketdir`](#-zabbix--server--socketdir)
+* [`hanodename`](#-zabbix--server--hanodename)
+* [`nodeaddress`](#-zabbix--server--nodeaddress)
 
-##### <a name="database_type"></a>`database_type`
+##### <a name="-zabbix--server--database_type"></a>`database_type`
 
 Data type: `Zabbix::Databases`
 
@@ -3964,7 +4136,7 @@ Type of database. Can use the following 2 databases:
 
 Default value: `$zabbix::params::database_type`
 
-##### <a name="database_path"></a>`database_path`
+##### <a name="-zabbix--server--database_path"></a>`database_path`
 
 Data type: `Any`
 
@@ -3975,15 +4147,23 @@ path.
 
 Default value: `$zabbix::params::database_path`
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix--server--zabbix_version"></a>`zabbix_version`
 
 Data type: `Any`
 
-This is the zabbix version. Example: 5.0
+This is the zabbix version. Example: 7.0
 
 Default value: `$zabbix::params::zabbix_version`
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-zabbix--server--manage_php"></a>`manage_php`
+
+Data type: `Optional[String]`
+
+If set, version of PHP to install on systems where default one is not supported by Zabbix (actually only EL8).
+
+Default value: `undef`
+
+##### <a name="-zabbix--server--manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
@@ -3991,7 +4171,7 @@ When true (default) this module will manage the Zabbix repository.
 
 Default value: `$zabbix::params::manage_repo`
 
-##### <a name="manage_database"></a>`manage_database`
+##### <a name="-zabbix--server--manage_database"></a>`manage_database`
 
 Data type: `Boolean`
 
@@ -3999,7 +4179,7 @@ When true, it will configure the database and execute the sql scripts.
 
 Default value: `$zabbix::params::manage_database`
 
-##### <a name="zabbix_package_state"></a>`zabbix_package_state`
+##### <a name="-zabbix--server--zabbix_package_state"></a>`zabbix_package_state`
 
 Data type: `Any`
 
@@ -4007,7 +4187,7 @@ The state of the package that needs to be installed: present or latest.
 
 Default value: `$zabbix::params::zabbix_package_state`
 
-##### <a name="manage_firewall"></a>`manage_firewall`
+##### <a name="-zabbix--server--manage_firewall"></a>`manage_firewall`
 
 Data type: `Boolean`
 
@@ -4015,7 +4195,7 @@ When true, it will create iptables rules.
 
 Default value: `$zabbix::params::manage_firewall`
 
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-zabbix--server--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
@@ -4024,7 +4204,7 @@ When false, it does not care about service
 
 Default value: `$zabbix::params::manage_service`
 
-##### <a name="server_configfile_path"></a>`server_configfile_path`
+##### <a name="-zabbix--server--server_configfile_path"></a>`server_configfile_path`
 
 Data type: `Any`
 
@@ -4032,7 +4212,7 @@ Server config file path defaults to /etc/zabbix/zabbix_server.conf
 
 Default value: `$zabbix::params::server_configfile_path`
 
-##### <a name="server_config_owner"></a>`server_config_owner`
+##### <a name="-zabbix--server--server_config_owner"></a>`server_config_owner`
 
 Data type: `Any`
 
@@ -4040,7 +4220,7 @@ The owner of Zabbix's server config file.
 
 Default value: `$zabbix::params::server_config_owner`
 
-##### <a name="server_config_group"></a>`server_config_group`
+##### <a name="-zabbix--server--server_config_group"></a>`server_config_group`
 
 Data type: `Any`
 
@@ -4048,7 +4228,7 @@ The group of Zabbix's server config file.
 
 Default value: `$zabbix::params::server_config_group`
 
-##### <a name="server_service_name"></a>`server_service_name`
+##### <a name="-zabbix--server--server_service_name"></a>`server_service_name`
 
 Data type: `Any`
 
@@ -4056,7 +4236,7 @@ The service name of Zabbix server.
 
 Default value: `$zabbix::params::server_service_name`
 
-##### <a name="pacemaker"></a>`pacemaker`
+##### <a name="-zabbix--server--pacemaker"></a>`pacemaker`
 
 Data type: `Any`
 
@@ -4064,7 +4244,7 @@ Whether to control zabbix server through Pacemaker.
 
 Default value: `$zabbix::params::server_pacemaker`
 
-##### <a name="pacemaker_resource"></a>`pacemaker_resource`
+##### <a name="-zabbix--server--pacemaker_resource"></a>`pacemaker_resource`
 
 Data type: `Any`
 
@@ -4072,7 +4252,7 @@ Zabbix server pacemaker resource.
 
 Default value: `$zabbix::params::server_pacemaker_resource`
 
-##### <a name="listenport"></a>`listenport`
+##### <a name="-zabbix--server--listenport"></a>`listenport`
 
 Data type: `Any`
 
@@ -4080,7 +4260,7 @@ Listen port for the zabbix-server. Default: 10051
 
 Default value: `$zabbix::params::server_listenport`
 
-##### <a name="sourceip"></a>`sourceip`
+##### <a name="-zabbix--server--sourceip"></a>`sourceip`
 
 Data type: `Any`
 
@@ -4088,7 +4268,7 @@ Source ip address for outgoing connections.
 
 Default value: `$zabbix::params::server_sourceip`
 
-##### <a name="logfile"></a>`logfile`
+##### <a name="-zabbix--server--logfile"></a>`logfile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -4096,7 +4276,7 @@ Name of log file.
 
 Default value: `$zabbix::params::server_logfile`
 
-##### <a name="logfilesize"></a>`logfilesize`
+##### <a name="-zabbix--server--logfilesize"></a>`logfilesize`
 
 Data type: `Any`
 
@@ -4104,7 +4284,7 @@ Maximum size of log file in MB.
 
 Default value: `$zabbix::params::server_logfilesize`
 
-##### <a name="logtype"></a>`logtype`
+##### <a name="-zabbix--server--logtype"></a>`logtype`
 
 Data type: `Enum['console', 'file', 'system']`
 
@@ -4112,7 +4292,7 @@ Specifies where log messages are written to. (options: console, file, system)
 
 Default value: `$zabbix::params::server_logtype`
 
-##### <a name="debuglevel"></a>`debuglevel`
+##### <a name="-zabbix--server--debuglevel"></a>`debuglevel`
 
 Data type: `Any`
 
@@ -4120,7 +4300,7 @@ Specifies debug level.
 
 Default value: `$zabbix::params::server_debuglevel`
 
-##### <a name="pidfile"></a>`pidfile`
+##### <a name="-zabbix--server--pidfile"></a>`pidfile`
 
 Data type: `Any`
 
@@ -4128,7 +4308,7 @@ Name of pid file.
 
 Default value: `$zabbix::params::server_pidfile`
 
-##### <a name="database_schema_path"></a>`database_schema_path`
+##### <a name="-zabbix--server--database_schema_path"></a>`database_schema_path`
 
 Data type: `Any`
 
@@ -4136,7 +4316,7 @@ The path to the directory containing the .sql schema files
 
 Default value: `$zabbix::params::database_schema_path`
 
-##### <a name="database_host"></a>`database_host`
+##### <a name="-zabbix--server--database_host"></a>`database_host`
 
 Data type: `Any`
 
@@ -4144,7 +4324,7 @@ Database host name.
 
 Default value: `$zabbix::params::server_database_host`
 
-##### <a name="database_name"></a>`database_name`
+##### <a name="-zabbix--server--database_name"></a>`database_name`
 
 Data type: `Any`
 
@@ -4152,7 +4332,7 @@ Database name.
 
 Default value: `$zabbix::params::server_database_name`
 
-##### <a name="database_schema"></a>`database_schema`
+##### <a name="-zabbix--server--database_schema"></a>`database_schema`
 
 Data type: `Any`
 
@@ -4160,7 +4340,7 @@ Schema name. used for ibm db2.
 
 Default value: `$zabbix::params::server_database_schema`
 
-##### <a name="database_user"></a>`database_user`
+##### <a name="-zabbix--server--database_user"></a>`database_user`
 
 Data type: `Any`
 
@@ -4168,15 +4348,15 @@ Database user. ignored for sqlite.
 
 Default value: `$zabbix::params::server_database_user`
 
-##### <a name="database_password"></a>`database_password`
+##### <a name="-zabbix--server--database_password"></a>`database_password`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Database password. ignored for sqlite.
 
 Default value: `$zabbix::params::server_database_password`
 
-##### <a name="database_socket"></a>`database_socket`
+##### <a name="-zabbix--server--database_socket"></a>`database_socket`
 
 Data type: `Any`
 
@@ -4184,7 +4364,7 @@ Path to mysql socket.
 
 Default value: `$zabbix::params::server_database_socket`
 
-##### <a name="database_port"></a>`database_port`
+##### <a name="-zabbix--server--database_port"></a>`database_port`
 
 Data type: `Optional[Stdlib::Port::Unprivileged]`
 
@@ -4192,7 +4372,7 @@ Database port when not using local socket. Ignored for sqlite.
 
 Default value: `$zabbix::params::server_database_port`
 
-##### <a name="database_tlsconnect"></a>`database_tlsconnect`
+##### <a name="-zabbix--server--database_tlsconnect"></a>`database_tlsconnect`
 
 Data type: `Optional[Enum['required', 'verify_ca', 'verify_full']]`
 
@@ -4203,7 +4383,7 @@ Available options:
 
 Default value: `$zabbix::params::server_database_tlsconnect`
 
-##### <a name="database_tlscafile"></a>`database_tlscafile`
+##### <a name="-zabbix--server--database_tlscafile"></a>`database_tlscafile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -4211,7 +4391,7 @@ Full pathname of a file containing the top-level CA(s) certificates for database
 
 Default value: `$zabbix::params::server_database_tlscafile`
 
-##### <a name="database_tlscertfile"></a>`database_tlscertfile`
+##### <a name="-zabbix--server--database_tlscertfile"></a>`database_tlscertfile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -4219,7 +4399,7 @@ Full pathname of file containing Zabbix server certificate for authenticating to
 
 Default value: `$zabbix::params::server_database_tlscertfile`
 
-##### <a name="database_tlskeyfile"></a>`database_tlskeyfile`
+##### <a name="-zabbix--server--database_tlskeyfile"></a>`database_tlskeyfile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -4227,7 +4407,7 @@ Full pathname of file containing the private key for authenticating to database.
 
 Default value: `$zabbix::params::server_database_tlskeyfile`
 
-##### <a name="database_tlscipher"></a>`database_tlscipher`
+##### <a name="-zabbix--server--database_tlscipher"></a>`database_tlscipher`
 
 Data type: `Optional[String[1]]`
 
@@ -4235,7 +4415,7 @@ The list of encryption ciphers that Zabbix server permits for TLS protocols up t
 
 Default value: `$zabbix::params::server_database_tlscipher`
 
-##### <a name="database_tlscipher13"></a>`database_tlscipher13`
+##### <a name="-zabbix--server--database_tlscipher13"></a>`database_tlscipher13`
 
 Data type: `Optional[String[1]]`
 
@@ -4243,7 +4423,7 @@ The list of encryption ciphersuites that Zabbix server permits for TLSv1.3 proto
 
 Default value: `$zabbix::params::server_database_tlscipher13`
 
-##### <a name="startpollers"></a>`startpollers`
+##### <a name="-zabbix--server--startpollers"></a>`startpollers`
 
 Data type: `Any`
 
@@ -4251,7 +4431,7 @@ Number of pre-forked instances of pollers.
 
 Default value: `$zabbix::params::server_startpollers`
 
-##### <a name="startpreprocessors"></a>`startpreprocessors`
+##### <a name="-zabbix--server--startpreprocessors"></a>`startpreprocessors`
 
 Data type: `Integer[1, 1000]`
 
@@ -4259,7 +4439,7 @@ Number of pre-forked instances of preprocessing workers
 
 Default value: `$zabbix::params::server_startpreprocessors`
 
-##### <a name="startipmipollers"></a>`startipmipollers`
+##### <a name="-zabbix--server--startipmipollers"></a>`startipmipollers`
 
 Data type: `Any`
 
@@ -4267,7 +4447,15 @@ Number of pre-forked instances of ipmi pollers.
 
 Default value: `$zabbix::params::server_startipmipollers`
 
-##### <a name="startpollersunreachable"></a>`startpollersunreachable`
+##### <a name="-zabbix--server--startodbcpollers"></a>`startodbcpollers`
+
+Data type: `Integer[0, 1000]`
+
+Number of pre-forked instances of ODBC pollers.
+
+Default value: `$zabbix::params::server_startodbcpollers`
+
+##### <a name="-zabbix--server--startpollersunreachable"></a>`startpollersunreachable`
 
 Data type: `Any`
 
@@ -4275,7 +4463,7 @@ Number of pre-forked instances of pollers for unreachable hosts (including ipmi)
 
 Default value: `$zabbix::params::server_startpollersunreachable`
 
-##### <a name="starttrappers"></a>`starttrappers`
+##### <a name="-zabbix--server--starttrappers"></a>`starttrappers`
 
 Data type: `Any`
 
@@ -4283,7 +4471,7 @@ Number of pre-forked instances of trappers.
 
 Default value: `$zabbix::params::server_starttrappers`
 
-##### <a name="startpingers"></a>`startpingers`
+##### <a name="-zabbix--server--startpingers"></a>`startpingers`
 
 Data type: `Any`
 
@@ -4291,7 +4479,7 @@ Number of pre-forked instances of icmp pingers.
 
 Default value: `$zabbix::params::server_startpingers`
 
-##### <a name="startalerters"></a>`startalerters`
+##### <a name="-zabbix--server--startalerters"></a>`startalerters`
 
 Data type: `Integer[1, 100]`
 
@@ -4299,7 +4487,7 @@ Number of pre-forked instances of alerters.
 
 Default value: `$zabbix::params::server_startalerters`
 
-##### <a name="startdiscoverers"></a>`startdiscoverers`
+##### <a name="-zabbix--server--startdiscoverers"></a>`startdiscoverers`
 
 Data type: `Any`
 
@@ -4307,7 +4495,7 @@ Number of pre-forked instances of discoverers.
 
 Default value: `$zabbix::params::server_startdiscoverers`
 
-##### <a name="startescalators"></a>`startescalators`
+##### <a name="-zabbix--server--startescalators"></a>`startescalators`
 
 Data type: `Integer[1, 100]`
 
@@ -4315,7 +4503,7 @@ Number of pre-forked instances of escalators.
 
 Default value: `$zabbix::params::server_startescalators`
 
-##### <a name="starthttppollers"></a>`starthttppollers`
+##### <a name="-zabbix--server--starthttppollers"></a>`starthttppollers`
 
 Data type: `Any`
 
@@ -4323,7 +4511,7 @@ Number of pre-forked instances of http pollers.
 
 Default value: `$zabbix::params::server_starthttppollers`
 
-##### <a name="starttimers"></a>`starttimers`
+##### <a name="-zabbix--server--starttimers"></a>`starttimers`
 
 Data type: `Any`
 
@@ -4331,7 +4519,7 @@ Number of pre-forked instances of timers.
 
 Default value: `$zabbix::params::server_starttimers`
 
-##### <a name="javagateway"></a>`javagateway`
+##### <a name="-zabbix--server--javagateway"></a>`javagateway`
 
 Data type: `Any`
 
@@ -4339,7 +4527,7 @@ IP address (or hostname) of zabbix java gateway.
 
 Default value: `$zabbix::params::server_javagateway`
 
-##### <a name="javagatewayport"></a>`javagatewayport`
+##### <a name="-zabbix--server--javagatewayport"></a>`javagatewayport`
 
 Data type: `Any`
 
@@ -4347,7 +4535,7 @@ Port that zabbix java gateway listens on.
 
 Default value: `$zabbix::params::server_javagatewayport`
 
-##### <a name="startjavapollers"></a>`startjavapollers`
+##### <a name="-zabbix--server--startjavapollers"></a>`startjavapollers`
 
 Data type: `Any`
 
@@ -4355,7 +4543,7 @@ Number of pre-forked instances of java pollers.
 
 Default value: `$zabbix::params::server_startjavapollers`
 
-##### <a name="startlldprocessors"></a>`startlldprocessors`
+##### <a name="-zabbix--server--startlldprocessors"></a>`startlldprocessors`
 
 Data type: `Integer[1, 100]`
 
@@ -4363,7 +4551,7 @@ Number of pre-forked instances of low-level discovery (LLD) workers.
 
 Default value: `$zabbix::params::server_startlldprocessors`
 
-##### <a name="startvmwarecollectors"></a>`startvmwarecollectors`
+##### <a name="-zabbix--server--startvmwarecollectors"></a>`startvmwarecollectors`
 
 Data type: `Any`
 
@@ -4371,23 +4559,23 @@ Number of pre-forked vmware collector instances.
 
 Default value: `$zabbix::params::server_startvmwarecollectors`
 
-##### <a name="startreportwriters"></a>`startreportwriters`
+##### <a name="-zabbix--server--startreportwriters"></a>`startreportwriters`
 
 Data type: `Optional[Integer[1, 100]]`
 
 Number of pre-forked report writer instances.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="webserviceurl"></a>`webserviceurl`
+##### <a name="-zabbix--server--webserviceurl"></a>`webserviceurl`
 
 Data type: `Optional[Stdlib::HTTPUrl]`
 
 URL to Zabbix web service, used to perform web related tasks.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="vmwarefrequency"></a>`vmwarefrequency`
+##### <a name="-zabbix--server--vmwarefrequency"></a>`vmwarefrequency`
 
 Data type: `Any`
 
@@ -4395,7 +4583,7 @@ How often zabbix will connect to vmware service to obtain a new datan.
 
 Default value: `$zabbix::params::server_vmwarefrequency`
 
-##### <a name="vaultdbpath"></a>`vaultdbpath`
+##### <a name="-zabbix--server--vaultdbpath"></a>`vaultdbpath`
 
 Data type: `Optional[String[1]]`
 
@@ -4403,7 +4591,7 @@ Vault path from where credentials for database will be retrieved by keys 'passwo
 
 Default value: `$zabbix::params::server_vaultdbpath`
 
-##### <a name="vaulttoken"></a>`vaulttoken`
+##### <a name="-zabbix--server--vaulttoken"></a>`vaulttoken`
 
 Data type: `Optional[String[1]]`
 
@@ -4412,7 +4600,7 @@ permission to the path specified in the optional VaultDBPath configuration param
 
 Default value: `$zabbix::params::server_vaulttoken`
 
-##### <a name="vaulturl"></a>`vaulturl`
+##### <a name="-zabbix--server--vaulturl"></a>`vaulturl`
 
 Data type: `Stdlib::HTTPSUrl`
 
@@ -4420,7 +4608,7 @@ Vault server HTTP[S] URL. System-wide CA certificates directory will be used if 
 
 Default value: `$zabbix::params::server_vaulturl`
 
-##### <a name="vmwarecachesize"></a>`vmwarecachesize`
+##### <a name="-zabbix--server--vmwarecachesize"></a>`vmwarecachesize`
 
 Data type: `Any`
 
@@ -4428,7 +4616,7 @@ Size of vmware cache, in bytes.
 
 Default value: `$zabbix::params::server_vmwarecachesize`
 
-##### <a name="vmwaretimeout"></a>`vmwaretimeout`
+##### <a name="-zabbix--server--vmwaretimeout"></a>`vmwaretimeout`
 
 Data type: `Any`
 
@@ -4436,7 +4624,7 @@ The maximum number of seconds vmware collector will wait for a response from VMw
 
 Default value: `$zabbix::params::server_vmwaretimeout`
 
-##### <a name="snmptrapperfile"></a>`snmptrapperfile`
+##### <a name="-zabbix--server--snmptrapperfile"></a>`snmptrapperfile`
 
 Data type: `Any`
 
@@ -4444,7 +4632,7 @@ Temporary file used for passing data from snmp trap daemon to the server.
 
 Default value: `$zabbix::params::server_snmptrapperfile`
 
-##### <a name="startsnmptrapper"></a>`startsnmptrapper`
+##### <a name="-zabbix--server--startsnmptrapper"></a>`startsnmptrapper`
 
 Data type: `Any`
 
@@ -4452,7 +4640,7 @@ If 1, snmp trapper process is started.
 
 Default value: `$zabbix::params::server_startsnmptrapper`
 
-##### <a name="listenip"></a>`listenip`
+##### <a name="-zabbix--server--listenip"></a>`listenip`
 
 Data type: `Any`
 
@@ -4460,7 +4648,7 @@ List of comma delimited ip addresses that the zabbix-server should listen on.
 
 Default value: `$zabbix::params::server_listenip`
 
-##### <a name="housekeepingfrequency"></a>`housekeepingfrequency`
+##### <a name="-zabbix--server--housekeepingfrequency"></a>`housekeepingfrequency`
 
 Data type: `Any`
 
@@ -4468,7 +4656,7 @@ How often zabbix will perform housekeeping procedure (in hours).
 
 Default value: `$zabbix::params::server_housekeepingfrequency`
 
-##### <a name="maxhousekeeperdelete"></a>`maxhousekeeperdelete`
+##### <a name="-zabbix--server--maxhousekeeperdelete"></a>`maxhousekeeperdelete`
 
 Data type: `Any`
 
@@ -4481,7 +4669,7 @@ if set to 0 then no limit is used at all. in this case you must know what you ar
 
 Default value: `$zabbix::params::server_maxhousekeeperdelete`
 
-##### <a name="cachesize"></a>`cachesize`
+##### <a name="-zabbix--server--cachesize"></a>`cachesize`
 
 Data type: `Any`
 
@@ -4489,7 +4677,7 @@ Size of configuration cache, in bytes.
 
 Default value: `$zabbix::params::server_cachesize`
 
-##### <a name="cacheupdatefrequency"></a>`cacheupdatefrequency`
+##### <a name="-zabbix--server--cacheupdatefrequency"></a>`cacheupdatefrequency`
 
 Data type: `Any`
 
@@ -4497,7 +4685,15 @@ How often zabbix will perform update of configuration cache, in seconds.
 
 Default value: `$zabbix::params::server_cacheupdatefrequency`
 
-##### <a name="startdbsyncers"></a>`startdbsyncers`
+##### <a name="-zabbix--server--smsdevices"></a>`smsdevices`
+
+Data type: `Array[String[1]]`
+
+What devices to use for texting
+
+Default value: `$zabbix::params::server_smsdevices`
+
+##### <a name="-zabbix--server--startdbsyncers"></a>`startdbsyncers`
 
 Data type: `Any`
 
@@ -4505,7 +4701,7 @@ Number of pre-forked instances of db syncers.
 
 Default value: `$zabbix::params::server_startdbsyncers`
 
-##### <a name="historycachesize"></a>`historycachesize`
+##### <a name="-zabbix--server--historycachesize"></a>`historycachesize`
 
 Data type: `Any`
 
@@ -4513,7 +4709,7 @@ Size of history cache, in bytes.
 
 Default value: `$zabbix::params::server_historycachesize`
 
-##### <a name="historyindexcachesize"></a>`historyindexcachesize`
+##### <a name="-zabbix--server--historyindexcachesize"></a>`historyindexcachesize`
 
 Data type: `Any`
 
@@ -4521,7 +4717,7 @@ Size of history index cache, in bytes.
 
 Default value: `$zabbix::params::server_historyindexcachesize`
 
-##### <a name="trendcachesize"></a>`trendcachesize`
+##### <a name="-zabbix--server--trendcachesize"></a>`trendcachesize`
 
 Data type: `Any`
 
@@ -4529,7 +4725,7 @@ Size of trend cache, in bytes.
 
 Default value: `$zabbix::params::server_trendcachesize`
 
-##### <a name="valuecachesize"></a>`valuecachesize`
+##### <a name="-zabbix--server--valuecachesize"></a>`valuecachesize`
 
 Data type: `Any`
 
@@ -4537,7 +4733,7 @@ Size of history value cache, in bytes.
 
 Default value: `$zabbix::params::server_valuecachesize`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-zabbix--server--timeout"></a>`timeout`
 
 Data type: `Any`
 
@@ -4545,7 +4741,7 @@ Specifies how long we wait for agent, snmp device or external check (in seconds)
 
 Default value: `$zabbix::params::server_timeout`
 
-##### <a name="tlscafile"></a>`tlscafile`
+##### <a name="-zabbix--server--tlscafile"></a>`tlscafile`
 
 Data type: `Any`
 
@@ -4553,7 +4749,7 @@ Full pathname of a file containing the top-level CA(s) certificates for peer cer
 
 Default value: `$zabbix::params::server_tlscafile`
 
-##### <a name="tlscertfile"></a>`tlscertfile`
+##### <a name="-zabbix--server--tlscertfile"></a>`tlscertfile`
 
 Data type: `Any`
 
@@ -4561,7 +4757,7 @@ Full pathname of a file containing the server certificate or certificate chain.
 
 Default value: `$zabbix::params::server_tlscertfile`
 
-##### <a name="tlscrlfile"></a>`tlscrlfile`
+##### <a name="-zabbix--server--tlscrlfile"></a>`tlscrlfile`
 
 Data type: `Any`
 
@@ -4569,7 +4765,7 @@ Full pathname of a file containing revoked certificates.
 
 Default value: `$zabbix::params::server_tlscrlfile`
 
-##### <a name="tlskeyfile"></a>`tlskeyfile`
+##### <a name="-zabbix--server--tlskeyfile"></a>`tlskeyfile`
 
 Data type: `Any`
 
@@ -4577,7 +4773,7 @@ Full pathname of a file containing the server private key.
 
 Default value: `$zabbix::params::server_tlskeyfile`
 
-##### <a name="tlscipherall"></a>`tlscipherall`
+##### <a name="-zabbix--server--tlscipherall"></a>`tlscipherall`
 
 Data type: `Optional[String[1]]`
 
@@ -4586,7 +4782,7 @@ for certificate- and PSK-based encryption.
 
 Default value: `$zabbix::params::server_tlscipherall`
 
-##### <a name="tlscipherall13"></a>`tlscipherall13`
+##### <a name="-zabbix--server--tlscipherall13"></a>`tlscipherall13`
 
 Data type: `Optional[String[1]]`
 
@@ -4595,7 +4791,7 @@ for certificate- and PSK-based encryption.
 
 Default value: `$zabbix::params::server_tlscipherall13`
 
-##### <a name="tlsciphercert"></a>`tlsciphercert`
+##### <a name="-zabbix--server--tlsciphercert"></a>`tlsciphercert`
 
 Data type: `Optional[String[1]]`
 
@@ -4604,7 +4800,7 @@ for certificate-based encryption.
 
 Default value: `$zabbix::params::server_tlsciphercert`
 
-##### <a name="tlsciphercert13"></a>`tlsciphercert13`
+##### <a name="-zabbix--server--tlsciphercert13"></a>`tlsciphercert13`
 
 Data type: `Optional[String[1]]`
 
@@ -4613,7 +4809,7 @@ for certificate-based encryption.
 
 Default value: `$zabbix::params::server_tlsciphercert13`
 
-##### <a name="tlscipherpsk"></a>`tlscipherpsk`
+##### <a name="-zabbix--server--tlscipherpsk"></a>`tlscipherpsk`
 
 Data type: `Optional[String[1]]`
 
@@ -4622,7 +4818,7 @@ for PSK-based encryption.
 
 Default value: `$zabbix::params::server_tlscipherpsk`
 
-##### <a name="tlscipherpsk13"></a>`tlscipherpsk13`
+##### <a name="-zabbix--server--tlscipherpsk13"></a>`tlscipherpsk13`
 
 Data type: `Optional[String[1]]`
 
@@ -4631,7 +4827,7 @@ for PSK-based encryption.
 
 Default value: `$zabbix::params::server_tlscipherpsk13`
 
-##### <a name="trappertimeout"></a>`trappertimeout`
+##### <a name="-zabbix--server--trappertimeout"></a>`trappertimeout`
 
 Data type: `Any`
 
@@ -4639,7 +4835,7 @@ Specifies how many seconds trapper may spend processing new data.
 
 Default value: `$zabbix::params::server_trappertimeout`
 
-##### <a name="unreachableperiod"></a>`unreachableperiod`
+##### <a name="-zabbix--server--unreachableperiod"></a>`unreachableperiod`
 
 Data type: `Any`
 
@@ -4647,7 +4843,7 @@ After how many seconds of unreachability treat a host as unavailable.
 
 Default value: `$zabbix::params::server_unreachableperiod`
 
-##### <a name="unavailabledelay"></a>`unavailabledelay`
+##### <a name="-zabbix--server--unavailabledelay"></a>`unavailabledelay`
 
 Data type: `Any`
 
@@ -4655,7 +4851,7 @@ How often host is checked for availability during the unavailability period, in 
 
 Default value: `$zabbix::params::server_unavailabledelay`
 
-##### <a name="unreachabledelay"></a>`unreachabledelay`
+##### <a name="-zabbix--server--unreachabledelay"></a>`unreachabledelay`
 
 Data type: `Any`
 
@@ -4663,7 +4859,7 @@ How often host is checked for availability during the unreachability period, in 
 
 Default value: `$zabbix::params::server_unreachabledelay`
 
-##### <a name="alertscriptspath"></a>`alertscriptspath`
+##### <a name="-zabbix--server--alertscriptspath"></a>`alertscriptspath`
 
 Data type: `Any`
 
@@ -4671,7 +4867,7 @@ Full path to location of custom alert scripts.
 
 Default value: `$zabbix::params::server_alertscriptspath`
 
-##### <a name="externalscripts"></a>`externalscripts`
+##### <a name="-zabbix--server--externalscripts"></a>`externalscripts`
 
 Data type: `Any`
 
@@ -4679,7 +4875,7 @@ Full path to location of external scripts.
 
 Default value: `$zabbix::params::server_externalscripts`
 
-##### <a name="fpinglocation"></a>`fpinglocation`
+##### <a name="-zabbix--server--fpinglocation"></a>`fpinglocation`
 
 Data type: `Any`
 
@@ -4687,7 +4883,7 @@ Location of fping.
 
 Default value: `$zabbix::params::server_fpinglocation`
 
-##### <a name="fping6location"></a>`fping6location`
+##### <a name="-zabbix--server--fping6location"></a>`fping6location`
 
 Data type: `Any`
 
@@ -4695,7 +4891,7 @@ Location of fping6.
 
 Default value: `$zabbix::params::server_fping6location`
 
-##### <a name="sshkeylocation"></a>`sshkeylocation`
+##### <a name="-zabbix--server--sshkeylocation"></a>`sshkeylocation`
 
 Data type: `Any`
 
@@ -4703,7 +4899,7 @@ Location of public and private keys for ssh checks and actions.
 
 Default value: `$zabbix::params::server_sshkeylocation`
 
-##### <a name="logslowqueries"></a>`logslowqueries`
+##### <a name="-zabbix--server--logslowqueries"></a>`logslowqueries`
 
 Data type: `Any`
 
@@ -4711,7 +4907,7 @@ How long a database query may take before being logged (in milliseconds).
 
 Default value: `$zabbix::params::server_logslowqueries`
 
-##### <a name="tmpdir"></a>`tmpdir`
+##### <a name="-zabbix--server--tmpdir"></a>`tmpdir`
 
 Data type: `Any`
 
@@ -4719,7 +4915,7 @@ Temporary directory.
 
 Default value: `$zabbix::params::server_tmpdir`
 
-##### <a name="startproxypollers"></a>`startproxypollers`
+##### <a name="-zabbix--server--startproxypollers"></a>`startproxypollers`
 
 Data type: `Any`
 
@@ -4727,7 +4923,7 @@ Number of pre-forked instances of pollers for passive proxies.
 
 Default value: `$zabbix::params::server_startproxypollers`
 
-##### <a name="proxyconfigfrequency"></a>`proxyconfigfrequency`
+##### <a name="-zabbix--server--proxyconfigfrequency"></a>`proxyconfigfrequency`
 
 Data type: `Any`
 
@@ -4735,7 +4931,7 @@ How often zabbix server sends configuration data to a zabbix proxy in seconds.
 
 Default value: `$zabbix::params::server_proxyconfigfrequency`
 
-##### <a name="proxydatafrequency"></a>`proxydatafrequency`
+##### <a name="-zabbix--server--proxydatafrequency"></a>`proxydatafrequency`
 
 Data type: `Any`
 
@@ -4743,7 +4939,7 @@ How often zabbix server requests history data from a zabbix proxy in seconds.
 
 Default value: `$zabbix::params::server_proxydatafrequency`
 
-##### <a name="allowroot"></a>`allowroot`
+##### <a name="-zabbix--server--allowroot"></a>`allowroot`
 
 Data type: `Any`
 
@@ -4751,7 +4947,7 @@ Allow the server to run as 'root'.
 
 Default value: `$zabbix::params::server_allowroot`
 
-##### <a name="include_dir"></a>`include_dir`
+##### <a name="-zabbix--server--include_dir"></a>`include_dir`
 
 Data type: `Any`
 
@@ -4759,7 +4955,15 @@ You may include individual files or all files in a directory in the configuratio
 
 Default value: `$zabbix::params::server_include`
 
-##### <a name="loadmodulepath"></a>`loadmodulepath`
+##### <a name="-zabbix--server--statsallowedip"></a>`statsallowedip`
+
+Data type: `Optional[String[1]]`
+
+list of allowed ipadresses that can access the internal stats of zabbix server over network
+
+Default value: `$zabbix::params::server_statsallowedip`
+
+##### <a name="-zabbix--server--loadmodulepath"></a>`loadmodulepath`
 
 Data type: `Any`
 
@@ -4767,7 +4971,7 @@ Full path to location of server modules.
 
 Default value: `$zabbix::params::server_loadmodulepath`
 
-##### <a name="loadmodule"></a>`loadmodule`
+##### <a name="-zabbix--server--loadmodule"></a>`loadmodule`
 
 Data type: `Any`
 
@@ -4775,7 +4979,7 @@ Module to load at server startup.
 
 Default value: `$zabbix::params::server_loadmodule`
 
-##### <a name="sslcertlocation_dir"></a>`sslcertlocation_dir`
+##### <a name="-zabbix--server--sslcertlocation_dir"></a>`sslcertlocation_dir`
 
 Data type: `Any`
 
@@ -4783,7 +4987,7 @@ Location of SSL client certificate files for client authentication.
 
 Default value: `$zabbix::params::server_sslcertlocation`
 
-##### <a name="sslkeylocation_dir"></a>`sslkeylocation_dir`
+##### <a name="-zabbix--server--sslkeylocation_dir"></a>`sslkeylocation_dir`
 
 Data type: `Any`
 
@@ -4791,7 +4995,7 @@ Location of SSL private key files for client authentication.
 
 Default value: `$zabbix::params::server_sslkeylocation`
 
-##### <a name="manage_selinux"></a>`manage_selinux`
+##### <a name="-zabbix--server--manage_selinux"></a>`manage_selinux`
 
 Data type: `Boolean`
 
@@ -4799,7 +5003,7 @@ Whether we should manage SELinux rules.
 
 Default value: `$zabbix::params::manage_selinux`
 
-##### <a name="additional_service_params"></a>`additional_service_params`
+##### <a name="-zabbix--server--additional_service_params"></a>`additional_service_params`
 
 Data type: `String`
 
@@ -4807,7 +5011,7 @@ Additional parameters to pass to the service.
 
 Default value: `$zabbix::params::additional_service_params`
 
-##### <a name="zabbix_user"></a>`zabbix_user`
+##### <a name="-zabbix--server--zabbix_user"></a>`zabbix_user`
 
 Data type: `Optional[String[1]]`
 
@@ -4815,7 +5019,7 @@ User the zabbix service will run as.
 
 Default value: `$zabbix::params::server_zabbix_user`
 
-##### <a name="manage_startup_script"></a>`manage_startup_script`
+##### <a name="-zabbix--server--manage_startup_script"></a>`manage_startup_script`
 
 Data type: `Boolean`
 
@@ -4823,22 +5027,39 @@ If the init script should be managed by this module. Attention: This might cause
 
 Default value: `$zabbix::params::manage_startup_script`
 
-##### <a name="socketdir"></a>`socketdir`
+##### <a name="-zabbix--server--socketdir"></a>`socketdir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-IPC socket directory.
-Directory to store IPC sockets used by internal Zabbix services.
+
 
 Default value: `$zabbix::params::server_socketdir`
 
-### <a name="zabbixuserparameter"></a>`zabbix::userparameter`
+##### <a name="-zabbix--server--hanodename"></a>`hanodename`
+
+Data type: `Optional[String[1]]`
+
+Node name identifier in HA setup
+
+Default value: `$zabbix::params::server_hanodename`
+
+##### <a name="-zabbix--server--nodeaddress"></a>`nodeaddress`
+
+Data type: `Optional[String[1]]`
+
+Connection details to the HA node, used to check if zabbix-web can talk to zabbix server
+IPC socket directory.
+Directory to store IPC sockets used by internal Zabbix services.
+
+Default value: `$zabbix::params::server_nodeaddress`
+
+### <a name="zabbix--userparameter"></a>`zabbix::userparameter`
 
 This class can be used when you use hiera or The Foreman. With this tools you can't use and define. This make use of "create_resources".
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 zabbix::userparameter::data:
@@ -4850,9 +5071,9 @@ zabbix::userparameter::data:
 
 The following parameters are available in the `zabbix::userparameter` class:
 
-* [`data`](#data)
+* [`data`](#-zabbix--userparameter--data)
 
-##### <a name="data"></a>`data`
+##### <a name="-zabbix--userparameter--data"></a>`data`
 
 Data type: `Hash`
 
@@ -4860,7 +5081,7 @@ This is the data in YAML format
 
 Default value: `{}`
 
-### <a name="zabbixweb"></a>`zabbix::web`
+### <a name="zabbix--web"></a>`zabbix::web`
 
 This will install the zabbix-web package and install an virtual host.
 
@@ -4873,7 +5094,6 @@ node 'wdpuppet02.dj-wasabi.local' {
   class { 'apache':
       mpm_module => 'prefork',
   }
-  class { 'apache::mod::php': }
   class { 'zabbix::web':
     zabbix_url    => 'zabbix.dj-wasabi.nl',
     zabbix_server => 'wdpuppet03.dj-wasabi.local',
@@ -4888,58 +5108,61 @@ node 'wdpuppet02.dj-wasabi.local' {
 
 The following parameters are available in the `zabbix::web` class:
 
-* [`zabbix_url`](#zabbix_url)
-* [`database_type`](#database_type)
-* [`manage_repo`](#manage_repo)
-* [`zabbix_version`](#zabbix_version)
-* [`zabbix_timezone`](#zabbix_timezone)
-* [`zabbix_template_dir`](#zabbix_template_dir)
-* [`zabbix_package_state`](#zabbix_package_state)
-* [`web_config_owner`](#web_config_owner)
-* [`web_config_group`](#web_config_group)
-* [`manage_vhost`](#manage_vhost)
-* [`default_vhost`](#default_vhost)
-* [`manage_resources`](#manage_resources)
-* [`apache_use_ssl`](#apache_use_ssl)
-* [`apache_ssl_cert`](#apache_ssl_cert)
-* [`apache_ssl_key`](#apache_ssl_key)
-* [`apache_ssl_cipher`](#apache_ssl_cipher)
-* [`apache_ssl_chain`](#apache_ssl_chain)
-* [`apache_listen_ip`](#apache_listen_ip)
-* [`apache_listenport`](#apache_listenport)
-* [`apache_listenport_ssl`](#apache_listenport_ssl)
-* [`zabbix_api_user`](#zabbix_api_user)
-* [`zabbix_api_pass`](#zabbix_api_pass)
-* [`database_host`](#database_host)
-* [`database_name`](#database_name)
-* [`database_schema`](#database_schema)
-* [`database_double_ieee754`](#database_double_ieee754)
-* [`database_user`](#database_user)
-* [`database_password`](#database_password)
-* [`database_socket`](#database_socket)
-* [`database_port`](#database_port)
-* [`zabbix_server`](#zabbix_server)
-* [`zabbix_server_name`](#zabbix_server_name)
-* [`zabbix_listenport`](#zabbix_listenport)
-* [`apache_php_max_execution_time`](#apache_php_max_execution_time)
-* [`apache_php_memory_limit`](#apache_php_memory_limit)
-* [`apache_php_post_max_size`](#apache_php_post_max_size)
-* [`apache_php_upload_max_filesize`](#apache_php_upload_max_filesize)
-* [`apache_php_max_input_time`](#apache_php_max_input_time)
-* [`apache_php_always_populate_raw_post_data`](#apache_php_always_populate_raw_post_data)
-* [`apache_php_max_input_vars`](#apache_php_max_input_vars)
-* [`ldap_cacert`](#ldap_cacert)
-* [`ldap_clientcert`](#ldap_clientcert)
-* [`ldap_clientkey`](#ldap_clientkey)
-* [`ldap_reqcert`](#ldap_reqcert)
-* [`saml_sp_key`](#saml_sp_key)
-* [`saml_sp_cert`](#saml_sp_cert)
-* [`saml_idp_cert`](#saml_idp_cert)
-* [`saml_settings`](#saml_settings)
-* [`puppetgem`](#puppetgem)
-* [`manage_selinux`](#manage_selinux)
+* [`zabbix_url`](#-zabbix--web--zabbix_url)
+* [`database_type`](#-zabbix--web--database_type)
+* [`manage_repo`](#-zabbix--web--manage_repo)
+* [`zabbix_version`](#-zabbix--web--zabbix_version)
+* [`zabbix_timezone`](#-zabbix--web--zabbix_timezone)
+* [`zabbix_template_dir`](#-zabbix--web--zabbix_template_dir)
+* [`zabbix_package_state`](#-zabbix--web--zabbix_package_state)
+* [`web_config_owner`](#-zabbix--web--web_config_owner)
+* [`web_config_group`](#-zabbix--web--web_config_group)
+* [`manage_vhost`](#-zabbix--web--manage_vhost)
+* [`default_vhost`](#-zabbix--web--default_vhost)
+* [`manage_resources`](#-zabbix--web--manage_resources)
+* [`apache_use_ssl`](#-zabbix--web--apache_use_ssl)
+* [`apache_ssl_cert`](#-zabbix--web--apache_ssl_cert)
+* [`apache_ssl_key`](#-zabbix--web--apache_ssl_key)
+* [`apache_ssl_cipher`](#-zabbix--web--apache_ssl_cipher)
+* [`apache_ssl_chain`](#-zabbix--web--apache_ssl_chain)
+* [`apache_listen_ip`](#-zabbix--web--apache_listen_ip)
+* [`apache_listenport`](#-zabbix--web--apache_listenport)
+* [`apache_listenport_ssl`](#-zabbix--web--apache_listenport_ssl)
+* [`zabbix_api_user`](#-zabbix--web--zabbix_api_user)
+* [`zabbix_api_pass`](#-zabbix--web--zabbix_api_pass)
+* [`zabbix_api_access`](#-zabbix--web--zabbix_api_access)
+* [`database_host`](#-zabbix--web--database_host)
+* [`database_name`](#-zabbix--web--database_name)
+* [`database_schema`](#-zabbix--web--database_schema)
+* [`database_double_ieee754`](#-zabbix--web--database_double_ieee754)
+* [`database_user`](#-zabbix--web--database_user)
+* [`database_password`](#-zabbix--web--database_password)
+* [`database_socket`](#-zabbix--web--database_socket)
+* [`database_port`](#-zabbix--web--database_port)
+* [`zabbix_server`](#-zabbix--web--zabbix_server)
+* [`zabbix_server_name`](#-zabbix--web--zabbix_server_name)
+* [`zabbix_listenport`](#-zabbix--web--zabbix_listenport)
+* [`apache_php_max_execution_time`](#-zabbix--web--apache_php_max_execution_time)
+* [`apache_php_memory_limit`](#-zabbix--web--apache_php_memory_limit)
+* [`apache_php_post_max_size`](#-zabbix--web--apache_php_post_max_size)
+* [`apache_php_upload_max_filesize`](#-zabbix--web--apache_php_upload_max_filesize)
+* [`apache_php_max_input_time`](#-zabbix--web--apache_php_max_input_time)
+* [`apache_php_always_populate_raw_post_data`](#-zabbix--web--apache_php_always_populate_raw_post_data)
+* [`apache_php_max_input_vars`](#-zabbix--web--apache_php_max_input_vars)
+* [`ldap_cacert`](#-zabbix--web--ldap_cacert)
+* [`ldap_clientcert`](#-zabbix--web--ldap_clientcert)
+* [`ldap_clientkey`](#-zabbix--web--ldap_clientkey)
+* [`ldap_reqcert`](#-zabbix--web--ldap_reqcert)
+* [`saml_sp_key`](#-zabbix--web--saml_sp_key)
+* [`saml_sp_cert`](#-zabbix--web--saml_sp_cert)
+* [`saml_idp_cert`](#-zabbix--web--saml_idp_cert)
+* [`saml_settings`](#-zabbix--web--saml_settings)
+* [`puppetgem`](#-zabbix--web--puppetgem)
+* [`manage_selinux`](#-zabbix--web--manage_selinux)
+* [`apache_vhost_custom_fragment`](#-zabbix--web--apache_vhost_custom_fragment)
+* [`apache_vhost_custom_params`](#-zabbix--web--apache_vhost_custom_params)
 
-##### <a name="zabbix_url"></a>`zabbix_url`
+##### <a name="-zabbix--web--zabbix_url"></a>`zabbix_url`
 
 Data type: `Any`
 
@@ -4949,7 +5172,7 @@ Example: zabbix.example.com
 
 Default value: `$zabbix::params::zabbix_url`
 
-##### <a name="database_type"></a>`database_type`
+##### <a name="-zabbix--web--database_type"></a>`database_type`
 
 Data type: `Any`
 
@@ -4959,7 +5182,7 @@ Type of database. Can use the following 2 databases:
 
 Default value: `$zabbix::params::database_type`
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-zabbix--web--manage_repo"></a>`manage_repo`
 
 Data type: `Any`
 
@@ -4967,7 +5190,7 @@ When true, it will create repository for installing the webinterface.
 
 Default value: `$zabbix::params::manage_repo`
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix--web--zabbix_version"></a>`zabbix_version`
 
 Data type: `Any`
 
@@ -4975,7 +5198,7 @@ This is the zabbix version.
 
 Default value: `$zabbix::params::zabbix_version`
 
-##### <a name="zabbix_timezone"></a>`zabbix_timezone`
+##### <a name="-zabbix--web--zabbix_timezone"></a>`zabbix_timezone`
 
 Data type: `Any`
 
@@ -4983,7 +5206,7 @@ The current timezone for vhost configuration needed for the php timezone. Exampl
 
 Default value: `$zabbix::params::zabbix_timezone`
 
-##### <a name="zabbix_template_dir"></a>`zabbix_template_dir`
+##### <a name="-zabbix--web--zabbix_template_dir"></a>`zabbix_template_dir`
 
 Data type: `Any`
 
@@ -4991,7 +5214,7 @@ The directory where all templates are stored before uploading via API
 
 Default value: `$zabbix::params::zabbix_template_dir`
 
-##### <a name="zabbix_package_state"></a>`zabbix_package_state`
+##### <a name="-zabbix--web--zabbix_package_state"></a>`zabbix_package_state`
 
 Data type: `Any`
 
@@ -4999,7 +5222,7 @@ The state of the package that needs to be installed: present or latest.
 
 Default value: `$zabbix::params::zabbix_package_state`
 
-##### <a name="web_config_owner"></a>`web_config_owner`
+##### <a name="-zabbix--web--web_config_owner"></a>`web_config_owner`
 
 Data type: `Any`
 
@@ -5007,7 +5230,7 @@ Which user should own the web interface configuration file.
 
 Default value: `$zabbix::params::web_config_owner`
 
-##### <a name="web_config_group"></a>`web_config_group`
+##### <a name="-zabbix--web--web_config_group"></a>`web_config_group`
 
 Data type: `Any`
 
@@ -5015,7 +5238,7 @@ Which group should own the web interface configuration file.
 
 Default value: `$zabbix::params::web_config_group`
 
-##### <a name="manage_vhost"></a>`manage_vhost`
+##### <a name="-zabbix--web--manage_vhost"></a>`manage_vhost`
 
 Data type: `Any`
 
@@ -5023,7 +5246,7 @@ When true, it will create an vhost for apache. The parameter zabbix_url has to b
 
 Default value: `$zabbix::params::manage_vhost`
 
-##### <a name="default_vhost"></a>`default_vhost`
+##### <a name="-zabbix--web--default_vhost"></a>`default_vhost`
 
 Data type: `Any`
 
@@ -5032,7 +5255,7 @@ with marking zabbix vhost as default one, when false priority is set to 25
 
 Default value: `$zabbix::params::default_vhost`
 
-##### <a name="manage_resources"></a>`manage_resources`
+##### <a name="-zabbix--web--manage_resources"></a>`manage_resources`
 
 Data type: `Any`
 
@@ -5043,7 +5266,7 @@ enabled.
 
 Default value: `$zabbix::params::manage_resources`
 
-##### <a name="apache_use_ssl"></a>`apache_use_ssl`
+##### <a name="-zabbix--web--apache_use_ssl"></a>`apache_use_ssl`
 
 Data type: `Any`
 
@@ -5052,7 +5275,7 @@ nonssl to ssl vhost.
 
 Default value: `$zabbix::params::apache_use_ssl`
 
-##### <a name="apache_ssl_cert"></a>`apache_ssl_cert`
+##### <a name="-zabbix--web--apache_ssl_cert"></a>`apache_ssl_cert`
 
 Data type: `Any`
 
@@ -5061,7 +5284,7 @@ file is present on the system, this module will not install this file.
 
 Default value: `$zabbix::params::apache_ssl_cert`
 
-##### <a name="apache_ssl_key"></a>`apache_ssl_key`
+##### <a name="-zabbix--web--apache_ssl_key"></a>`apache_ssl_key`
 
 Data type: `Any`
 
@@ -5070,7 +5293,7 @@ present on the system, this module will not install this file.
 
 Default value: `$zabbix::params::apache_ssl_key`
 
-##### <a name="apache_ssl_cipher"></a>`apache_ssl_cipher`
+##### <a name="-zabbix--web--apache_ssl_cipher"></a>`apache_ssl_cipher`
 
 Data type: `Any`
 
@@ -5079,7 +5302,7 @@ https://wiki.mozilla.org/Security/Server_Side_TLS
 
 Default value: `$zabbix::params::apache_ssl_cipher`
 
-##### <a name="apache_ssl_chain"></a>`apache_ssl_chain`
+##### <a name="-zabbix--web--apache_ssl_chain"></a>`apache_ssl_chain`
 
 Data type: `Any`
 
@@ -5087,7 +5310,7 @@ The ssl chain file.
 
 Default value: `$zabbix::params::apache_ssl_chain`
 
-##### <a name="apache_listen_ip"></a>`apache_listen_ip`
+##### <a name="-zabbix--web--apache_listen_ip"></a>`apache_listen_ip`
 
 Data type: `Any`
 
@@ -5095,23 +5318,23 @@ The IP the apache service should listen on.
 
 Default value: `$zabbix::params::apache_listen_ip`
 
-##### <a name="apache_listenport"></a>`apache_listenport`
+##### <a name="-zabbix--web--apache_listenport"></a>`apache_listenport`
 
-Data type: `Any`
+Data type: `Variant[Array[Stdlib::Port], Stdlib::Port]`
 
 The port for the apache vhost.
 
 Default value: `$zabbix::params::apache_listenport`
 
-##### <a name="apache_listenport_ssl"></a>`apache_listenport_ssl`
+##### <a name="-zabbix--web--apache_listenport_ssl"></a>`apache_listenport_ssl`
 
-Data type: `Any`
+Data type: `Variant[Array[Stdlib::Port], Stdlib::Port]`
 
 The port for the apache SSL vhost.
 
 Default value: `$zabbix::params::apache_listenport_ssl`
 
-##### <a name="zabbix_api_user"></a>`zabbix_api_user`
+##### <a name="-zabbix--web--zabbix_api_user"></a>`zabbix_api_user`
 
 Data type: `Any`
 
@@ -5119,15 +5342,23 @@ Name of the user which the api should connect to. Default: Admin
 
 Default value: `$zabbix::params::server_api_user`
 
-##### <a name="zabbix_api_pass"></a>`zabbix_api_pass`
+##### <a name="-zabbix--web--zabbix_api_pass"></a>`zabbix_api_pass`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Password of the user which connects to the api. Default: zabbix
 
 Default value: `$zabbix::params::server_api_pass`
 
-##### <a name="database_host"></a>`database_host`
+##### <a name="-zabbix--web--zabbix_api_access"></a>`zabbix_api_access`
+
+Data type: `Optional[Array[Stdlib::Host,1]]`
+
+Which host has access to the api. Default: no restriction
+
+Default value: `$zabbix::params::server_api_access`
+
+##### <a name="-zabbix--web--database_host"></a>`database_host`
 
 Data type: `Any`
 
@@ -5135,7 +5366,7 @@ Database host name.
 
 Default value: `$zabbix::params::server_database_host`
 
-##### <a name="database_name"></a>`database_name`
+##### <a name="-zabbix--web--database_name"></a>`database_name`
 
 Data type: `Any`
 
@@ -5143,7 +5374,7 @@ Database name.
 
 Default value: `$zabbix::params::server_database_name`
 
-##### <a name="database_schema"></a>`database_schema`
+##### <a name="-zabbix--web--database_schema"></a>`database_schema`
 
 Data type: `Any`
 
@@ -5151,7 +5382,7 @@ Schema name. used for ibm db2.
 
 Default value: `$zabbix::params::server_database_schema`
 
-##### <a name="database_double_ieee754"></a>`database_double_ieee754`
+##### <a name="-zabbix--web--database_double_ieee754"></a>`database_double_ieee754`
 
 Data type: `Boolean`
 
@@ -5161,7 +5392,7 @@ https://www.zabbix.com/documentation/5.0/manual/installation/upgrade_notes_500#e
 
 Default value: `$zabbix::params::server_database_double_ieee754`
 
-##### <a name="database_user"></a>`database_user`
+##### <a name="-zabbix--web--database_user"></a>`database_user`
 
 Data type: `Any`
 
@@ -5169,15 +5400,15 @@ Database user. ignored for sqlite.
 
 Default value: `$zabbix::params::server_database_user`
 
-##### <a name="database_password"></a>`database_password`
+##### <a name="-zabbix--web--database_password"></a>`database_password`
 
-Data type: `Any`
+Data type: `Variant[Sensitive[String], String]`
 
 Database password. ignored for sqlite.
 
 Default value: `$zabbix::params::server_database_password`
 
-##### <a name="database_socket"></a>`database_socket`
+##### <a name="-zabbix--web--database_socket"></a>`database_socket`
 
 Data type: `Any`
 
@@ -5185,7 +5416,7 @@ Path to mysql socket.
 
 Default value: `$zabbix::params::server_database_socket`
 
-##### <a name="database_port"></a>`database_port`
+##### <a name="-zabbix--web--database_port"></a>`database_port`
 
 Data type: `Any`
 
@@ -5193,7 +5424,7 @@ Database port when not using local socket. Ignored for sqlite.
 
 Default value: `$zabbix::params::server_database_port`
 
-##### <a name="zabbix_server"></a>`zabbix_server`
+##### <a name="-zabbix--web--zabbix_server"></a>`zabbix_server`
 
 Data type: `Any`
 
@@ -5201,7 +5432,7 @@ The fqdn name of the host running the zabbix-server. When single node: localhost
 
 Default value: `$zabbix::params::zabbix_server`
 
-##### <a name="zabbix_server_name"></a>`zabbix_server_name`
+##### <a name="-zabbix--web--zabbix_server_name"></a>`zabbix_server_name`
 
 Data type: `Optional[String]`
 
@@ -5211,7 +5442,7 @@ This can also be used to upave a different name such as "Zabbix DEV"
 
 Default value: `$zabbix::params::zabbix_server`
 
-##### <a name="zabbix_listenport"></a>`zabbix_listenport`
+##### <a name="-zabbix--web--zabbix_listenport"></a>`zabbix_listenport`
 
 Data type: `Any`
 
@@ -5219,7 +5450,7 @@ The port on which the zabbix-server is listening. Default: 10051
 
 Default value: `$zabbix::params::server_listenport`
 
-##### <a name="apache_php_max_execution_time"></a>`apache_php_max_execution_time`
+##### <a name="-zabbix--web--apache_php_max_execution_time"></a>`apache_php_max_execution_time`
 
 Data type: `Any`
 
@@ -5227,7 +5458,7 @@ Max execution time for php. Default: 300
 
 Default value: `$zabbix::params::apache_php_max_execution_time`
 
-##### <a name="apache_php_memory_limit"></a>`apache_php_memory_limit`
+##### <a name="-zabbix--web--apache_php_memory_limit"></a>`apache_php_memory_limit`
 
 Data type: `Any`
 
@@ -5235,7 +5466,7 @@ PHP memory size limit. Default: 128M
 
 Default value: `$zabbix::params::apache_php_memory_limit`
 
-##### <a name="apache_php_post_max_size"></a>`apache_php_post_max_size`
+##### <a name="-zabbix--web--apache_php_post_max_size"></a>`apache_php_post_max_size`
 
 Data type: `Any`
 
@@ -5243,7 +5474,7 @@ PHP maximum post size data. Default: 16M
 
 Default value: `$zabbix::params::apache_php_post_max_size`
 
-##### <a name="apache_php_upload_max_filesize"></a>`apache_php_upload_max_filesize`
+##### <a name="-zabbix--web--apache_php_upload_max_filesize"></a>`apache_php_upload_max_filesize`
 
 Data type: `Any`
 
@@ -5251,7 +5482,7 @@ PHP maximum upload filesize. Default: 2M
 
 Default value: `$zabbix::params::apache_php_upload_max_filesize`
 
-##### <a name="apache_php_max_input_time"></a>`apache_php_max_input_time`
+##### <a name="-zabbix--web--apache_php_max_input_time"></a>`apache_php_max_input_time`
 
 Data type: `Any`
 
@@ -5259,7 +5490,7 @@ Max input time for php. Default: 300
 
 Default value: `$zabbix::params::apache_php_max_input_time`
 
-##### <a name="apache_php_always_populate_raw_post_data"></a>`apache_php_always_populate_raw_post_data`
+##### <a name="-zabbix--web--apache_php_always_populate_raw_post_data"></a>`apache_php_always_populate_raw_post_data`
 
 Data type: `Any`
 
@@ -5267,7 +5498,7 @@ Default: -1
 
 Default value: `$zabbix::params::apache_php_always_populate_raw_post_data`
 
-##### <a name="apache_php_max_input_vars"></a>`apache_php_max_input_vars`
+##### <a name="-zabbix--web--apache_php_max_input_vars"></a>`apache_php_max_input_vars`
 
 Data type: `Any`
 
@@ -5275,7 +5506,7 @@ Max amount of vars for GET/POST requests
 
 Default value: `$zabbix::params::apache_php_max_input_vars`
 
-##### <a name="ldap_cacert"></a>`ldap_cacert`
+##### <a name="-zabbix--web--ldap_cacert"></a>`ldap_cacert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -5283,7 +5514,7 @@ Set location of ca_cert used by LDAP authentication.
 
 Default value: `$zabbix::params::ldap_cacert`
 
-##### <a name="ldap_clientcert"></a>`ldap_clientcert`
+##### <a name="-zabbix--web--ldap_clientcert"></a>`ldap_clientcert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -5291,7 +5522,7 @@ Set location of client cert used by LDAP authentication.
 
 Default value: `$zabbix::params::ldap_clientcert`
 
-##### <a name="ldap_clientkey"></a>`ldap_clientkey`
+##### <a name="-zabbix--web--ldap_clientkey"></a>`ldap_clientkey`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -5299,7 +5530,7 @@ Set location of client key used by LDAP authentication.
 
 Default value: `$zabbix::params::ldap_clientkey`
 
-##### <a name="ldap_reqcert"></a>`ldap_reqcert`
+##### <a name="-zabbix--web--ldap_reqcert"></a>`ldap_reqcert`
 
 Data type: `Optional[Enum['never','allow','try','demand','hard']]`
 
@@ -5307,7 +5538,7 @@ Specifies what checks to perform on a server certificate
 
 Default value: `$zabbix::params::ldap_reqcert`
 
-##### <a name="saml_sp_key"></a>`saml_sp_key`
+##### <a name="-zabbix--web--saml_sp_key"></a>`saml_sp_key`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -5315,7 +5546,7 @@ The location of the SAML Service Provider Key file.
 
 Default value: `$zabbix::params::saml_sp_key`
 
-##### <a name="saml_sp_cert"></a>`saml_sp_cert`
+##### <a name="-zabbix--web--saml_sp_cert"></a>`saml_sp_cert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -5323,7 +5554,7 @@ The location of the SAML Service Provider Certificate.
 
 Default value: `$zabbix::params::saml_sp_cert`
 
-##### <a name="saml_idp_cert"></a>`saml_idp_cert`
+##### <a name="-zabbix--web--saml_idp_cert"></a>`saml_idp_cert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -5331,7 +5562,7 @@ The location of the SAML Identity Provider Certificate.
 
 Default value: `$zabbix::params::saml_idp_cert`
 
-##### <a name="saml_settings"></a>`saml_settings`
+##### <a name="-zabbix--web--saml_settings"></a>`saml_settings`
 
 Data type: `Hash[String[1], Variant[ScalarData, Hash]]`
 
@@ -5339,7 +5570,7 @@ A hash of additional SAML SSO settings.
 
 Default value: `$zabbix::params::saml_settings`
 
-##### <a name="puppetgem"></a>`puppetgem`
+##### <a name="-zabbix--web--puppetgem"></a>`puppetgem`
 
 Data type: `Any`
 
@@ -5347,7 +5578,7 @@ Provider for the zabbixapi gem package.
 
 Default value: `$zabbix::params::puppetgem`
 
-##### <a name="manage_selinux"></a>`manage_selinux`
+##### <a name="-zabbix--web--manage_selinux"></a>`manage_selinux`
 
 Data type: `Boolean`
 
@@ -5355,7 +5586,50 @@ Whether we should manage SELinux rules.
 
 Default value: `$zabbix::params::manage_selinux`
 
-### <a name="zabbixzapache"></a>`zabbix::zapache`
+##### <a name="-zabbix--web--apache_vhost_custom_fragment"></a>`apache_vhost_custom_fragment`
+
+Data type: `Optional[String[1]]`
+
+custom_fragment to pass to apache::vhost.
+
+Default value: `undef`
+
+##### <a name="-zabbix--web--apache_vhost_custom_params"></a>`apache_vhost_custom_params`
+
+Data type: `Hash[String[1], Any]`
+
+Additional parameters to pass to apache::vhost.
+
+Default value: `{}`
+
+### <a name="zabbix--zabbixapi"></a>`zabbix::zabbixapi`
+
+This will install the zabbixapi gem.
+
+#### Parameters
+
+The following parameters are available in the `zabbix::zabbixapi` class:
+
+* [`zabbix_version`](#-zabbix--zabbixapi--zabbix_version)
+* [`puppetgem`](#-zabbix--zabbixapi--puppetgem)
+
+##### <a name="-zabbix--zabbixapi--zabbix_version"></a>`zabbix_version`
+
+Data type: `Any`
+
+This is the zabbix version.
+
+Default value: `$zabbix::params::zabbix_version`
+
+##### <a name="-zabbix--zabbixapi--puppetgem"></a>`puppetgem`
+
+Data type: `Any`
+
+Provider for the zabbixapi gem package.
+
+Default value: `$zabbix::params::puppetgem`
+
+### <a name="zabbix--zapache"></a>`zabbix::zapache`
 
 This will install and configure the zapache monitoring script Upstream: https://github.com/lorf/zapache
 
@@ -5375,9 +5649,9 @@ class { 'zabbix::agent':
 
 The following parameters are available in the `zabbix::zapache` class:
 
-* [`apache_status`](#apache_status)
+* [`apache_status`](#-zabbix--zapache--apache_status)
 
-##### <a name="apache_status"></a>`apache_status`
+##### <a name="-zabbix--zapache--apache_status"></a>`apache_status`
 
 Data type: `Boolean`
 
@@ -5387,7 +5661,7 @@ Default value: `$zabbix::params::apache_status`
 
 ## Defined types
 
-### <a name="zabbixresourcestemplate"></a>`zabbix::resources::template`
+### <a name="zabbix--resources--template"></a>`zabbix::resources::template`
 
 This will create resources into puppetdb for automatically configuring agent into zabbix front-end.
 
@@ -5395,19 +5669,19 @@ This will create resources into puppetdb for automatically configuring agent int
 
 The following parameters are available in the `zabbix::resources::template` defined type:
 
-* [`template_dir`](#template_dir)
-* [`template_name`](#template_name)
-* [`template_source`](#template_source)
-* [`zabbix_version`](#zabbix_version)
-* [`delete_missing_applications`](#delete_missing_applications)
-* [`delete_missing_drules`](#delete_missing_drules)
-* [`delete_missing_graphs`](#delete_missing_graphs)
-* [`delete_missing_httptests`](#delete_missing_httptests)
-* [`delete_missing_items`](#delete_missing_items)
-* [`delete_missing_templatescreens`](#delete_missing_templatescreens)
-* [`delete_missing_triggers`](#delete_missing_triggers)
+* [`template_dir`](#-zabbix--resources--template--template_dir)
+* [`template_name`](#-zabbix--resources--template--template_name)
+* [`template_source`](#-zabbix--resources--template--template_source)
+* [`zabbix_version`](#-zabbix--resources--template--zabbix_version)
+* [`delete_missing_applications`](#-zabbix--resources--template--delete_missing_applications)
+* [`delete_missing_drules`](#-zabbix--resources--template--delete_missing_drules)
+* [`delete_missing_graphs`](#-zabbix--resources--template--delete_missing_graphs)
+* [`delete_missing_httptests`](#-zabbix--resources--template--delete_missing_httptests)
+* [`delete_missing_items`](#-zabbix--resources--template--delete_missing_items)
+* [`delete_missing_templatescreens`](#-zabbix--resources--template--delete_missing_templatescreens)
+* [`delete_missing_triggers`](#-zabbix--resources--template--delete_missing_triggers)
 
-##### <a name="template_dir"></a>`template_dir`
+##### <a name="-zabbix--resources--template--template_dir"></a>`template_dir`
 
 Data type: `Any`
 
@@ -5415,7 +5689,7 @@ The directory containing zabbix templates
 
 Default value: `$zabbix::params::zabbix_template_dir`
 
-##### <a name="template_name"></a>`template_name`
+##### <a name="-zabbix--resources--template--template_name"></a>`template_name`
 
 Data type: `Any`
 
@@ -5423,7 +5697,7 @@ The name of template.
 
 Default value: `$title`
 
-##### <a name="template_source"></a>`template_source`
+##### <a name="-zabbix--resources--template--template_source"></a>`template_source`
 
 Data type: `Any`
 
@@ -5431,7 +5705,7 @@ Template source file.
 
 Default value: `''`
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix--resources--template--zabbix_version"></a>`zabbix_version`
 
 Data type: `Any`
 
@@ -5439,63 +5713,63 @@ Zabbix version that the template will be installed on.
 
 Default value: `$zabbix::params::zabbix_version`
 
-##### <a name="delete_missing_applications"></a>`delete_missing_applications`
+##### <a name="-zabbix--resources--template--delete_missing_applications"></a>`delete_missing_applications`
 
 Data type: `Boolean`
 
 Deletes applications from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_drules"></a>`delete_missing_drules`
+##### <a name="-zabbix--resources--template--delete_missing_drules"></a>`delete_missing_drules`
 
 Data type: `Boolean`
 
 Deletes discovery rules from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_graphs"></a>`delete_missing_graphs`
+##### <a name="-zabbix--resources--template--delete_missing_graphs"></a>`delete_missing_graphs`
 
 Data type: `Boolean`
 
 Deletes graphs from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_httptests"></a>`delete_missing_httptests`
+##### <a name="-zabbix--resources--template--delete_missing_httptests"></a>`delete_missing_httptests`
 
 Data type: `Boolean`
 
 Deletes web-scenarios from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_items"></a>`delete_missing_items`
+##### <a name="-zabbix--resources--template--delete_missing_items"></a>`delete_missing_items`
 
 Data type: `Boolean`
 
 Deletes items from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_templatescreens"></a>`delete_missing_templatescreens`
+##### <a name="-zabbix--resources--template--delete_missing_templatescreens"></a>`delete_missing_templatescreens`
 
 Data type: `Boolean`
 
 Deletes template-screens from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_triggers"></a>`delete_missing_triggers`
+##### <a name="-zabbix--resources--template--delete_missing_triggers"></a>`delete_missing_triggers`
 
 Data type: `Boolean`
 
 Deletes triggers from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-### <a name="zabbixresourcesuserparameters"></a>`zabbix::resources::userparameters`
+### <a name="zabbix--resources--userparameters"></a>`zabbix::resources::userparameters`
 
 This will create resources into puppetdb for automatically configuring agent into zabbix front-end.
 
@@ -5503,41 +5777,41 @@ This will create resources into puppetdb for automatically configuring agent int
 
 The following parameters are available in the `zabbix::resources::userparameters` defined type:
 
-* [`ensure`](#ensure)
-* [`hostname`](#hostname)
-* [`template`](#template)
+* [`ensure`](#-zabbix--resources--userparameters--ensure)
+* [`hostname`](#-zabbix--resources--userparameters--hostname)
+* [`template`](#-zabbix--resources--userparameters--template)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-zabbix--resources--userparameters--ensure"></a>`ensure`
 
 Data type: `Any`
 
 Ensure resource.
 
-##### <a name="hostname"></a>`hostname`
+##### <a name="-zabbix--resources--userparameters--hostname"></a>`hostname`
 
 Data type: `Any`
 
 Hostname of the machine.
 
-##### <a name="template"></a>`template`
+##### <a name="-zabbix--resources--userparameters--template"></a>`template`
 
 Data type: `Any`
 
 Template which should be attached to this host.
 
-### <a name="zabbixstartup"></a>`zabbix::startup`
+### <a name="zabbix--startup"></a>`zabbix::startup`
 
 This manage the zabbix related service startup script.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 zabbix::startup { 'agent': }
 ```
 
-##### 
+#####
 
 ```puppet
 zabbix::startup { 'server': }
@@ -5547,41 +5821,41 @@ zabbix::startup { 'server': }
 
 The following parameters are available in the `zabbix::startup` defined type:
 
-* [`pidfile`](#pidfile)
-* [`agent_configfile_path`](#agent_configfile_path)
-* [`server_configfile_path`](#server_configfile_path)
-* [`database_type`](#database_type)
-* [`zabbix_user`](#zabbix_user)
-* [`additional_service_params`](#additional_service_params)
-* [`service_type`](#service_type)
-* [`manage_database`](#manage_database)
-* [`service_name`](#service_name)
+* [`pidfile`](#-zabbix--startup--pidfile)
+* [`agent_configfile_path`](#-zabbix--startup--agent_configfile_path)
+* [`server_configfile_path`](#-zabbix--startup--server_configfile_path)
+* [`database_type`](#-zabbix--startup--database_type)
+* [`zabbix_user`](#-zabbix--startup--zabbix_user)
+* [`additional_service_params`](#-zabbix--startup--additional_service_params)
+* [`service_type`](#-zabbix--startup--service_type)
+* [`manage_database`](#-zabbix--startup--manage_database)
+* [`service_name`](#-zabbix--startup--service_name)
 
-##### <a name="pidfile"></a>`pidfile`
+##### <a name="-zabbix--startup--pidfile"></a>`pidfile`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of the PID file
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="agent_configfile_path"></a>`agent_configfile_path`
+##### <a name="-zabbix--startup--agent_configfile_path"></a>`agent_configfile_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of Zabbix's agent configuration file
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="server_configfile_path"></a>`server_configfile_path`
+##### <a name="-zabbix--startup--server_configfile_path"></a>`server_configfile_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Location of Zabbix's server configuration file
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="database_type"></a>`database_type`
+##### <a name="-zabbix--startup--database_type"></a>`database_type`
 
 Data type: `Optional[Zabbix::Databases]`
 
@@ -5589,25 +5863,25 @@ Type of database. Can use the following 2 databases:
 - postgresql
 - mysql
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="zabbix_user"></a>`zabbix_user`
+##### <a name="-zabbix--startup--zabbix_user"></a>`zabbix_user`
 
 Data type: `Optional[String]`
 
 User the zabbix service will run as
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="additional_service_params"></a>`additional_service_params`
+##### <a name="-zabbix--startup--additional_service_params"></a>`additional_service_params`
 
 Data type: `Optional[String[1]]`
 
 Additional parameters to pass to the service
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="service_type"></a>`service_type`
+##### <a name="-zabbix--startup--service_type"></a>`service_type`
 
 Data type: `String`
 
@@ -5615,15 +5889,15 @@ Systemd service type
 
 Default value: `'simple'`
 
-##### <a name="manage_database"></a>`manage_database`
+##### <a name="-zabbix--startup--manage_database"></a>`manage_database`
 
 Data type: `Optional[Boolean]`
 
 When true, it will configure the database and execute the sql scripts.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="service_name"></a>`service_name`
+##### <a name="-zabbix--startup--service_name"></a>`service_name`
 
 Data type: `Optional[String]`
 
@@ -5631,13 +5905,13 @@ Name of the service. Defaults to the resource name
 
 Default value: `$name`
 
-### <a name="zabbixtemplate"></a>`zabbix::template`
+### <a name="zabbix--template"></a>`zabbix::template`
 
 This will upload an Zabbix Template (XML format)
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 zabbix::template { 'Template App MySQL':
@@ -5649,18 +5923,18 @@ zabbix::template { 'Template App MySQL':
 
 The following parameters are available in the `zabbix::template` defined type:
 
-* [`templ_name`](#templ_name)
-* [`templ_source`](#templ_source)
-* [`zabbix_version`](#zabbix_version)
-* [`delete_missing_applications`](#delete_missing_applications)
-* [`delete_missing_drules`](#delete_missing_drules)
-* [`delete_missing_graphs`](#delete_missing_graphs)
-* [`delete_missing_httptests`](#delete_missing_httptests)
-* [`delete_missing_items`](#delete_missing_items)
-* [`delete_missing_templatescreens`](#delete_missing_templatescreens)
-* [`delete_missing_triggers`](#delete_missing_triggers)
+* [`templ_name`](#-zabbix--template--templ_name)
+* [`templ_source`](#-zabbix--template--templ_source)
+* [`zabbix_version`](#-zabbix--template--zabbix_version)
+* [`delete_missing_applications`](#-zabbix--template--delete_missing_applications)
+* [`delete_missing_drules`](#-zabbix--template--delete_missing_drules)
+* [`delete_missing_graphs`](#-zabbix--template--delete_missing_graphs)
+* [`delete_missing_httptests`](#-zabbix--template--delete_missing_httptests)
+* [`delete_missing_items`](#-zabbix--template--delete_missing_items)
+* [`delete_missing_templatescreens`](#-zabbix--template--delete_missing_templatescreens)
+* [`delete_missing_triggers`](#-zabbix--template--delete_missing_triggers)
 
-##### <a name="templ_name"></a>`templ_name`
+##### <a name="-zabbix--template--templ_name"></a>`templ_name`
 
 Data type: `Any`
 
@@ -5668,7 +5942,7 @@ The name of the template. This name will be found in the Web interface
 
 Default value: `$title`
 
-##### <a name="templ_source"></a>`templ_source`
+##### <a name="-zabbix--template--templ_source"></a>`templ_source`
 
 Data type: `Any`
 
@@ -5676,7 +5950,7 @@ The location of the XML file wich needs to be imported.
 
 Default value: `''`
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix--template--zabbix_version"></a>`zabbix_version`
 
 Data type: `String[1]`
 
@@ -5684,69 +5958,69 @@ The Zabbix version on which the template will be installed on.
 
 Default value: `$zabbix::params::zabbix_version`
 
-##### <a name="delete_missing_applications"></a>`delete_missing_applications`
+##### <a name="-zabbix--template--delete_missing_applications"></a>`delete_missing_applications`
 
 Data type: `Boolean`
 
 Deletes applications from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_drules"></a>`delete_missing_drules`
+##### <a name="-zabbix--template--delete_missing_drules"></a>`delete_missing_drules`
 
 Data type: `Boolean`
 
 Deletes discovery rules from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_graphs"></a>`delete_missing_graphs`
+##### <a name="-zabbix--template--delete_missing_graphs"></a>`delete_missing_graphs`
 
 Data type: `Boolean`
 
 Deletes graphs from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_httptests"></a>`delete_missing_httptests`
+##### <a name="-zabbix--template--delete_missing_httptests"></a>`delete_missing_httptests`
 
 Data type: `Boolean`
 
 Deletes web-scenarios from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_items"></a>`delete_missing_items`
+##### <a name="-zabbix--template--delete_missing_items"></a>`delete_missing_items`
 
 Data type: `Boolean`
 
 Deletes items from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_templatescreens"></a>`delete_missing_templatescreens`
+##### <a name="-zabbix--template--delete_missing_templatescreens"></a>`delete_missing_templatescreens`
 
 Data type: `Boolean`
 
 Deletes template-screens from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_missing_triggers"></a>`delete_missing_triggers`
+##### <a name="-zabbix--template--delete_missing_triggers"></a>`delete_missing_triggers`
 
 Data type: `Boolean`
 
 Deletes triggers from zabbix that are not in the template when set to true
 
-Default value: ``false``
+Default value: `false`
 
-### <a name="zabbixuserparameters"></a>`zabbix::userparameters`
+### <a name="zabbix--userparameters"></a>`zabbix::userparameters`
 
 This will install an userparameters file with keys for items that can be checked with zabbix.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 zabbix::userparameters { 'mysql':
@@ -5754,7 +6028,7 @@ zabbix::userparameters { 'mysql':
 }
 ```
 
-##### 
+#####
 
 ```puppet
 zabbix::userparameters { 'mysql':
@@ -5775,16 +6049,16 @@ zabbix::userparameters { 'mysql':
 
 The following parameters are available in the `zabbix::userparameters` defined type:
 
-* [`ensure`](#ensure)
-* [`source`](#source)
-* [`content`](#content)
-* [`script`](#script)
-* [`script_ext`](#script_ext)
-* [`template`](#template)
-* [`script_dir`](#script_dir)
-* [`config_mode`](#config_mode)
+* [`ensure`](#-zabbix--userparameters--ensure)
+* [`source`](#-zabbix--userparameters--source)
+* [`content`](#-zabbix--userparameters--content)
+* [`script`](#-zabbix--userparameters--script)
+* [`script_ext`](#-zabbix--userparameters--script_ext)
+* [`template`](#-zabbix--userparameters--template)
+* [`script_dir`](#-zabbix--userparameters--script_dir)
+* [`config_mode`](#-zabbix--userparameters--config_mode)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-zabbix--userparameters--ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -5792,39 +6066,39 @@ If the userparameter should be `present` or `absent`
 
 Default value: `'present'`
 
-##### <a name="source"></a>`source`
+##### <a name="-zabbix--userparameters--source"></a>`source`
 
 Data type: `Optional[Stdlib::Filesource]`
 
 File which holds several userparameter entries.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="content"></a>`content`
+##### <a name="-zabbix--userparameters--content"></a>`content`
 
 Data type: `Optional[String[1]]`
 
 When you have 1 userparameter entry which you want to install.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="script"></a>`script`
+##### <a name="-zabbix--userparameters--script"></a>`script`
 
 Data type: `Optional[Stdlib::Filesource]`
 
 Low level discovery (LLD) script.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="script_ext"></a>`script_ext`
+##### <a name="-zabbix--userparameters--script_ext"></a>`script_ext`
 
 Data type: `Optional[String[1]]`
 
 The script extention. Should be started with the dot. Like: .sh .bat .py
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="template"></a>`template`
+##### <a name="-zabbix--userparameters--template"></a>`template`
 
 Data type: `Optional[String[1]]`
 
@@ -5832,9 +6106,9 @@ When you use exported resources (when manage_resources is set to true on other c
 you'll can add the name of the template which correspondents with the 'content' or
 'source' which you add. The template will be added to the host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="script_dir"></a>`script_dir`
+##### <a name="-zabbix--userparameters--script_dir"></a>`script_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -5842,7 +6116,7 @@ When 'script' is used, this parameter can provide the directly where this script
 
 Default value: `'/usr/bin'`
 
-##### <a name="config_mode"></a>`config_mode`
+##### <a name="-zabbix--userparameters--config_mode"></a>`config_mode`
 
 Data type: `Stdlib::Filemode`
 
@@ -5853,57 +6127,9 @@ Default value: `'0644'`
 
 ## Resource types
 
-### <a name="zabbix_application"></a>`zabbix_application`
-
-%q(Manage zabbix applications
-
-    zabbix_application{"app1":
-      ensure   => present,
-      template => 'template1',
-    }
-
-It Raise exception on deleting an application which is a part of used template.
-
-)
-
-#### Properties
-
-The following properties are available in the `zabbix_application` type.
-
-##### `ensure`
-
-Valid values: `present`, `absent`
-
-The basic property that the resource should be in.
-
-Default value: `present`
-
-#### Parameters
-
-The following parameters are available in the `zabbix_application` type.
-
-* [`name`](#name)
-* [`provider`](#provider)
-* [`template`](#template)
-
-##### <a name="name"></a>`name`
-
-namevar
-
-application name
-
-##### <a name="provider"></a>`provider`
-
-The specific backend to use for this `zabbix_application` resource. You will seldom need to specify this --- Puppet will
-usually discover the appropriate provider for your platform.
-
-##### <a name="template"></a>`template`
-
-template to which the application is linked
-
 ### <a name="zabbix_host"></a>`zabbix_host`
 
-FQDN of the machine.
+Manage zabbix hosts
 
 #### Properties
 
@@ -5916,10 +6142,6 @@ Valid values: `present`, `absent`
 The basic property that the resource should be in.
 
 Default value: `present`
-
-##### `group`
-
-Deprecated! Name of the hostgroup.
 
 ##### `groups`
 
@@ -5961,9 +6183,25 @@ Whether it is monitored by an proxy or not.
 
 List of templates which should be loaded for this host.
 
+##### `tls_accept`
+
+How the client connect to the server (unencrypted, psk or cert)
+
+##### `tls_connect`
+
+How the server connect to the client (unencrypted, psk or cert)
+
+##### `tls_issuer`
+
+Certificate issuer.
+
+##### `tls_subject`
+
+Certificate subject.
+
 ##### `use_ip`
 
-Valid values: ``true``, ``false``
+Valid values: `true`, `false`
 
 Using ipadress instead of dns to connect.
 
@@ -5971,21 +6209,21 @@ Using ipadress instead of dns to connect.
 
 The following parameters are available in the `zabbix_host` type.
 
-* [`group_create`](#group_create)
-* [`hostname`](#hostname)
-* [`provider`](#provider)
+* [`group_create`](#-zabbix_host--group_create)
+* [`hostname`](#-zabbix_host--hostname)
+* [`provider`](#-zabbix_host--provider)
 
-##### <a name="group_create"></a>`group_create`
+##### <a name="-zabbix_host--group_create"></a>`group_create`
 
-Valid values: ``true``, ``false``
+Valid values: `true`, `false`
 
 Create hostgroup if missing.
 
-##### <a name="hostname"></a>`hostname`
+##### <a name="-zabbix_host--hostname"></a>`hostname`
 
 FQDN of the machine.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-zabbix_host--provider"></a>`provider`
 
 The specific backend to use for this `zabbix_host` resource. You will seldom need to specify this --- Puppet will
 usually discover the appropriate provider for your platform.
@@ -6010,23 +6248,23 @@ Default value: `present`
 
 The following parameters are available in the `zabbix_hostgroup` type.
 
-* [`name`](#name)
-* [`provider`](#provider)
+* [`name`](#-zabbix_hostgroup--name)
+* [`provider`](#-zabbix_hostgroup--provider)
 
-##### <a name="name"></a>`name`
+##### <a name="-zabbix_hostgroup--name"></a>`name`
 
 namevar
 
 hostgroup name
 
-##### <a name="provider"></a>`provider`
+##### <a name="-zabbix_hostgroup--provider"></a>`provider`
 
 The specific backend to use for this `zabbix_hostgroup` resource. You will seldom need to specify this --- Puppet will
 usually discover the appropriate provider for your platform.
 
 ### <a name="zabbix_proxy"></a>`zabbix_proxy`
 
-FQDN of the proxy.
+Manage zabbix proxies
 
 #### Properties
 
@@ -6070,21 +6308,21 @@ Using ipadress instead of dns to connect. Is used by the zabbix-api command.
 
 The following parameters are available in the `zabbix_proxy` type.
 
-* [`hostname`](#hostname)
-* [`provider`](#provider)
+* [`hostname`](#-zabbix_proxy--hostname)
+* [`provider`](#-zabbix_proxy--provider)
 
-##### <a name="hostname"></a>`hostname`
+##### <a name="-zabbix_proxy--hostname"></a>`hostname`
 
 FQDN of the proxy.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-zabbix_proxy--provider"></a>`provider`
 
 The specific backend to use for this `zabbix_proxy` resource. You will seldom need to specify this --- Puppet will
 usually discover the appropriate provider for your platform.
 
 ### <a name="zabbix_template"></a>`zabbix_template`
 
-The name of template.
+Manage zabbix templates
 
 #### Properties
 
@@ -6102,108 +6340,66 @@ Default value: `present`
 
 The following parameters are available in the `zabbix_template` type.
 
-* [`delete_missing_applications`](#delete_missing_applications)
-* [`delete_missing_drules`](#delete_missing_drules)
-* [`delete_missing_graphs`](#delete_missing_graphs)
-* [`delete_missing_httptests`](#delete_missing_httptests)
-* [`delete_missing_items`](#delete_missing_items)
-* [`delete_missing_templatescreens`](#delete_missing_templatescreens)
-* [`delete_missing_triggers`](#delete_missing_triggers)
-* [`provider`](#provider)
-* [`template_name`](#template_name)
-* [`template_source`](#template_source)
-* [`zabbix_version`](#zabbix_version)
+* [`delete_missing_applications`](#-zabbix_template--delete_missing_applications)
+* [`delete_missing_drules`](#-zabbix_template--delete_missing_drules)
+* [`delete_missing_graphs`](#-zabbix_template--delete_missing_graphs)
+* [`delete_missing_httptests`](#-zabbix_template--delete_missing_httptests)
+* [`delete_missing_items`](#-zabbix_template--delete_missing_items)
+* [`delete_missing_templatescreens`](#-zabbix_template--delete_missing_templatescreens)
+* [`delete_missing_triggers`](#-zabbix_template--delete_missing_triggers)
+* [`provider`](#-zabbix_template--provider)
+* [`template_name`](#-zabbix_template--template_name)
+* [`template_source`](#-zabbix_template--template_source)
+* [`zabbix_version`](#-zabbix_template--zabbix_version)
 
-##### <a name="delete_missing_applications"></a>`delete_missing_applications`
+##### <a name="-zabbix_template--delete_missing_applications"></a>`delete_missing_applications`
 
 Delete applications from zabbix which are not in the template.
 
-##### <a name="delete_missing_drules"></a>`delete_missing_drules`
+##### <a name="-zabbix_template--delete_missing_drules"></a>`delete_missing_drules`
 
 Delete discovery rules from zabbix which are not in the template.
 
-##### <a name="delete_missing_graphs"></a>`delete_missing_graphs`
+##### <a name="-zabbix_template--delete_missing_graphs"></a>`delete_missing_graphs`
 
 Delete graphs from zabbix which are not in the template.
 
-##### <a name="delete_missing_httptests"></a>`delete_missing_httptests`
+##### <a name="-zabbix_template--delete_missing_httptests"></a>`delete_missing_httptests`
 
 Delete web scenarios from zabbix which are not in the template.
 
-##### <a name="delete_missing_items"></a>`delete_missing_items`
+##### <a name="-zabbix_template--delete_missing_items"></a>`delete_missing_items`
 
 Delete items from zabbix which are not in the template.
 
-##### <a name="delete_missing_templatescreens"></a>`delete_missing_templatescreens`
+##### <a name="-zabbix_template--delete_missing_templatescreens"></a>`delete_missing_templatescreens`
 
 Delete templateScreens from zabbix which are not in the template.
 
-##### <a name="delete_missing_triggers"></a>`delete_missing_triggers`
+##### <a name="-zabbix_template--delete_missing_triggers"></a>`delete_missing_triggers`
 
 Delete triggers from zabbix which are not in the template.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-zabbix_template--provider"></a>`provider`
 
 The specific backend to use for this `zabbix_template` resource. You will seldom need to specify this --- Puppet will
 usually discover the appropriate provider for your platform.
 
-##### <a name="template_name"></a>`template_name`
+##### <a name="-zabbix_template--template_name"></a>`template_name`
 
 The name of template.
 
-##### <a name="template_source"></a>`template_source`
+##### <a name="-zabbix_template--template_source"></a>`template_source`
 
 Template source file.
 
-##### <a name="zabbix_version"></a>`zabbix_version`
+##### <a name="-zabbix_template--zabbix_version"></a>`zabbix_version`
 
 Zabbix version that the template will be installed on.
 
-### <a name="zabbix_template_host"></a>`zabbix_template_host`
-
-Link or Unlink template to host. Only for Zabbix < 6.0!
-Example.
-Name should be in the format of "template_name@hostname"
-
-zabbix_template_host{ 'mysql_template@db1':
-      ensure => present,
-    }
-
-#### Properties
-
-The following properties are available in the `zabbix_template_host` type.
-
-##### `ensure`
-
-Valid values: `present`, `absent`
-
-The basic property that the resource should be in.
-
-Default value: `present`
-
-#### Parameters
-
-The following parameters are available in the `zabbix_template_host` type.
-
-* [`name`](#name)
-* [`provider`](#provider)
-
-##### <a name="name"></a>`name`
-
-Valid values: `%r{.+@.+}`
-
-namevar
-
-template_name@host_name
-
-##### <a name="provider"></a>`provider`
-
-The specific backend to use for this `zabbix_template_host` resource. You will seldom need to specify this --- Puppet
-will usually discover the appropriate provider for your platform.
-
 ### <a name="zabbix_userparameters"></a>`zabbix_userparameters`
 
-An unique name for this define.
+Manage zabbix user templates
 
 #### Properties
 
@@ -6221,49 +6417,40 @@ Default value: `present`
 
 The following parameters are available in the `zabbix_userparameters` type.
 
-* [`hostname`](#hostname)
-* [`name`](#name)
-* [`provider`](#provider)
-* [`template`](#template)
+* [`hostname`](#-zabbix_userparameters--hostname)
+* [`name`](#-zabbix_userparameters--name)
+* [`provider`](#-zabbix_userparameters--provider)
+* [`template`](#-zabbix_userparameters--template)
 
-##### <a name="hostname"></a>`hostname`
+##### <a name="-zabbix_userparameters--hostname"></a>`hostname`
 
 FQDN of the machine.
 
-##### <a name="name"></a>`name`
+##### <a name="-zabbix_userparameters--name"></a>`name`
 
 namevar
 
 An unique name for this define.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-zabbix_userparameters--provider"></a>`provider`
 
 The specific backend to use for this `zabbix_userparameters` resource. You will seldom need to specify this --- Puppet
 will usually discover the appropriate provider for your platform.
 
-##### <a name="template"></a>`template`
+##### <a name="-zabbix_userparameters--template"></a>`template`
 
 Template which should be loaded for this host.
 
 ## Data types
 
-### <a name="zabbixdatabases"></a>`Zabbix::Databases`
+### <a name="Zabbix--Databases"></a>`Zabbix::Databases`
 
 Type for supported databases by the zabbix module
 
-Alias of
+Alias of `Enum['postgresql', 'mysql', 'sqlite']`
 
-```puppet
-Enum['postgresql', 'mysql', 'sqlite']
-```
+### <a name="Zabbix--Historyics"></a>`Zabbix::Historyics`
 
-### <a name="zabbixhistoryics"></a>`Zabbix::Historyics`
+Type for size values in bytes (also allows k/K and m/M as appendix)
 
-The Zabbix::Historyics data type.
-
-Alias of
-
-```puppet
-Optional[Pattern[/^\d+[k|K|m|M]?$/]]
-```
-
+Alias of `Optional[Pattern[/^\d+[k|K|m|M]?$/]]`
